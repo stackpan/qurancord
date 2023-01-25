@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SurahRepositoryMemoryTest {
+public class MemorySurahRepositoryTest {
 
     @Test
     void testGetAll() {
-        SurahRepository surahRepository = new SurahRepositoryMemory();
+        SurahRepository surahRepository = new MemorySurahRepository();
 
         List<Surah> surahList = generateDummy(10);
 
@@ -28,8 +28,8 @@ public class SurahRepositoryMemoryTest {
     }
 
     @Test
-    void testGet() {
-        SurahRepository surahRepository = new SurahRepositoryMemory();
+    void testGetByNumber() {
+        SurahRepository surahRepository = new MemorySurahRepository();
 
         List<Surah> surahList = generateDummy(10);
 
@@ -38,13 +38,28 @@ public class SurahRepositoryMemoryTest {
         } catch (IllegalAccessException ignored) {
         }
 
-        Assertions.assertNotNull(surahRepository.get(2));
-        Assertions.assertEquals(surahList.get(1), surahRepository.get(2));
+        Assertions.assertNotNull(surahRepository.getByNumber(2));
+        Assertions.assertEquals(surahList.get(1), surahRepository.getByNumber(2));
+    }
+
+    @Test
+    void testGetByLatinName() {
+        SurahRepository surahRepository = new MemorySurahRepository();
+
+        List<Surah> surahList = generateDummy(10);
+
+        try {
+            new Injector<>().injectField(surahRepository, surahList);
+        } catch (IllegalAccessException ignored) {
+        }
+
+        Assertions.assertNotNull(surahRepository.getByLatinName("Surah latinName: 1"));
+        Assertions.assertEquals(surahList.get(0), surahRepository.getByLatinName("Surah latinName: 1"));
     }
 
     @Test
     void testStore() {
-        StorableRepository<Surah> surahStorableRepository = new SurahRepositoryMemory();
+        StorableRepository<Surah> surahStorableRepository = new MemorySurahRepository();
         surahStorableRepository.store(generateDummy(1).get(0));
 
         SurahRepository surahRepository = (SurahRepository) surahStorableRepository;
@@ -53,7 +68,7 @@ public class SurahRepositoryMemoryTest {
 
     @Test
     void testStoreThrows() {
-        StorableRepository<Surah> surahStorableRepository = new SurahRepositoryMemory();
+        StorableRepository<Surah> surahStorableRepository = new MemorySurahRepository();
         Assertions.assertThrows(NullPointerException.class, () -> surahStorableRepository.store(null));
     }
 

@@ -7,6 +7,9 @@ import com.stackpan.entity.Surah;
 
 import java.util.List;
 
+/**
+ * Json deserializer for: <a href="https://equran.id/apidev">equran.id</a>
+ */
 public class Deserializer {
 
     public static List<JsonElement> parseGetSurah(String jsonString) {

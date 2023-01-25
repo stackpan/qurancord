@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AyahRepositoryMemoryTest {
+public class MemoryAyahRepositoryTest {
 
     @Test
     void testGetAllBySurah() {
-        AyahRepository ayahRepository = new AyahRepositoryMemory();
+        AyahRepository ayahRepository = new MemoryAyahRepository();
 
         List<Ayah> dummyList = generateDummyList(5, 2);
 
@@ -28,7 +28,7 @@ public class AyahRepositoryMemoryTest {
 
     @Test
     void testGetBySurah() {
-        AyahRepository ayahRepository = new AyahRepositoryMemory();
+        AyahRepository ayahRepository = new MemoryAyahRepository();
 
         List<Ayah> dummyList = generateDummyList(5, 2);
 
@@ -43,7 +43,7 @@ public class AyahRepositoryMemoryTest {
 
     @Test
     void testStore() {
-        StorableRepository<Ayah> ayahStorableRepository = new AyahRepositoryMemory();
+        StorableRepository<Ayah> ayahStorableRepository = new MemoryAyahRepository();
         ayahStorableRepository.store(generateDummyList(1, 1).get(0));
 
         AyahRepository surahRepository = (AyahRepository) ayahStorableRepository;
@@ -52,7 +52,7 @@ public class AyahRepositoryMemoryTest {
 
     @Test
     void testStoreThrows() {
-        StorableRepository<Ayah> ayahStorableRepository = new AyahRepositoryMemory();
+        StorableRepository<Ayah> ayahStorableRepository = new MemoryAyahRepository();
         Assertions.assertThrows(NullPointerException.class, () -> ayahStorableRepository.store(null));
     }
 

@@ -6,12 +6,13 @@ import com.stackpan.util.RequestApi;
 
 import java.net.http.HttpClient;
 import java.util.List;
+import java.util.Objects;
 
-public final class SurahRepositoryApi implements SurahRepository {
+public final class ApiSurahRepository implements SurahRepository {
 
     private final HttpClient httpClient;
 
-    public SurahRepositoryApi(HttpClient httpClient) {
+    public ApiSurahRepository(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
@@ -27,10 +28,19 @@ public final class SurahRepositoryApi implements SurahRepository {
     }
 
     @Override
-    public Surah get(Integer number) {
-        var json = RequestApi.fetchData(httpClient, "https://equran.id/api/surat/" + number);
+    public Surah getByNumber(Integer number) {
+       return getAll().stream()
+                .filter(surah -> surah.number() == number)
+                .findFirst()
+                .orElse(null);
+    }
 
-        return Deserializer.parseElementSurah(Deserializer.parseGetSurahDetail(json));
+    @Override
+    public Surah getByLatinName(String latinName) {
+        return getAll().stream()
+                .filter(surah -> Objects.equals(surah.latinName(), latinName))
+                .findFirst()
+                .orElse(null);
     }
 
 }

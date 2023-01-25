@@ -6,13 +6,14 @@ import com.stackpan.entity.Surah;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public final class SurahRepositoryMemory implements SurahRepository, StorableRepository<Surah> {
+public final class MemorySurahRepository implements SurahRepository, StorableRepository<Surah> {
 
     @Injectable
     private List<Surah> surahList;
 
-    public SurahRepositoryMemory() {
+    public MemorySurahRepository() {
         this.surahList = new ArrayList<>();
     }
 
@@ -22,9 +23,17 @@ public final class SurahRepositoryMemory implements SurahRepository, StorableRep
     }
 
     @Override
-    public Surah get(Integer number) {
+    public Surah getByNumber(Integer number) {
         return surahList.stream()
                 .filter(surah -> surah.number() == number)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public Surah getByLatinName(String latinName) {
+        return surahList.stream()
+                .filter(surah -> Objects.equals(surah.latinName(), latinName))
                 .findFirst()
                 .orElse(null);
     }

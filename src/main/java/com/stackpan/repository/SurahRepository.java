@@ -5,9 +5,12 @@ import com.stackpan.entity.Surah;
 import java.util.List;
 
 public sealed interface SurahRepository
-        permits SurahRepositoryApi, SurahRepositoryMemory
+        permits ApiSurahRepository, MemorySurahRepository
 {
     List<Surah> getAll();
 
-    Surah get(Integer number);
+    Surah getByNumber(Integer number);
+
+    // todo: add advanced compare using RegExp
+    Surah getByLatinName(String latinName);
 }

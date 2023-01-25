@@ -1,7 +1,5 @@
 package com.stackpan.entity;
 
-
-
 public record Surah(
         int number,
         String arabicName,

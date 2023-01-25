@@ -5,7 +5,7 @@ import com.stackpan.entity.Ayah;
 import java.util.List;
 
 public sealed interface AyahRepository
-        permits AyahRepositoryApi, AyahRepositoryMemory
+        permits ApiAyahRepository, MemoryAyahRepository
 {
     List<Ayah> getAllBySurah(Integer surahNumber);
 

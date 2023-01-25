@@ -7,12 +7,12 @@ import com.stackpan.util.RequestApi;
 import java.net.http.HttpClient;
 import java.util.List;
 
-public final class AyahRepositoryApi implements AyahRepository
+public final class ApiAyahRepository implements AyahRepository
 {
 
     private final HttpClient httpClient;
 
-    public AyahRepositoryApi(HttpClient httpClient) {
+    public ApiAyahRepository(HttpClient httpClient) {
         this.httpClient = httpClient;
     }
 

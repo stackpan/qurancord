@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.net.http.HttpClient;
 import java.util.List;
 
-public class SurahRepositoryApiTest {
+public class ApiSurahRepositoryTest {
 
     private HttpClient httpClient;
 
@@ -21,7 +21,7 @@ public class SurahRepositoryApiTest {
 
     @Test
     void testGetAll() {
-        SurahRepository surahRepository = new SurahRepositoryApi(httpClient);
+        SurahRepository surahRepository = new ApiSurahRepository(httpClient);
 
         var result = surahRepository.getAll();
 
@@ -35,12 +35,25 @@ public class SurahRepositoryApiTest {
     }
 
     @Test
-    void testGet() {
-        SurahRepository surahRepository = new SurahRepositoryApi(httpClient);
+    void testGetByNumber() {
+        SurahRepository surahRepository = new ApiSurahRepository(httpClient);
 
-        var result = surahRepository.get(5);
+        var result = surahRepository.getByNumber(5);
 
         Assertions.assertNotNull(result);
         Assertions.assertInstanceOf(Surah.class, result);
+    }
+
+    @Test
+    void testGetByLatinName() {
+        SurahRepository surahRepository = new ApiSurahRepository(httpClient);
+
+        var result = surahRepository.getByNumber(5);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertInstanceOf(Surah.class, result);
+
+        Assertions.assertNotNull(surahRepository.getByLatinName("Al-Fatihah"));
+        Assertions.assertEquals(surahRepository.getByNumber(1), surahRepository.getByLatinName("Al-Fatihah"));
     }
 }

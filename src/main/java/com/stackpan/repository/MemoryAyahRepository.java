@@ -6,12 +6,12 @@ import com.stackpan.entity.Ayah;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class AyahRepositoryMemory implements AyahRepository, StorableRepository<Ayah> {
+public final class MemoryAyahRepository implements AyahRepository, StorableRepository<Ayah> {
 
     @Injectable
     private List<Ayah> ayahList;
 
-    public AyahRepositoryMemory() {
+    public MemoryAyahRepository() {
         ayahList = new ArrayList<>();
     }
 

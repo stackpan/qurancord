@@ -1,7 +1,7 @@
 package com.stackpan.repository;
 
 public sealed interface StorableRepository<T>
-        permits AyahRepositoryMemory, SurahRepositoryMemory
+        permits MemoryAyahRepository, MemorySurahRepository
 {
     void store(T data);
 }
