@@ -3,9 +3,9 @@ package com.stackpan.util;
 import com.stackpan.entity.Ayah;
 
 public class AyahBuilder {
-    private int id;
-    private int surahNumber;
-    private int number;
+    private Integer id;
+    private Integer surahNumber;
+    private Integer number;
     private String arabicText;
     private String latinText;
     private String bahasaTranslate;

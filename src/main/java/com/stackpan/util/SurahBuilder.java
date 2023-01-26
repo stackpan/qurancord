@@ -4,10 +4,10 @@ import com.stackpan.entity.RevelationType;
 import com.stackpan.entity.Surah;
 
 public class SurahBuilder {
-    private int number;
+    private Integer number;
     private String arabicName;
     private String latinName;
-    private int ayahCount;
+    private Integer ayahCount;
     private RevelationType revelationType;
     private String meaning;
     private String description;

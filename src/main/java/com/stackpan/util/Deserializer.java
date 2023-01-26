@@ -44,6 +44,7 @@ public class Deserializer {
                     .setNumber(surahObject.get("nomor").getAsInt())
                     .setArabicName(surahObject.get("nama").getAsString())
                     .setLatinName(surahObject.get("nama_latin").getAsString())
+                    .setAyahCount(surahObject.get("jumlah_ayat").getAsInt())
                     .setRevelationType(surahObject.get("tempat_turun").getAsString().equals("mekah") ?
                             RevelationType.MECCAN : RevelationType.MEDINAN)
                     .setMeaning(surahObject.get("arti").getAsString())
