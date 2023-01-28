@@ -77,8 +77,8 @@ public class DiscordQuranServiceTest {
     }
 
     @Test
-    void testOpenSurahWithSurahName() {
-        var result = discordQuranService.openSurah("Yasin");
+    void testSearchSurahWithSurahName() {
+        var result = discordQuranService.searchSurah("Yasin");
 
         Assertions.assertNotNull(result);
         Assertions.assertInstanceOf(Surah.class, result);
@@ -86,8 +86,8 @@ public class DiscordQuranServiceTest {
     }
 
     @Test
-    void testOpenSurahWithSurahNumber() {
-        var result = discordQuranService.openSurah(36);
+    void testSearchSurahWithSurahNumber() {
+        var result = discordQuranService.searchSurah(36);
 
         Assertions.assertNotNull(result);
         Assertions.assertInstanceOf(Surah.class, result);
@@ -95,8 +95,8 @@ public class DiscordQuranServiceTest {
     }
 
     @Test
-    void testOpenAyahWithSurahName() {
-        var result = discordQuranService.openAyah("Yasin", 10);
+    void testSearchAyahWithSurahName() {
+        var result = discordQuranService.searchAyah("Yasin", 10);
 
         Assertions.assertNotNull(result);
         Assertions.assertInstanceOf(Map.class, result);
@@ -113,8 +113,8 @@ public class DiscordQuranServiceTest {
     }
 
     @Test
-    void testOpenAyahWithSurahNumber() {
-        var result = discordQuranService.openAyah(36, 10);
+    void testSearchAyahWithSurahNumber() {
+        var result = discordQuranService.searchAyah(36, 10);
 
         Assertions.assertNotNull(result);
         Assertions.assertInstanceOf(Map.class, result);

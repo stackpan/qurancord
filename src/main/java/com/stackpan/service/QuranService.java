@@ -14,12 +14,12 @@ public interface QuranService {
 
     Map<String, Object> getRandomAyah(Integer surahNumber);
 
-    Surah openSurah(String surahName);
+    Surah searchSurah(String surahName);
 
-    Surah openSurah(Integer surahNumber);
+    Surah searchSurah(Integer surahNumber);
 
-    Map<String, Object> openAyah(String surahName, Integer ayahNumber);
+    Map<String, Object> searchAyah(String surahName, Integer ayahNumber);
 
-    Map<String, Object> openAyah(Integer surahNumber, Integer ayahNumber);
+    Map<String, Object> searchAyah(Integer surahNumber, Integer ayahNumber);
 
 }

@@ -26,27 +26,27 @@ public class DiscordQuranService implements QuranService {
 
     @Override
     public Surah getRandomSurah() {
-        return openSurah(1 + (new Random().nextInt(SurahRepository.MAX_SURAH)));
+        return searchSurah(1 + (new Random().nextInt(SurahRepository.MAX_SURAH)));
     }
 
     @Override
     public Map<String, Object> getRandomAyah() {
-        return getRandomAyah(openSurah(getRandomSurah().number()).number());
+        return getRandomAyah(searchSurah(getRandomSurah().number()).number());
     }
 
     @Override
     public Map<String, Object> getRandomAyah(String surahName) {
-        return getRandomAyah(openSurah(surahName).number());
+        return getRandomAyah(searchSurah(surahName).number());
     }
 
     @Override
     public Map<String, Object> getRandomAyah(Integer surahNumber) {
-        return openAyah(surahNumber, 1 + new Random()
-                .nextInt(openSurah(surahNumber).ayahCount() - 1));
+        return searchAyah(surahNumber, 1 + new Random()
+                .nextInt(searchSurah(surahNumber).ayahCount() - 1));
     }
 
     @Override
-    public Surah openSurah(String surahName) {
+    public Surah searchSurah(String surahName) {
         return Optional.ofNullable(((SurahRepository) memorySurahRepository)
                         .getByLatinName(surahName))
                 .orElseGet(() -> {
@@ -57,7 +57,7 @@ public class DiscordQuranService implements QuranService {
     }
 
     @Override
-    public Surah openSurah(Integer surahNumber) {
+    public Surah searchSurah(Integer surahNumber) {
         return Optional.ofNullable(((SurahRepository) memorySurahRepository)
                         .getByNumber(surahNumber))
                 .orElseGet(() -> {
@@ -68,8 +68,8 @@ public class DiscordQuranService implements QuranService {
     }
 
     @Override
-    public Map<String, Object> openAyah(Integer surahNumber, Integer ayahNumber) {
-        var surah = openSurah(surahNumber);
+    public Map<String, Object> searchAyah(Integer surahNumber, Integer ayahNumber) {
+        var surah = searchSurah(surahNumber);
         var ayah = Optional.ofNullable(((AyahRepository) memoryAyahRepository)
                         .getBySurah(surah.number(), ayahNumber))
                 .orElseGet(() -> {
@@ -82,8 +82,8 @@ public class DiscordQuranService implements QuranService {
     }
 
     @Override
-    public Map<String, Object> openAyah(String surahName, Integer ayahNumber) {
-        var surah = openSurah(surahName);
-        return openAyah(surah.number(), ayahNumber);
+    public Map<String, Object> searchAyah(String surahName, Integer ayahNumber) {
+        var surah = searchSurah(surahName);
+        return searchAyah(surah.number(), ayahNumber);
     }
 }
