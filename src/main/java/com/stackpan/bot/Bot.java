@@ -60,6 +60,8 @@ public class Bot {
                         )
         ).queue();
 
+        System.out.println(quranService.hashCode());
+
         api.addEventListener(new RandomCommandHandler(quranService));
         api.addEventListener(new SearchCommandHandler(quranService));
     }
