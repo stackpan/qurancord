@@ -1,4 +1,4 @@
-package com.stackpan.bot.reply.embeds;
+package com.stackpan.bot.command.reply.embeds;
 
 import com.stackpan.entity.Surah;
 import net.dv8tion.jda.api.EmbedBuilder;

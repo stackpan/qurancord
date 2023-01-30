@@ -1,4 +1,4 @@
-package com.stackpan.bot.reply;
+package com.stackpan.bot.command.reply;
 
 import com.stackpan.entity.Ayah;
 import com.stackpan.entity.Surah;

@@ -1,7 +1,7 @@
 package com.stackpan.bot.command.handler;
 
-import com.stackpan.bot.reply.AyahReply;
-import com.stackpan.bot.reply.SurahReply;
+import com.stackpan.bot.command.reply.AyahReply;
+import com.stackpan.bot.command.reply.SurahReply;
 import com.stackpan.service.QuranService;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

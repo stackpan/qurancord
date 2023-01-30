@@ -1,6 +1,6 @@
-package com.stackpan.bot.reply;
+package com.stackpan.bot.command.reply;
 
-import com.stackpan.bot.reply.embeds.SurahEmbed;
+import com.stackpan.bot.command.reply.embeds.SurahEmbed;
 import com.stackpan.entity.Surah;
 import com.stackpan.util.StringFormatter;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
