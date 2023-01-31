@@ -40,5 +40,5 @@ Bot ini menggunakan slash command, sebagai berikut:
         - Use Slash Command
     - Copy URL yang digenerate dan buka di browser untuk mengundang bot ke server kamu
 4. Download [distribusi file jar kami](https://github.com/stackpan/qurancord/releases/download/snapshot/qurancord-1.0-SNAPSHOT-jar-with-dependencies.jar)
-5. Buka command line, lalu `cd /to/downloaded.jar/directory`
+5. Buka command line, lalu `cd /to/downloadedjar/directory`
 6. Jalankan dengan perintah `java -jar quranbot-VERSION-jar-with-dependencies.jar`
