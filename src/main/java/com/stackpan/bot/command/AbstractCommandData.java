@@ -1,6 +1,6 @@
 package com.stackpan.bot.command;
 
-public abstract class AbstractCommandData implements InsatiableCommandData {
+public abstract class AbstractCommandData {
 
     private final String name;
     private final String description;
@@ -18,7 +18,7 @@ public abstract class AbstractCommandData implements InsatiableCommandData {
         return description;
     }
 
-    public abstract String nameInit();
+    protected abstract String nameInit();
 
-    public abstract String descriptionInit();
+    protected abstract String descriptionInit();
 }
