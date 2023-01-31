@@ -39,8 +39,8 @@ public final class MemorySurahRepository implements SurahRepository, StorableRep
     }
 
     @Override
-    public void store(Surah data) {
+    public void store(List<Surah> data) {
         if (data == null) throw new NullPointerException("Surah data cannot be null");
-        surahList.add(data);
+        surahList.addAll(data);
     }
 }

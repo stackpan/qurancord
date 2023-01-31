@@ -50,9 +50,8 @@ public class DiscordQuranService implements QuranService {
         return Optional.ofNullable(((SurahRepository) memorySurahRepository)
                         .getByLatinName(surahName))
                 .orElseGet(() -> {
-                    var apiResult = apiSurahRepository.getByLatinName(surahName);
-                    memorySurahRepository.store(apiResult);
-                    return apiResult;
+                    memorySurahRepository.store(apiSurahRepository.getAll());
+                    return ((SurahRepository) memorySurahRepository).getByLatinName(surahName);
                 });
     }
 
@@ -61,9 +60,8 @@ public class DiscordQuranService implements QuranService {
         return Optional.ofNullable(((SurahRepository) memorySurahRepository)
                         .getByNumber(surahNumber))
                 .orElseGet(() -> {
-                    var apiResult = apiSurahRepository.getByNumber(surahNumber);
-                    memorySurahRepository.store(apiResult);
-                    return apiResult;
+                    memorySurahRepository.store(apiSurahRepository.getAll());
+                    return ((SurahRepository) memorySurahRepository).getByNumber(surahNumber);
                 });
     }
 
@@ -73,9 +71,8 @@ public class DiscordQuranService implements QuranService {
         var ayah = Optional.ofNullable(((AyahRepository) memoryAyahRepository)
                         .getBySurah(surah.number(), ayahNumber))
                 .orElseGet(() -> {
-                    var apiResult = apiAyahRepository.getBySurah(surah.number(), ayahNumber);
-                    memoryAyahRepository.store(apiResult);
-                    return apiResult;
+                    memoryAyahRepository.store(apiAyahRepository.getAllBySurah(surahNumber));
+                    return ((AyahRepository) memoryAyahRepository).getBySurah(surah.number(), ayahNumber);
                 });
 
         return new HashMap<>(Map.of("surah", surah, "ayah", ayah));
