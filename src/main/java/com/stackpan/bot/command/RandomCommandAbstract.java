@@ -3,10 +3,10 @@ package com.stackpan.bot.command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.*;
 
-public class RandomCommand extends com.stackpan.bot.command.SlashCommandData {
+public class RandomCommandAbstract extends AbstractSlashCommandData {
 
     @Override
-    protected net.dv8tion.jda.api.interactions.commands.build.SlashCommandData init() {
+    protected SlashCommandData init() {
         return Commands.slash(this.getName(), this.getDescription())
                 .addSubcommands(new SubcommandData("surah", "Meminta surah Al-Quran secara acak"))
                 .addSubcommandGroups(new SubcommandGroupData("ayah", "Meminta ayat Al-Quran secara acak")

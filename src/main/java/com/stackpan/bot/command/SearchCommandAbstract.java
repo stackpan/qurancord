@@ -2,12 +2,13 @@ package com.stackpan.bot.command;
 
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 
-public class SearchCommand extends SlashCommandData {
+public class SearchCommandAbstract extends AbstractSlashCommandData {
     @Override
-    protected net.dv8tion.jda.api.interactions.commands.build.SlashCommandData init() {
+    protected SlashCommandData init() {
         return Commands.slash(this.getName(), this.getDescription())
                 .addSubcommandGroups(
                         new SubcommandGroupData("surah", "Mencari surah Al-Quran")
