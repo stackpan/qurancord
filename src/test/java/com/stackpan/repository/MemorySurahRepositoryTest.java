@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MemorySurahRepositoryTest {
@@ -60,7 +61,7 @@ public class MemorySurahRepositoryTest {
     @Test
     void testStore() {
         StorableRepository<Surah> surahStorableRepository = new MemorySurahRepository();
-        surahStorableRepository.store(generateDummy(1).get(0));
+        surahStorableRepository.store(Collections.singletonList(generateDummy(1).get(0)));
 
         SurahRepository surahRepository = (SurahRepository) surahStorableRepository;
         Assertions.assertNotNull(surahRepository.getAll());
