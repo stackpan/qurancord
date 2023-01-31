@@ -20,12 +20,12 @@ public class RandomCommandAbstract extends AbstractSlashCommandData {
     }
 
     @Override
-    protected String nameInit() {
+    public String nameInit() {
         return "random";
     }
 
     @Override
-    protected String descriptionInit() {
+    public String descriptionInit() {
         return "Meminta ayat atau surah Al-Quran secara acak";
     }
 }

@@ -31,12 +31,12 @@ public class SearchCommandAbstract extends AbstractSlashCommandData {
     }
 
     @Override
-    protected String nameInit() {
+    public String nameInit() {
         return "search";
     }
 
     @Override
-    protected String descriptionInit() {
+    public String descriptionInit() {
         return "Mencari ayat atau surah Al-Quran";
     }
 }

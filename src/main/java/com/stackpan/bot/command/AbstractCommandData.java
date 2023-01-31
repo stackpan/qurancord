@@ -1,8 +1,6 @@
 package com.stackpan.bot.command;
 
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-
-public abstract class AbstractCommandData {
+public abstract class AbstractCommandData implements InsatiableCommandData {
 
     private final String name;
     private final String description;
@@ -20,10 +18,7 @@ public abstract class AbstractCommandData {
         return description;
     }
 
-    public abstract CommandData get();
+    public abstract String nameInit();
 
-    protected abstract CommandData init();
-    protected abstract String nameInit();
-
-    protected abstract String descriptionInit();
+    public abstract String descriptionInit();
 }
