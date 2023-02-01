@@ -13,15 +13,24 @@ import java.util.Map;
 public class ImageGenerator {
 
     private final static Map<?, ?> renderingHintsMap = new HashMap<>(Map.of(
-            RenderingHints.KEY_ALPHA_INTERPOLATION,  RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
+            RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
             RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON,
             RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY,
-            RenderingHints.KEY_DITHERING,RenderingHints.VALUE_DITHER_ENABLE,
+            RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE,
             RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON,
-            RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR,
-            RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY,
-            RenderingHints.KEY_STROKE_CONTROL,RenderingHints.VALUE_STROKE_PURE
+            RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR,
+            RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY,
+            RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE
     ));
+
+    static {
+        try {
+            var ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("DroidNaskh-Regular.ttf")));
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void ayahToImage(Ayah ayah) {
 
@@ -29,7 +38,7 @@ public class ImageGenerator {
 
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
-        Font font = new Font("TimesNewRoman", Font.PLAIN, 48);
+        Font font = new Font("Droid Arabic Naskh", Font.PLAIN, 48);
         g2d.setFont(font);
         FontMetrics fontMetrics = g2d.getFontMetrics();
         int width = fontMetrics.stringWidth(text) + 12;
