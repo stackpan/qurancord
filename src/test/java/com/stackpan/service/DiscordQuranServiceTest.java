@@ -64,9 +64,6 @@ public class DiscordQuranServiceTest {
         var surah = result.get("surah");
         var ayah = result.get("ayah");
 
-        System.out.println(ayah);
-        System.out.println(ayah.getClass().getName());
-
         Assertions.assertNotNull(result);
         Assertions.assertInstanceOf(Map.class, result);
         Assertions.assertNotNull(surah);

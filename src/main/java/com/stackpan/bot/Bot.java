@@ -37,8 +37,6 @@ public class Bot {
 
         api.updateCommands().addCommands(slashCommands).queue();
 
-        System.out.println(quranService.hashCode());
-
         api.addEventListener(new RandomCommandHandler(quranService));
         api.addEventListener(new SearchCommandHandler(quranService));
     }
