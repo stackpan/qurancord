@@ -6,7 +6,6 @@ import com.stackpan.entity.Surah;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public final class MemorySurahRepository implements SurahRepository, StorableRepository<Surah> {
 
@@ -33,7 +32,7 @@ public final class MemorySurahRepository implements SurahRepository, StorableRep
     @Override
     public Surah getByLatinName(String latinName) {
         return surahList.stream()
-                .filter(surah -> Objects.equals(surah.latinName(), latinName))
+                .filter(surah -> surah.latinName().equalsIgnoreCase(latinName))
                 .findFirst()
                 .orElse(null);
     }

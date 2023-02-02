@@ -6,7 +6,6 @@ import com.stackpan.util.RequestApi;
 
 import java.net.http.HttpClient;
 import java.util.List;
-import java.util.Objects;
 
 public final class ApiSurahRepository implements SurahRepository {
 
@@ -38,7 +37,7 @@ public final class ApiSurahRepository implements SurahRepository {
     @Override
     public Surah getByLatinName(String latinName) {
         return getAll().stream()
-                .filter(surah -> Objects.equals(surah.latinName(), latinName))
+                .filter(surah -> surah.latinName().equalsIgnoreCase(latinName))
                 .findFirst()
                 .orElse(null);
     }

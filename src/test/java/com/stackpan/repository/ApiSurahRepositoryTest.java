@@ -56,4 +56,21 @@ public class ApiSurahRepositoryTest {
         Assertions.assertNotNull(surahRepository.getByLatinName("Al-Fatihah"));
         Assertions.assertEquals(surahRepository.getByNumber(1), surahRepository.getByLatinName("Al-Fatihah"));
     }
+
+    @Test
+    void testGetByLatinNameIgnoreCase() {
+        SurahRepository surahRepository = new ApiSurahRepository(httpClient);
+
+        var result = surahRepository.getByNumber(5);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertInstanceOf(Surah.class, result);
+
+        Assertions.assertNotNull(surahRepository.getByLatinName("Al-Fatihah"));
+        Assertions.assertNotNull(surahRepository.getByLatinName("Al-fatihah"));
+        Assertions.assertNotNull(surahRepository.getByLatinName("al-fatihah"));
+        Assertions.assertEquals(surahRepository.getByNumber(1), surahRepository.getByLatinName("Al-Fatihah"));
+        Assertions.assertEquals(surahRepository.getByNumber(1), surahRepository.getByLatinName("Al-fatihah"));
+        Assertions.assertEquals(surahRepository.getByNumber(1), surahRepository.getByLatinName("al-fatihah"));
+    }
 }
