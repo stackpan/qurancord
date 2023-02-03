@@ -20,7 +20,7 @@ public class RandomCommandHandler extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         // todo: make it more readable and maintainable
-        // todo: prevent code repetition
+        // todo: make it modular
         // todo: beautify the reply using Discord Embeds
 
         SurahReply surahReply = new SurahReply(event);
@@ -41,15 +41,16 @@ public class RandomCommandHandler extends ListenerAdapter {
                 if (Objects.requireNonNull(event.getSubcommandName()).equals("with-surah-name")) {
                     event.deferReply().queue();
                     var searchName = Objects.requireNonNull(event.getOption("surah_name")).getAsString();
-                    ayahReply.send(quranService.getRandomAyah(searchName));
+                    ayahReply.send(searchName, quranService::getRandomAyah);
                 }
 
                 if (Objects.requireNonNull(event.getSubcommandName()).equals("with-surah-number")) {
                     event.deferReply().queue();
                     var searchNumber = Objects.requireNonNull(event.getOption("surah_number")).getAsInt();
-                    ayahReply.send(quranService.getRandomAyah(searchNumber));
+                    ayahReply.send(searchNumber, quranService::getRandomAyah);
                 }
             }
         }
     }
+
 }

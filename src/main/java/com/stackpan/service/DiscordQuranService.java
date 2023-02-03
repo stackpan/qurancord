@@ -2,6 +2,8 @@ package com.stackpan.service;
 
 import com.stackpan.entity.Ayah;
 import com.stackpan.entity.Surah;
+import com.stackpan.exception.AyahNotFoundException;
+import com.stackpan.exception.SurahNotFoundException;
 import com.stackpan.repository.*;
 
 import java.net.http.HttpClient;
@@ -36,33 +38,47 @@ public class DiscordQuranService implements QuranService {
 
     @Override
     public Map<String, Object> getRandomAyah(String surahName) {
-        return getRandomAyah(searchSurah(surahName).number());
+        var surah = searchSurah(surahName);
+        if (surah == null) throw new SurahNotFoundException();
+
+        return getRandomAyah(surah.number());
     }
 
     @Override
     public Map<String, Object> getRandomAyah(Integer surahNumber) {
+        var surah = searchSurah(surahNumber);
+        if (surah == null) throw new SurahNotFoundException();
+
         return searchAyah(surahNumber, 1 + new Random()
                 .nextInt(searchSurah(surahNumber).ayahCount() - 1));
     }
 
     @Override
     public Surah searchSurah(String surahName) {
-        return Optional.ofNullable(((SurahRepository) memorySurahRepository)
+        var result = Optional.ofNullable(((SurahRepository) memorySurahRepository)
                         .getByLatinName(surahName))
                 .orElseGet(() -> {
                     memorySurahRepository.store(apiSurahRepository.getAll());
                     return ((SurahRepository) memorySurahRepository).getByLatinName(surahName);
                 });
+
+        if (result == null) throw new SurahNotFoundException();
+
+        return result;
     }
 
     @Override
     public Surah searchSurah(Integer surahNumber) {
-        return Optional.ofNullable(((SurahRepository) memorySurahRepository)
+        var result = Optional.ofNullable(((SurahRepository) memorySurahRepository)
                         .getByNumber(surahNumber))
                 .orElseGet(() -> {
                     memorySurahRepository.store(apiSurahRepository.getAll());
                     return ((SurahRepository) memorySurahRepository).getByNumber(surahNumber);
                 });
+
+        if (result == null) throw new SurahNotFoundException();
+
+        return result;
     }
 
     @Override
@@ -74,6 +90,7 @@ public class DiscordQuranService implements QuranService {
                     memoryAyahRepository.store(apiAyahRepository.getAllBySurah(surahNumber));
                     return ((AyahRepository) memoryAyahRepository).getBySurah(surah.number(), ayahNumber);
                 });
+        if (ayah == null) throw new AyahNotFoundException();
 
         return new HashMap<>(Map.of("surah", surah, "ayah", ayah));
     }
@@ -81,6 +98,8 @@ public class DiscordQuranService implements QuranService {
     @Override
     public Map<String, Object> searchAyah(String surahName, Integer ayahNumber) {
         var surah = searchSurah(surahName);
+        if (surah == null) throw new AyahNotFoundException();
+
         return searchAyah(surah.number(), ayahNumber);
     }
 }

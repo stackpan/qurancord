@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 
-public class SearchCommandAbstract extends AbstractSlashCommandData {
+public class SearchCommandData extends AbstractSlashCommandData {
     @Override
     protected SlashCommandData init() {
         return Commands.slash(this.getName(), this.getDescription())

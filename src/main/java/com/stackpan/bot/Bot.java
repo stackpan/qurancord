@@ -1,7 +1,7 @@
 package com.stackpan.bot;
 
-import com.stackpan.bot.command.RandomCommandAbstract;
-import com.stackpan.bot.command.SearchCommandAbstract;
+import com.stackpan.bot.command.RandomCommandData;
+import com.stackpan.bot.command.SearchCommandData;
 import com.stackpan.bot.command.handler.RandomCommandHandler;
 import com.stackpan.bot.command.handler.SearchCommandHandler;
 import com.stackpan.service.DiscordQuranService;
@@ -31,8 +31,8 @@ public class Bot {
         // todo: make commands manager
         // todo: make language manager
         List<SlashCommandData> slashCommands = new ArrayList<>(List.of(
-                (SlashCommandData) new RandomCommandAbstract().get(),
-                (SlashCommandData) new SearchCommandAbstract().get()
+                (SlashCommandData) new RandomCommandData().get(),
+                (SlashCommandData) new SearchCommandData().get()
         ));
 
         api.updateCommands().addCommands(slashCommands).queue();

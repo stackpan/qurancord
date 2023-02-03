@@ -1,6 +1,5 @@
 package com.stackpan.bot.command;
 
-
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 

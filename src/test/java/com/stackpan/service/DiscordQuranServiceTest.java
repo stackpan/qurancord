@@ -2,6 +2,8 @@ package com.stackpan.service;
 
 import com.stackpan.entity.Ayah;
 import com.stackpan.entity.Surah;
+import com.stackpan.exception.AyahNotFoundException;
+import com.stackpan.exception.SurahNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,6 +61,11 @@ public class DiscordQuranServiceTest {
     }
 
     @Test
+    void testGetRandomAyahWithSurahNameNotFound() {
+        Assertions.assertThrows(SurahNotFoundException.class, () -> discordQuranService.getRandomAyah("Not Found"));
+    }
+
+    @Test
     void testGetRandomAyahWithSurahNumber() {
         var result = discordQuranService.getRandomAyah(36);
         var surah = result.get("surah");
@@ -74,6 +81,12 @@ public class DiscordQuranServiceTest {
     }
 
     @Test
+    void testGetRandomAyahWithSurahNumberNotFound() {
+        Assertions.assertThrows(SurahNotFoundException.class, () -> discordQuranService.getRandomAyah(150));
+
+    }
+
+    @Test
     void testSearchSurahWithSurahName() {
         var result = discordQuranService.searchSurah("Yasin");
 
@@ -83,12 +96,22 @@ public class DiscordQuranServiceTest {
     }
 
     @Test
+    void testSearchSurahWithSurahNameNotFound() {
+        Assertions.assertThrows(SurahNotFoundException.class, () -> discordQuranService.searchSurah("Not Found"));
+    }
+
+    @Test
     void testSearchSurahWithSurahNumber() {
         var result = discordQuranService.searchSurah(36);
 
         Assertions.assertNotNull(result);
         Assertions.assertInstanceOf(Surah.class, result);
         Assertions.assertEquals("Yasin", result.latinName());
+    }
+
+    @Test
+    void testSearchSurahWithSurahNumberNotFound() {
+        Assertions.assertThrows(SurahNotFoundException.class, () -> discordQuranService.searchSurah(150));
     }
 
     @Test
@@ -110,6 +133,12 @@ public class DiscordQuranServiceTest {
     }
 
     @Test
+    void testSearchAyahWithSurahNameNotFound() {
+        Assertions.assertThrows(SurahNotFoundException.class, () -> discordQuranService.searchAyah("Not Found", 10));
+        Assertions.assertThrows(AyahNotFoundException.class, () -> discordQuranService.searchAyah("Yasin", 999));
+    }
+
+    @Test
     void testSearchAyahWithSurahNumber() {
         var result = discordQuranService.searchAyah(36, 10);
 
@@ -125,5 +154,12 @@ public class DiscordQuranServiceTest {
         Assertions.assertNotNull(ayah);
         Assertions.assertInstanceOf(Ayah.class, ayah);
         Assertions.assertEquals(10, ((Ayah) ayah).number());
+    }
+
+    @Test
+    void testSearchAyahWithSurahNumberNotFound() {
+        Assertions.assertThrows(SurahNotFoundException.class, () -> discordQuranService.searchAyah(999, 10));
+        Assertions.assertThrows(AyahNotFoundException.class, () -> discordQuranService.searchAyah(36, 999));
+
     }
 }

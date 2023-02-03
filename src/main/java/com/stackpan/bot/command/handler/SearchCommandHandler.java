@@ -31,13 +31,13 @@ public class SearchCommandHandler extends ListenerAdapter {
                 if (Objects.requireNonNull(event.getSubcommandName()).equals("name")) {
                     event.deferReply().queue();
                     var searchName = Objects.requireNonNull(event.getOption("search_name")).getAsString();
-                    surahReply.send(quranService.searchSurah(searchName));
+                    surahReply.send(searchName, quranService::searchSurah);
                 }
 
                 if (Objects.requireNonNull(event.getSubcommandName()).equals("number")) {
                     event.deferReply().queue();
                     var searchNumber = Objects.requireNonNull(event.getOption("search_number")).getAsInt();
-                    surahReply.send(quranService.searchSurah(searchNumber));
+                    surahReply.send(searchNumber, quranService::searchSurah);
                 }
             }
 
@@ -46,14 +46,14 @@ public class SearchCommandHandler extends ListenerAdapter {
                     event.deferReply().queue();
                     var searchName = Objects.requireNonNull(event.getOption("surah_name")).getAsString();
                     var ayahNumber = Objects.requireNonNull(event.getOption("ayah_number")).getAsInt();
-                    ayahReply.send(quranService.searchAyah(searchName, ayahNumber));
+                    ayahReply.send(searchName, ayahNumber, quranService::searchAyah);
                 }
 
                 if (Objects.requireNonNull(event.getSubcommandName()).equals("with-surah-number")) {
                     event.deferReply().queue();
                     var searchNumber = Objects.requireNonNull(event.getOption("surah_number")).getAsInt();
                     var ayahNumber = Objects.requireNonNull(event.getOption("ayah_number")).getAsInt();
-                    ayahReply.send(quranService.searchAyah(searchNumber, ayahNumber));
+                    ayahReply.send(searchNumber, ayahNumber, quranService::searchAyah);
                 }
             }
         }
