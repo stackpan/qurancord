@@ -2,6 +2,7 @@ package com.stackpan.repository;
 
 import com.stackpan.annotation.Injectable;
 import com.stackpan.entity.Surah;
+import com.stackpan.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +33,7 @@ public final class MemorySurahRepository implements SurahRepository, StorableRep
     @Override
     public Surah getByLatinName(String latinName) {
         return surahList.stream()
-                .filter(surah -> surah.latinName().equalsIgnoreCase(latinName))
+                .filter(surah -> StringUtil.matchSurahName(surah.latinNameRegex(), latinName))
                 .findFirst()
                 .orElse(null);
     }

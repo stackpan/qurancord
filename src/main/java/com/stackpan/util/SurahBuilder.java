@@ -7,6 +7,7 @@ public class SurahBuilder {
     private Integer number;
     private String arabicName;
     private String latinName;
+    private String regexLatinName;
     private Integer ayahCount;
     private RevelationType revelationType;
     private String meaning;
@@ -33,6 +34,7 @@ public class SurahBuilder {
 
     public SurahBuilder setLatinName(String latinName) {
         this.latinName = latinName;
+        this.regexLatinName = StringUtil.formatSurahNameToRegex(latinName);
         return this;
     }
 
@@ -66,6 +68,6 @@ public class SurahBuilder {
             FieldValidator.validateNotNull(this);
         } catch (IllegalAccessException ignored) {
         }
-        return new Surah(number, arabicName, latinName, ayahCount, revelationType, meaning, description, audioUrl);
+        return new Surah(number, arabicName, latinName, regexLatinName, ayahCount, revelationType, meaning, description, audioUrl);
     }
 }

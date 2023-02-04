@@ -1,5 +1,8 @@
 package com.stackpan.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringUtil {
 
     public static String formatDiscord(String value) {
@@ -7,10 +10,14 @@ public class StringUtil {
                 .replaceAll("<br>", "\n");
     }
 
-//    public static boolean matchSurah(String wanted, String search) {
-//
-//        Pattern pattern = Pattern.compile("", Pattern.CASE_INSENSITIVE);
-//    }
+    public static String formatSurahNameToRegex(String latinName) {
+        return latinName
+                .replaceAll("-|\\s", Matcher.quoteReplacement("(-|\\s)?"))
+                .replaceAll("'", "'?");
+    }
 
+    public static boolean matchSurahName(String regex, String search) {
+        return Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(search).find();
+    }
 
 }

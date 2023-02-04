@@ -3,6 +3,7 @@ package com.stackpan.repository;
 import com.stackpan.entity.Surah;
 import com.stackpan.util.Deserializer;
 import com.stackpan.util.RequestApi;
+import com.stackpan.util.StringUtil;
 
 import java.net.http.HttpClient;
 import java.util.List;
@@ -37,7 +38,7 @@ public final class ApiSurahRepository implements SurahRepository {
     @Override
     public Surah getByLatinName(String latinName) {
         return getAll().stream()
-                .filter(surah -> surah.latinName().equalsIgnoreCase(latinName))
+                .filter(surah -> StringUtil.matchSurahName(surah.latinNameRegex(), latinName))
                 .findFirst()
                 .orElse(null);
     }

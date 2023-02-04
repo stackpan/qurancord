@@ -55,26 +55,9 @@ public class MemorySurahRepositoryTest {
         }
 
         Assertions.assertNotNull(surahRepository.getByLatinName("Surah latinName: 1"));
+        Assertions.assertNotNull(surahRepository.getByLatinName("surahlatinname:1"));
         Assertions.assertEquals(surahList.get(0), surahRepository.getByLatinName("Surah latinName: 1"));
-    }
-
-    @Test
-    void testGetByLatinNameIgnoreCase() {
-        SurahRepository surahRepository = new MemorySurahRepository();
-
-        List<Surah> surahList = generateDummy(10);
-
-        try {
-            new Injector<>().injectField(surahRepository, surahList);
-        } catch (IllegalAccessException ignored) {
-        }
-
-        Assertions.assertNotNull(surahRepository.getByLatinName("surah latinName: 1"));
-        Assertions.assertNotNull(surahRepository.getByLatinName("SURAH LATINNAME: 1"));
-        Assertions.assertNotNull(surahRepository.getByLatinName("surah latInName: 1"));
-        Assertions.assertEquals(surahList.get(0), surahRepository.getByLatinName("surah latinName: 1"));
-        Assertions.assertEquals(surahList.get(0), surahRepository.getByLatinName("SURAH LATINNAME: 1"));
-        Assertions.assertEquals(surahList.get(0), surahRepository.getByLatinName("surah latInName: 1"));
+        Assertions.assertEquals(surahList.get(0), surahRepository.getByLatinName("surahlatinname:1"));
     }
 
     @Test
