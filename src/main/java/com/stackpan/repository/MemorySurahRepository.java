@@ -38,8 +38,9 @@ public final class MemorySurahRepository implements SurahRepository, StorableRep
     }
 
     @Override
-    public void store(List<Surah> data) {
+    public void store(Surah data) {
         if (data == null) throw new NullPointerException("Surah data cannot be null");
-        surahList.addAll(data);
+        var isThere = surahList.stream().anyMatch(surah -> surah.equals(data));
+        if (!isThere) surahList.add(data); // anti-duplicate
     }
 }

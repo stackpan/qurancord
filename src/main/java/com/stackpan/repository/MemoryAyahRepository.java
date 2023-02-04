@@ -31,8 +31,9 @@ public final class MemoryAyahRepository implements AyahRepository, StorableRepos
     }
 
     @Override
-    public void store(List<Ayah> data) {
+    public void store(Ayah data) {
         if (data == null) throw new NullPointerException("Ayah data cannot be null");
-        ayahList.addAll(data);
+        var isThere = ayahList.stream().anyMatch(surah -> surah.equals(data));
+        if (!isThere) ayahList.add(data); // anti-duplicate
     }
 }

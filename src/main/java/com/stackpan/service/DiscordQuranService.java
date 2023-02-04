@@ -58,7 +58,7 @@ public class DiscordQuranService implements QuranService {
         var result = Optional.ofNullable(((SurahRepository) memorySurahRepository)
                         .getByLatinName(surahName))
                 .orElseGet(() -> {
-                    memorySurahRepository.store(apiSurahRepository.getAll());
+                    apiSurahRepository.getAll().forEach(memorySurahRepository::store);
                     return ((SurahRepository) memorySurahRepository).getByLatinName(surahName);
                 });
 
@@ -72,7 +72,7 @@ public class DiscordQuranService implements QuranService {
         var result = Optional.ofNullable(((SurahRepository) memorySurahRepository)
                         .getByNumber(surahNumber))
                 .orElseGet(() -> {
-                    memorySurahRepository.store(apiSurahRepository.getAll());
+                    apiSurahRepository.getAll().forEach(memorySurahRepository::store);
                     return ((SurahRepository) memorySurahRepository).getByNumber(surahNumber);
                 });
 
@@ -87,7 +87,7 @@ public class DiscordQuranService implements QuranService {
         var ayah = Optional.ofNullable(((AyahRepository) memoryAyahRepository)
                         .getBySurah(surah.number(), ayahNumber))
                 .orElseGet(() -> {
-                    memoryAyahRepository.store(apiAyahRepository.getAllBySurah(surahNumber));
+                    apiAyahRepository.getAllBySurah(surahNumber).forEach(memoryAyahRepository::store);
                     return ((AyahRepository) memoryAyahRepository).getBySurah(surah.number(), ayahNumber);
                 });
         if (ayah == null) throw new AyahNotFoundException();

@@ -80,10 +80,23 @@ public class MemorySurahRepositoryTest {
     @Test
     void testStore() {
         StorableRepository<Surah> surahStorableRepository = new MemorySurahRepository();
-        surahStorableRepository.store(Collections.singletonList(generateDummy(1).get(0)));
+        generateDummy(1).forEach(surahStorableRepository::store);
 
         SurahRepository surahRepository = (SurahRepository) surahStorableRepository;
         Assertions.assertNotNull(surahRepository.getAll());
+    }
+
+    @Test
+    void testStoreAntiDuplicate() {
+        StorableRepository<Surah> surahStorableRepository = new MemorySurahRepository();
+        generateDummy(3).forEach(surahStorableRepository::store);
+        generateDummy(3).forEach(surahStorableRepository::store);
+        generateDummy(3).forEach(surahStorableRepository::store);
+
+        SurahRepository surahRepository = (SurahRepository) surahStorableRepository;
+        var surahList = surahRepository.getAll();
+
+        Assertions.assertFalse(surahList.stream().anyMatch(surah -> Collections.frequency(surahList, surah) > 1));
     }
 
     @Test

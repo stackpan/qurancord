@@ -45,10 +45,23 @@ public class MemoryAyahRepositoryTest {
     @Test
     void testStore() {
         StorableRepository<Ayah> ayahStorableRepository = new MemoryAyahRepository();
-        ayahStorableRepository.store(Collections.singletonList(generateDummyList(1, 1).get(0)));
+        generateDummyList(1, 1).forEach(ayahStorableRepository::store);
 
         AyahRepository surahRepository = (AyahRepository) ayahStorableRepository;
         Assertions.assertNotNull(surahRepository.getAllBySurah(1));
+    }
+
+    @Test
+    void testStoreAntiDuplicate() {
+        StorableRepository<Ayah> ayahStorableRepository = new MemoryAyahRepository();
+        generateDummyList(1, 3).forEach(ayahStorableRepository::store);
+        generateDummyList(1, 3).forEach(ayahStorableRepository::store);
+        generateDummyList(1, 3).forEach(ayahStorableRepository::store);
+
+        AyahRepository surahRepository = (AyahRepository) ayahStorableRepository;
+        var surahList = surahRepository.getAllBySurah(1);
+
+        Assertions.assertFalse(surahList.stream().anyMatch(surah -> Collections.frequency(surahList, surah) > 1));
     }
 
     @Test
