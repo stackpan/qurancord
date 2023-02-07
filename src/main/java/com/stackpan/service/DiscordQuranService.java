@@ -55,10 +55,11 @@ public class DiscordQuranService implements QuranService {
 
     @Override
     public Surah searchSurah(String surahName) {
-        var result = Optional.ofNullable(((SurahRepository) memorySurahRepository)
-                        .getByLatinName(surahName))
+        var readableMemoryRepository = (SurahRepository) memorySurahRepository;
+
+        var result = Optional.ofNullable(readableMemoryRepository.getByLatinName(surahName))
                 .orElseGet(() -> {
-                    apiSurahRepository.getAll().forEach(memorySurahRepository::store);
+                    if (readableMemoryRepository.getAll().isEmpty()) apiSurahRepository.getAll().forEach(memorySurahRepository::store);
                     return ((SurahRepository) memorySurahRepository).getByLatinName(surahName);
                 });
 
@@ -69,11 +70,11 @@ public class DiscordQuranService implements QuranService {
 
     @Override
     public Surah searchSurah(Integer surahNumber) {
-        var readableMemoryRepository = (SurahRepository) memorySurahRepository;
+        if (surahNumber < 1 || surahNumber > SurahRepository.MAX_SURAH) throw new SurahNotFoundException();
 
-        var result = Optional.ofNullable(readableMemoryRepository.getByNumber(surahNumber))
+        var result = Optional.ofNullable(((SurahRepository) memorySurahRepository).getByNumber(surahNumber))
                 .orElseGet(() -> {
-                    if (readableMemoryRepository.getAll().isEmpty()) apiSurahRepository.getAll().forEach(memorySurahRepository::store);
+                    apiSurahRepository.getAll().forEach(memorySurahRepository::store);
                     return ((SurahRepository) memorySurahRepository).getByNumber(surahNumber);
                 });
 
@@ -83,23 +84,23 @@ public class DiscordQuranService implements QuranService {
     }
 
     @Override
-    public Map<String, Object> searchAyah(Integer surahNumber, Integer ayahNumber) {
+    public Map<String, Object> searchAyah(Integer surahNumber, Integer ayahNumber) throws SurahNotFoundException {
         var surah = searchSurah(surahNumber);
+
+        if (ayahNumber < 1 || ayahNumber > surah.ayahCount()) throw new AyahNotFoundException();
+
         var ayah = Optional.ofNullable(((AyahRepository) memoryAyahRepository)
                         .getBySurah(surah.number(), ayahNumber))
                 .orElseGet(() -> {
                     apiAyahRepository.getAllBySurah(surahNumber).forEach(memoryAyahRepository::store);
                     return ((AyahRepository) memoryAyahRepository).getBySurah(surah.number(), ayahNumber);
                 });
-        if (ayah == null) throw new AyahNotFoundException();
 
         return new HashMap<>(Map.of("surah", surah, "ayah", ayah));
     }
 
-    @Override
-    public Map<String, Object> searchAyah(String surahName, Integer ayahNumber) {
+    public Map<String, Object> searchAyah(String surahName, Integer ayahNumber) throws SurahNotFoundException {
         var surah = searchSurah(surahName);
-        if (surah == null) throw new AyahNotFoundException();
 
         return searchAyah(surah.number(), ayahNumber);
     }
