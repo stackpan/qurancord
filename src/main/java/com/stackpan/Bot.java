@@ -1,4 +1,4 @@
-package com.stackpan.bot;
+package com.stackpan;
 
 import com.stackpan.bot.command.RandomCommandData;
 import com.stackpan.bot.command.SearchCommandData;
@@ -18,6 +18,8 @@ import java.util.List;
 public class Bot {
 
     public static void main(String[] args) {
+
+        Bootstrap.boot();
 
         JDA api = JDABuilder.createDefault(System.getenv("BOT_TOKEN")).build();
 

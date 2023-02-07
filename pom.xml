@@ -107,7 +107,7 @@
             </descriptorRefs>
             <archive>
               <manifest>
-                <mainClass>com.stackpan.bot.Bot</mainClass>
+                <mainClass>com.stackpan.Bot</mainClass>
               </manifest>
             </archive>
           </configuration>
