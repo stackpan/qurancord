@@ -69,10 +69,11 @@ public class DiscordQuranService implements QuranService {
 
     @Override
     public Surah searchSurah(Integer surahNumber) {
-        var result = Optional.ofNullable(((SurahRepository) memorySurahRepository)
-                        .getByNumber(surahNumber))
+        var readableMemoryRepository = (SurahRepository) memorySurahRepository;
+
+        var result = Optional.ofNullable(readableMemoryRepository.getByNumber(surahNumber))
                 .orElseGet(() -> {
-                    apiSurahRepository.getAll().forEach(memorySurahRepository::store);
+                    if (readableMemoryRepository.getAll().isEmpty()) apiSurahRepository.getAll().forEach(memorySurahRepository::store);
                     return ((SurahRepository) memorySurahRepository).getByNumber(surahNumber);
                 });
 
