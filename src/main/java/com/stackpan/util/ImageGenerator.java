@@ -41,7 +41,7 @@ public class ImageGenerator {
         }
     }
 
-    public static String generateAyah(Surah surah, Ayah ayah) {
+    public static void generateAyah(Surah surah, Ayah ayah) {
         String arabicText = ayah.arabicText();
         String translateText = ayah.bahasaTranslate();
         String surahName = "[" + surah.latinName() + ":" + ayah.number() + "]";
@@ -146,7 +146,5 @@ public class ImageGenerator {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-        return path;
     }
 }

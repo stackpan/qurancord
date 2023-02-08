@@ -1,5 +1,6 @@
 package com.stackpan.bot.command.reply;
 
+import com.stackpan.App;
 import com.stackpan.entity.Ayah;
 import com.stackpan.entity.Surah;
 import com.stackpan.exception.AyahNotFoundException;
@@ -8,7 +9,9 @@ import com.stackpan.worker.AyahImageWorker;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -68,15 +71,19 @@ public class AyahReply {
         var surah = (Surah) serviceResult.get("surah");
         var ayah = (Ayah) serviceResult.get("ayah");
 
-        AyahImageWorker worker = new AyahImageWorker(surah, ayah);
-        worker.start();
-        try {
-            worker.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        String path = worker.getResultPath();
+        // If file not exist, generate first. Otherwise, send
+        Path path = Paths.get(App.RESOURCE_PATH + "/" + surah.number() + "_" + ayah.number() + ".png");
 
-        event.getHook().sendFiles(FileUpload.fromData(Path.of(path))).queue();
+        if (!Files.exists(path)) {
+            AyahImageWorker worker = new AyahImageWorker(surah, ayah);
+            worker.start();
+            try {
+                worker.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        event.getHook().sendFiles(FileUpload.fromData(path)).queue();
     }
 }

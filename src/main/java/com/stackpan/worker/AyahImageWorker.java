@@ -9,7 +9,6 @@ public class AyahImageWorker extends Thread {
     private final Surah surah;
     private final Ayah ayah;
 
-    private String resultPath;
 
     public AyahImageWorker(Surah surah, Ayah ayah) {
         this.surah = surah;
@@ -18,10 +17,6 @@ public class AyahImageWorker extends Thread {
 
     @Override
     public void run() {
-        resultPath = ImageGenerator.generateAyah(surah, ayah);
-    }
-
-    public String getResultPath() {
-        return resultPath;
+        ImageGenerator.generateAyah(surah, ayah);
     }
 }
