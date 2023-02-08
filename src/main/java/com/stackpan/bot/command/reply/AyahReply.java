@@ -72,7 +72,7 @@ public class AyahReply {
         var ayah = (Ayah) serviceResult.get("ayah");
 
         // If file not exist, generate first. Otherwise, send
-        Path path = Paths.get(App.RESOURCE_PATH + "/" + surah.number() + "_" + ayah.number() + ".png");
+        Path path = Paths.get(App.CACHE_RESOURCE_PATH + "/" + surah.number() + "_" + ayah.number() + ".png");
 
         if (!Files.exists(path)) {
             AyahImageWorker worker = new AyahImageWorker(surah, ayah);

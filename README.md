@@ -17,6 +17,7 @@ Bot ini menggunakan slash command, sebagai berikut:
 - `/random ayah any`: Meminta ayat Al-Quran secara acak di surah apapun
 - `/random ayah with-surah-name` `[surah_name:str]`: Meminta ayat Al-Quran secara acak berdasarkan surah
 - `/random ayah with-surah-number` `[surah_number:int]`: Meminta ayat Al-Quran secara acak berdasarkan nomor surah
+- `/random ayah image`: **(Preview Feature)** Meminta ayat Al-Quran secara acak di surah apapun dengan gambar
 - `/search surah name` `[search_name:str]`: Mencari surah Al-Quran dengan nama
 - `/search surah number` `[search_number:int]`: Mencari surah Al-Quran dengan nomor urut surah
 - `/search ayah with-surah-name` `[surah_name:str]` `[ayah_number:int]`: Mencari ayat di Al-Quran dengan nama surah

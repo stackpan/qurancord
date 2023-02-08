@@ -13,6 +13,7 @@ import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 import java.util.HashMap;
@@ -35,9 +36,11 @@ public class ImageGenerator {
 
         try {
             var ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Naskh-Nastaleeq-IndoPak-QWBW.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(new App().getResource("Naskh-Nastaleeq-IndoPak-QWBW.ttf").toURI())));
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -140,7 +143,7 @@ public class ImageGenerator {
 
         g.dispose();
 
-        String path = App.RESOURCE_PATH + "/" + surah.number() + "_" + ayah.number() + ".png";
+        String path = App.CACHE_RESOURCE_PATH + "/" + surah.number() + "_" + ayah.number() + ".png";
         try {
             ImageIO.write(image, "png", new File(path));
         } catch (IOException ex) {

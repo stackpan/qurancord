@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 
 public class FileUtil {
-    public static void clearResources() {
-        try (var pathStream = Files.walk(Paths.get(App.RESOURCE_PATH))) {
+    public static void clearCacheResources() {
+        try (var pathStream = Files.walk(Paths.get(App.CACHE_RESOURCE_PATH))) {
             pathStream.sorted(Comparator.reverseOrder())
                     .forEach(path -> {
                         try {

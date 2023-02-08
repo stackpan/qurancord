@@ -12,10 +12,10 @@ public class Bootstrap {
 
     public static void boot() {
         try {
-            final Path RESOURCE_PATH = Paths.get(App.RESOURCE_PATH);
+            final Path RESOURCE_PATH = Paths.get(App.CACHE_RESOURCE_PATH);
 
-            // clear resources if exist
-            if (Files.exists(RESOURCE_PATH)) FileUtil.clearResources();
+            // clear cache if exist
+            if (Files.exists(RESOURCE_PATH)) FileUtil.clearCacheResources();
 
             // create resource directory
             Files.createDirectories(RESOURCE_PATH);

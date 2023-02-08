@@ -22,7 +22,7 @@ public class ImageGeneratorTest {
 
     @AfterAll
     static void afterAll() {
-        FileUtil.clearResources();
+        FileUtil.clearCacheResources();
     }
 
     @Test
@@ -39,6 +39,6 @@ public class ImageGeneratorTest {
 
         ImageGenerator.generateAyah(surah, ayah);
 
-        Assertions.assertNotEquals(0, Objects.requireNonNull(new File(App.RESOURCE_PATH).listFiles()).length);
+        Assertions.assertNotEquals(0, Objects.requireNonNull(new File(App.CACHE_RESOURCE_PATH).listFiles()).length);
     }
 }
