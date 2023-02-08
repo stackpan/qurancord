@@ -5,15 +5,12 @@ import com.stackpan.Bootstrap;
 import com.stackpan.entity.Ayah;
 import com.stackpan.entity.Surah;
 import com.stackpan.service.DiscordQuranService;
+import com.stackpan.util.FileUtil;
 import com.stackpan.util.ImageGenerator;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.http.HttpClient;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class ImageGeneratorTest {
@@ -25,18 +22,7 @@ public class ImageGeneratorTest {
 
     @AfterAll
     static void afterAll() {
-        try (var pathStream = Files.walk(Paths.get(App.RESOURCE_PATH))) {
-            pathStream.sorted(Comparator.reverseOrder())
-                    .forEach(path -> {
-                        try {
-                            Files.delete(path);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FileUtil.clearResources();
     }
 
     @Test
