@@ -4,10 +4,12 @@ import com.stackpan.entity.Ayah;
 import com.stackpan.entity.Surah;
 import com.stackpan.util.ImageGenerator;
 
-public class AyahImageWorker implements Runnable {
+public class AyahImageWorker extends Thread {
 
     private final Surah surah;
     private final Ayah ayah;
+
+    private String resultPath;
 
     public AyahImageWorker(Surah surah, Ayah ayah) {
         this.surah = surah;
@@ -16,6 +18,10 @@ public class AyahImageWorker implements Runnable {
 
     @Override
     public void run() {
-        ImageGenerator.generateAyah(surah, ayah);
+        resultPath = ImageGenerator.generateAyah(surah, ayah);
+    }
+
+    public String getResultPath() {
+        return resultPath;
     }
 }

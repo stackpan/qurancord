@@ -49,6 +49,11 @@ public class RandomCommandHandler extends ListenerAdapter {
                     var searchNumber = Objects.requireNonNull(event.getOption("surah_number")).getAsInt();
                     ayahReply.send(searchNumber, quranService::getRandomAyah);
                 }
+
+                if (Objects.requireNonNull(event.getSubcommandName()).equals("image")) {
+                    event.deferReply().queue();
+                    ayahReply.sendFiles(quranService.getRandomAyah());
+                }
             }
         }
     }

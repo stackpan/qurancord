@@ -15,8 +15,8 @@ public class RandomCommandData extends AbstractSlashCommandData {
                                 new SubcommandData("with-surah-name", "Meminta ayat Al-Quran berdasarkan surah")
                                         .addOption(OptionType.STRING, "surah_name", "Nama surah", true, true),
                                 new SubcommandData("with-surah-number", "Meminta ayat Al-Quran berdasarkan nomor surah")
-                                        .addOption(OptionType.INTEGER, "surah_number", "Nomor urutan surah", true)));
-
+                                        .addOption(OptionType.INTEGER, "surah_number", "Nomor urutan surah", true),
+                                new SubcommandData("image", "Meminta ayat Al-Quran di surah apapun secara acak dengan gambar")));
     }
 
     @Override

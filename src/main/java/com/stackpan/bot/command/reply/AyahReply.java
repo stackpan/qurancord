@@ -4,8 +4,11 @@ import com.stackpan.entity.Ayah;
 import com.stackpan.entity.Surah;
 import com.stackpan.exception.AyahNotFoundException;
 import com.stackpan.exception.SurahNotFoundException;
+import com.stackpan.worker.AyahImageWorker;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.utils.FileUpload;
 
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -59,5 +62,21 @@ public class AyahReply {
         } catch (AyahNotFoundException e) {
             event.getHook().sendMessage(e.getUserMessage(searchNumber1)).queue();
         }
+    }
+
+    public void sendFiles(Map<String, Object> serviceResult) {
+        var surah = (Surah) serviceResult.get("surah");
+        var ayah = (Ayah) serviceResult.get("ayah");
+
+        AyahImageWorker worker = new AyahImageWorker(surah, ayah);
+        worker.start();
+        try {
+            worker.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        String path = worker.getResultPath();
+
+        event.getHook().sendFiles(FileUpload.fromData(Path.of(path))).queue();
     }
 }

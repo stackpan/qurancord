@@ -41,14 +41,14 @@ public class ImageGenerator {
         }
     }
 
-    public static void generateAyah(Surah surah, Ayah ayah) {
+    public static String generateAyah(Surah surah, Ayah ayah) {
         String arabicText = ayah.arabicText();
         String translateText = ayah.bahasaTranslate();
         String surahName = "[" + surah.latinName() + ":" + ayah.number() + "]";
 
         final int IMAGE_WIDTH = 1280;
         final int MARGIN = 18;
-        final int FONT_SIZE = 48;
+        final int FONT_SIZE = 60;
         final int SECTION_GAP = (int) (FONT_SIZE * 0.8);
         final float WRAPPING_WIDTH = (float) IMAGE_WIDTH - MARGIN * 2;
 
@@ -140,10 +140,13 @@ public class ImageGenerator {
 
         g.dispose();
 
+        String path = App.RESOURCE_PATH + "/" + surah.number() + "_" + ayah.number() + ".png";
         try {
-            ImageIO.write(image, "png", new File(App.RESOURCE_PATH + "/" + surah.number() + "_" + ayah.number() + ".png"));
+            ImageIO.write(image, "png", new File(path));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+
+        return path;
     }
 }
