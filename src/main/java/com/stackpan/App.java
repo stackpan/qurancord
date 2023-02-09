@@ -1,13 +1,15 @@
 package com.stackpan;
 
-import java.net.URL;
+import java.io.InputStream;
+import java.util.Optional;
 
 public class App {
 
     public static final String CACHE_RESOURCE_PATH = System.getProperty("user.dir") + "/.res";
 
-    public URL getResource(String file) {
-        return this.getClass().getResource("/" + file);
+    public InputStream getResourceStream(String fileName) {
+        return Optional.ofNullable(getClass().getClassLoader().getResourceAsStream(fileName))
+                .orElseThrow(() -> new IllegalArgumentException("File Not Found"));
     }
 
 }
