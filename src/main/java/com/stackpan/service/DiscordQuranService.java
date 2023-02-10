@@ -38,17 +38,11 @@ public class DiscordQuranService implements QuranService {
 
     @Override
     public Map<String, Object> getRandomAyah(String surahName) {
-        var surah = searchSurah(surahName);
-        if (surah == null) throw new SurahNotFoundException();
-
-        return getRandomAyah(surah.number());
+        return getRandomAyah(searchSurah(surahName).number());
     }
 
     @Override
     public Map<String, Object> getRandomAyah(Integer surahNumber) {
-        var surah = searchSurah(surahNumber);
-        if (surah == null) throw new SurahNotFoundException();
-
         return searchAyah(surahNumber, 1 + new Random()
                 .nextInt(searchSurah(surahNumber).ayahCount() - 1));
     }
@@ -57,49 +51,61 @@ public class DiscordQuranService implements QuranService {
     public Surah searchSurah(String surahName) {
         var readableMemoryRepository = (SurahRepository) memorySurahRepository;
 
-        var result = Optional.ofNullable(readableMemoryRepository.getByLatinName(surahName))
+        return Optional.ofNullable(readableMemoryRepository.getByLatinName(surahName))
                 .orElseGet(() -> {
-                    if (readableMemoryRepository.getAll().isEmpty()) apiSurahRepository.getAll().forEach(memorySurahRepository::store);
-                    return ((SurahRepository) memorySurahRepository).getByLatinName(surahName);
+                    // don't send request if in memory repository is not empty
+                    if (readableMemoryRepository.getAll().isEmpty())
+                        apiSurahRepository.getAll()
+                                .forEach(memorySurahRepository::store);
+
+                    return Optional.ofNullable(((SurahRepository) memorySurahRepository).getByLatinName(surahName))
+                            .orElseThrow(SurahNotFoundException::new);
                 });
-
-        if (result == null) throw new SurahNotFoundException();
-
-        return result;
     }
 
     @Override
     public Surah searchSurah(Integer surahNumber) {
         if (surahNumber < 1 || surahNumber > SurahRepository.MAX_SURAH) throw new SurahNotFoundException();
 
-        var result = Optional.ofNullable(((SurahRepository) memorySurahRepository).getByNumber(surahNumber))
+        var readableMemoryRepository = (SurahRepository) memorySurahRepository;
+
+        return Optional.ofNullable(readableMemoryRepository.getByNumber(surahNumber))
                 .orElseGet(() -> {
-                    apiSurahRepository.getAll().forEach(memorySurahRepository::store);
-                    return ((SurahRepository) memorySurahRepository).getByNumber(surahNumber);
+                    // don't send request if in memory repository is not empty
+                    if (readableMemoryRepository.getAll().isEmpty())
+                        apiSurahRepository.getAll()
+                                .forEach(memorySurahRepository::store);
+
+                    return Optional.ofNullable(((SurahRepository) memorySurahRepository).getByNumber(surahNumber))
+                            .orElseThrow(SurahNotFoundException::new);
                 });
-
-        if (result == null) throw new SurahNotFoundException();
-
-        return result;
     }
 
     @Override
     public Map<String, Object> searchAyah(Integer surahNumber, Integer ayahNumber) throws SurahNotFoundException {
+        // surah object is still be required because it will return a Map of Surah and Ayah
         var surah = searchSurah(surahNumber);
 
         if (ayahNumber < 1 || ayahNumber > surah.ayahCount()) throw new AyahNotFoundException();
 
-        var ayah = Optional.ofNullable(((AyahRepository) memoryAyahRepository)
-                        .getBySurah(surah.number(), ayahNumber))
+        var readableMemoryRepository = (AyahRepository) memoryAyahRepository;
+
+        var ayah = Optional.ofNullable(readableMemoryRepository.getBySurah(surah.number(), ayahNumber))
                 .orElseGet(() -> {
-                    apiAyahRepository.getAllBySurah(surahNumber).forEach(memoryAyahRepository::store);
-                    return ((AyahRepository) memoryAyahRepository).getBySurah(surah.number(), ayahNumber);
+                    // don't send request if in memory repository is not empty
+                    if (readableMemoryRepository.getAllBySurah(surahNumber).isEmpty())
+                        apiAyahRepository.getAllBySurah(surahNumber)
+                                .forEach(memoryAyahRepository::store);
+
+                    return Optional.ofNullable(((AyahRepository) memoryAyahRepository).getBySurah(surah.number(), ayahNumber))
+                            .orElseThrow(AyahNotFoundException::new);
                 });
 
         return new HashMap<>(Map.of("surah", surah, "ayah", ayah));
     }
 
     public Map<String, Object> searchAyah(String surahName, Integer ayahNumber) throws SurahNotFoundException {
+        // surah object is still be required because it will return a Map of Surah and Ayah
         var surah = searchSurah(surahName);
 
         return searchAyah(surah.number(), ayahNumber);
