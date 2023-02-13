@@ -57,7 +57,7 @@ Bot ini menggunakan slash command, sebagai berikut:
 
 ### Docker image
 
-Jika kamu kesulitan dengan metode [Manual Local](###ManualLocal) kamu bisa memanfaatkan [Docker Image kami](https://hub.docker.com/r/ivanzkyanto/qurancord).
+Jika kamu kesulitan dengan metode [Manual Local](#ManualLocal) kamu bisa memanfaatkan [Docker Image kami](https://hub.docker.com/r/ivanzkyanto/qurancord).
 
 1. Pastikan kamu telah menginstall setidaknya docker daemon di mesin kamu, atau bisa sekaligus dengan docker client. Kunjungi [docker.com](https://www.docker.com) untuk menginstallnya
 2. Pull image [ivanzkyanto/qurancord](https://hub.docker.com/r/ivanzkyanto/qurancord):
