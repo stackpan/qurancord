@@ -14,6 +14,5 @@ public sealed interface SurahRepository
 
     Surah getByNumber(Integer number);
 
-    // todo: add advanced compare using RegExp
     Surah getByLatinName(String latinName);
 }

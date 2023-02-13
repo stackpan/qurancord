@@ -19,6 +19,7 @@ public class Bot {
 
     public static void main(String[] args) {
 
+        Bootstrap.checkEnv();
         Bootstrap.boot();
 
         JDA api = JDABuilder.createDefault(System.getenv("BOT_TOKEN")).build();
