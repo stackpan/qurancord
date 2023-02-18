@@ -1,4 +1,4 @@
-package com.stackpan.qurancord.bot.command.reply.embeds;
+package com.stackpan.qurancord.bot.commands.old.reply.embeds;
 
 import com.stackpan.qurancord.core.entity.Surah;
 import net.dv8tion.jda.api.EmbedBuilder;

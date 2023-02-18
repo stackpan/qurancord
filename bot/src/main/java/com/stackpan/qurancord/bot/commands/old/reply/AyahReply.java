@@ -1,4 +1,4 @@
-package com.stackpan.qurancord.bot.command.reply;
+package com.stackpan.qurancord.bot.commands.old.reply;
 
 import com.stackpan.qurancord.core.App;
 import com.stackpan.qurancord.core.entity.Ayah;

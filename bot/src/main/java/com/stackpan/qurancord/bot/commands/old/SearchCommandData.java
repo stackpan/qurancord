@@ -1,4 +1,4 @@
-package com.stackpan.qurancord.bot.command;
+package com.stackpan.qurancord.bot.commands.old;
 
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;

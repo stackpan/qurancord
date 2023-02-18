@@ -1,6 +1,6 @@
-package com.stackpan.qurancord.bot.command.reply;
+package com.stackpan.qurancord.bot.commands.old.reply;
 
-import com.stackpan.qurancord.bot.command.reply.embeds.SurahEmbed;
+import com.stackpan.qurancord.bot.commands.old.reply.embeds.SurahEmbed;
 import com.stackpan.qurancord.core.entity.Surah;
 import com.stackpan.qurancord.core.exception.SurahNotFoundException;
 import com.stackpan.qurancord.core.util.StringUtil;

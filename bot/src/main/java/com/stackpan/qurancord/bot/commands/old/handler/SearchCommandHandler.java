@@ -1,7 +1,7 @@
-package com.stackpan.qurancord.bot.command.handler;
+package com.stackpan.qurancord.bot.commands.old.handler;
 
-import com.stackpan.qurancord.bot.command.reply.AyahReply;
-import com.stackpan.qurancord.bot.command.reply.SurahReply;
+import com.stackpan.qurancord.bot.commands.old.reply.AyahReply;
+import com.stackpan.qurancord.bot.commands.old.reply.SurahReply;
 import com.stackpan.qurancord.core.service.QuranService;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

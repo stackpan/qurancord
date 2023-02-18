@@ -1,9 +1,9 @@
 package com.stackpan.qurancord.bot;
 
-import com.stackpan.qurancord.bot.command.RandomCommandData;
-import com.stackpan.qurancord.bot.command.SearchCommandData;
-import com.stackpan.qurancord.bot.command.handler.RandomCommandHandler;
-import com.stackpan.qurancord.bot.command.handler.SearchCommandHandler;
+import com.stackpan.qurancord.bot.commands.old.RandomCommandData;
+import com.stackpan.qurancord.bot.commands.old.SearchCommandData;
+import com.stackpan.qurancord.bot.commands.old.handler.RandomCommandHandler;
+import com.stackpan.qurancord.bot.commands.old.handler.SearchCommandHandler;
 import com.stackpan.qurancord.core.Bootstrap;
 import com.stackpan.qurancord.core.service.DiscordQuranService;
 import com.stackpan.qurancord.core.service.QuranService;

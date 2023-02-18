@@ -1,4 +1,4 @@
-package com.stackpan.qurancord.bot.command;
+package com.stackpan.qurancord.bot.commands.old;
 
 public abstract class AbstractCommandData {
 
