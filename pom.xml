@@ -7,6 +7,7 @@
     <groupId>com.stackpan.qurancord</groupId>
     <artifactId>qurancord</artifactId>
     <version>2.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>qurancord</name>
     <description>Qurancord adalah aplikasi berupa bot discord untuk mencari dan mendapatkan surah dan/atau ayat Al-Quran
@@ -21,6 +22,10 @@
             <url>https://www.github.com/stackpan</url>
         </developer>
     </developers>
+    <modules>
+        <module>core</module>
+        <module>bot</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
