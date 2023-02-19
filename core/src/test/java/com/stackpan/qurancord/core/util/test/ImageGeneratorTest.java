@@ -1,7 +1,7 @@
 package com.stackpan.qurancord.core.util.test;
 
 import com.stackpan.qurancord.core.App;
-import com.stackpan.qurancord.core.Bootstrap;
+import com.stackpan.qurancord.core.Bootstrapper;
 import com.stackpan.qurancord.core.entity.Ayah;
 import com.stackpan.qurancord.core.entity.Surah;
 import com.stackpan.qurancord.core.service.DiscordQuranService;
@@ -17,7 +17,7 @@ public class ImageGeneratorTest {
 
     @BeforeAll
     static void beforeAll() {
-        Bootstrap.boot();
+        Bootstrapper.boot();
     }
 
     @AfterAll

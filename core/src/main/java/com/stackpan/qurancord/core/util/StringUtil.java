@@ -20,4 +20,8 @@ public class StringUtil {
         return Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(search).find();
     }
 
+    public static boolean isNumeric(String search) {
+        return Pattern.compile("^[0-9]*$").matcher(search).matches();
+    }
+
 }

@@ -6,11 +6,16 @@ import com.freya02.botcommands.api.application.CommandScope;
 import com.freya02.botcommands.api.application.annotations.AppOption;
 import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
+import com.stackpan.qurancord.bot.Bot;
+import com.stackpan.qurancord.bot.Replier;
+import com.stackpan.qurancord.core.service.QuranService;
+import com.stackpan.qurancord.core.util.StringUtil;
 
 @CommandMarker
 public class SlashRandom extends ApplicationCommand {
 
     private final String name = "random";
+    private final QuranService quranService = Bot.getQuranService();
 
     @JDASlashCommand(
             name = name,
@@ -19,7 +24,8 @@ public class SlashRandom extends ApplicationCommand {
             description = "Meminta surah Al-Quran secara acak"
     )
     public void onRandomSurah(GlobalSlashEvent event) {
-        // todo: add onRandomSurah reply
+        event.deferReply().queue();
+        Replier.replySurah(event, quranService.getRandomSurah());
     }
 
     @JDASlashCommand(
@@ -30,7 +36,8 @@ public class SlashRandom extends ApplicationCommand {
             description = "Meminta ayat Al-Quran di surah apapun"
     )
     public void onRandomAyahAny(GlobalSlashEvent event) {
-        // todo: add onRandomAyahAny reply
+        event.deferReply().queue();
+        Replier.replyAyah(event, quranService.getRandomAyah());
     }
 
     @JDASlashCommand(
@@ -46,7 +53,12 @@ public class SlashRandom extends ApplicationCommand {
                     name = "surah",
                     description = "Nama surah atau nomor surah"
             ) String surah) {
-        // todo: add onRandomAyahSurahName reply
+        event.deferReply().queue();
+        if (StringUtil.isNumeric(surah)) {
+            Replier.replyAyah(event, Integer.valueOf(surah), quranService::getRandomAyah);
+        } else {
+            Replier.replyAyah(event, surah, quranService::getRandomAyah);
+        }
     }
 
     @JDASlashCommand(
@@ -57,7 +69,8 @@ public class SlashRandom extends ApplicationCommand {
             description = "Meminta ayat Al-Quran di surah apapun secara acak dengan gambar"
     )
     public void onRandomAyahImage(GlobalSlashEvent event) {
-        // todo: add onRandomAyahImage reply
+        event.deferReply().queue();
+        Replier.sendAyahImage(event, quranService.getRandomAyah());
     }
 
 }

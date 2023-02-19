@@ -35,7 +35,7 @@ public class ImageGenerator {
 
         try {
             var ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new App().getResourceStream("Naskh-Nastaleeq-IndoPak-QWBW.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, App.getResourceStream("Naskh-Nastaleeq-IndoPak-QWBW.ttf")));
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }

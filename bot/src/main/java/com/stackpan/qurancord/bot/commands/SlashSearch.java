@@ -6,11 +6,17 @@ import com.freya02.botcommands.api.application.CommandScope;
 import com.freya02.botcommands.api.application.annotations.AppOption;
 import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
+import com.stackpan.qurancord.bot.Bot;
+import com.stackpan.qurancord.bot.Replier;
+import com.stackpan.qurancord.core.service.QuranService;
+import com.stackpan.qurancord.core.util.StringUtil;
 
 @CommandMarker
 public class SlashSearch extends ApplicationCommand {
 
     private final String name = "search";
+
+    private final QuranService quranService = Bot.getQuranService();
 
     @JDASlashCommand(
             name = name,
@@ -24,7 +30,12 @@ public class SlashSearch extends ApplicationCommand {
                     name = "surah_search",
                     description = "Nama surah atau nomor surah yang ingin dicari"
             ) String surahSearch) {
-        // todo: add onSearchSurah reply
+        event.deferReply().queue();
+        if (StringUtil.isNumeric(surahSearch)) {
+            Replier.replySurah(event, Integer.valueOf(surahSearch), quranService::searchSurah);
+        } else {
+            Replier.replySurah(event, surahSearch, quranService::searchSurah);
+        }
     }
 
     @JDASlashCommand(
@@ -44,7 +55,12 @@ public class SlashSearch extends ApplicationCommand {
                     description = "Ayat yang ingin dicari"
             ) Integer ayahSearch
     ) {
-        // todo: add onSearchSurah reply
+        event.deferReply().queue();
+        if (StringUtil.isNumeric(surahSearch)) {
+            Replier.replyAyah(event, Integer.valueOf(surahSearch), ayahSearch, quranService::searchAyah);
+        } else {
+            Replier.replyAyah(event, surahSearch, ayahSearch, quranService::searchAyah);
+        }
     }
 
 }

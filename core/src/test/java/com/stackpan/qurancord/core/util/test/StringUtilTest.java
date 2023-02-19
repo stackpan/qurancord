@@ -29,4 +29,13 @@ public class StringUtilTest {
         Assertions.assertFalse(StringUtil.matchSurahName(regexes[1], "ali imron"));
         Assertions.assertFalse(StringUtil.matchSurahName(regexes[2], "al bayyinah"));
     }
+
+    @Test
+    void testIsNumeric() {
+        String[] searches = {"34", "Alfatihah", "yasin234"};
+
+        Assertions.assertTrue(StringUtil.isNumeric(searches[0]));
+        Assertions.assertFalse(StringUtil.isNumeric(searches[1]));
+        Assertions.assertFalse(StringUtil.isNumeric(searches[2]));
+    }
 }

@@ -1,3 +1,5 @@
 .idea
 target
+bot/target
+core/target
 .res
