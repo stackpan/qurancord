@@ -7,9 +7,9 @@ Project ini dibuat menggunakan bahasa Java (Java 17) dan memanfaatkan Apache Mav
 Berikut dependensi yang digunakan:
 - [JDA (Java Discord API)](https://github.com/DV8FromTheWorld/JDA)
 - [JUnit Jupiter (JUnit 5)](https://junit.org/junit5)
-- [Mockito](https://site.mockito.org)
 - [Google GSON](https://github.com/google/gson)
 - [SLF4J logback-classic](https://logback.qos.ch)
+- [freya022/BotCommands](https://github.com/freya022/BotCommands)
 
 ### Penggunaan
 Bot ini menggunakan slash command, sebagai berikut:
