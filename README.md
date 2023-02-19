@@ -15,13 +15,10 @@ Berikut dependensi yang digunakan:
 Bot ini menggunakan slash command, sebagai berikut:
 - `/random surah`: Meminta surah Al-Quran secara acak
 - `/random ayah any`: Meminta ayat Al-Quran secara acak di surah apapun
-- `/random ayah with-surah-name` `[surah_name:str]`: Meminta ayat Al-Quran secara acak berdasarkan surah
-- `/random ayah with-surah-number` `[surah_number:int]`: Meminta ayat Al-Quran secara acak berdasarkan nomor surah
+- `/random ayah from-surah` `[surah:str]`: Meminta ayat Al-Quran secara acak berdasarkan surah
 - `/random ayah image`: **(Preview Feature)** Meminta ayat Al-Quran secara acak di surah apapun dengan gambar
-- `/search surah name` `[search_name:str]`: Mencari surah Al-Quran dengan nama
-- `/search surah number` `[search_number:int]`: Mencari surah Al-Quran dengan nomor urut surah
-- `/search ayah with-surah-name` `[surah_name:str]` `[ayah_number:int]`: Mencari ayat di Al-Quran dengan nama surah
-- `/search ayat with-surah-number` `[surah_number:int]` `[ayah_number:int]`: Mencari ayat di Al-Quran dengan nomor urut surah
+- `/search surah` `[surah_search:str]`: Mencari surah Al-Quran
+- `/search ayah` `[surah_search:str]` `[ayah_number:int]`: Mencari ayat di Al-Quran
 
 ## Installasi
 

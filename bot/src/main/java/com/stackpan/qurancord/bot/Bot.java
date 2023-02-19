@@ -1,48 +1,43 @@
 package com.stackpan.qurancord.bot;
 
-import com.stackpan.qurancord.bot.commands.old.RandomCommandData;
-import com.stackpan.qurancord.bot.commands.old.SearchCommandData;
-import com.stackpan.qurancord.bot.commands.old.handler.RandomCommandHandler;
-import com.stackpan.qurancord.bot.commands.old.handler.SearchCommandHandler;
-import com.stackpan.qurancord.core.Bootstrap;
+import com.freya02.botcommands.api.CommandsBuilder;
+import com.freya02.botcommands.api.Logging;
+import com.stackpan.qurancord.core.App;
+import com.stackpan.qurancord.core.Bootstrapper;
 import com.stackpan.qurancord.core.service.DiscordQuranService;
 import com.stackpan.qurancord.core.service.QuranService;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import org.slf4j.Logger;
 
-import java.net.http.HttpClient;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 public class Bot {
 
+    private static App app;
+
+    private static final Logger LOGGER = Logging.getLogger();
+
     public static void main(String[] args) {
+        Bootstrapper.checkEnv();
+        Bootstrapper.boot();
 
-        Bootstrap.checkEnv();
-        Bootstrap.boot();
+        app = new App();
+        app.setQuranService(new DiscordQuranService(App.HTTP_CLIENT));
 
-        JDA api = JDABuilder.createDefault(System.getenv("BOT_TOKEN")).build();
+        try {
+            JDA jda = JDABuilder.createDefault(System.getenv("BOT_TOKEN")).build();
 
-        HttpClient httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofMinutes(1))
-                .version(HttpClient.Version.HTTP_1_1)
-                .build();
+            CommandsBuilder.newBuilder()
+                    .build(jda, "com.stackpan.qurancord.bot.commands");
+        } catch (IOException e) {
+            LOGGER.error("Unable to start the bot", e);
+            System.exit(-1);
+        }
+    }
 
-        QuranService quranService = new DiscordQuranService(httpClient);
-
-        // todo: make commands manager
-        // todo: make language manager
-        List<SlashCommandData> slashCommands = new ArrayList<>(List.of(
-                (SlashCommandData) new RandomCommandData().get(),
-                (SlashCommandData) new SearchCommandData().get()
-        ));
-
-        api.updateCommands().addCommands(slashCommands).queue();
-
-        api.addEventListener(new RandomCommandHandler(quranService));
-        api.addEventListener(new SearchCommandHandler(quranService));
+    public static QuranService getQuranService() {
+        return app.getQuranService();
     }
 
 }

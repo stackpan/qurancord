@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class Bootstrap {
+public class Bootstrapper {
 
     public static void checkEnv() {
         if (App.BOT_TOKEN == null) {
