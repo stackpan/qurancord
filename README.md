@@ -49,7 +49,7 @@ Bot ini menggunakan slash command, sebagai berikut:
     ```
 6. Jalankan dengan perintah:
     ```
-    java -jar quranbot-VERSION-jar-with-dependencies.jar
+    java -jar qurancord-bot-VERSION-jar-with-dependencies.jar
     ```
 
 ### Docker image
