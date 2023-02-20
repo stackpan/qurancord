@@ -16,29 +16,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Replier {
 
     public static void replySurah(SlashCommandInteractionEvent event, Surah surah) {
         event.getHook().sendMessageEmbeds(SurahEmbed.show(surah)).queue();
         event.getHook().sendMessage(StringUtil.formatDiscord(surah.description())).queue();
-    }
-
-    public static void replySurah(SlashCommandInteractionEvent event, Integer searchNumber, Function<Integer, Surah> function) {
-        try {
-            replySurah(event, function.apply(searchNumber));
-        } catch (SurahNotFoundException e) {
-            event.getHook().sendMessage(e.getUserMessage(searchNumber)).queue();
-        }
-    }
-
-    public static void replySurah(SlashCommandInteractionEvent event, String search, Function<String, Surah> function) {
-        try {
-            replySurah(event, function.apply(search));
-        } catch (SurahNotFoundException e) {
-            event.getHook().sendMessage(e.getUserMessage()).queue();
-        }
     }
 
     public static void replyAyah(SlashCommandInteractionEvent event, Map<String, Object> serviceResult) {
