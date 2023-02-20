@@ -67,15 +67,17 @@ public class SlashRandom extends ApplicationCommand {
                     name = "without_image",
                     description = "Penanda untuk tidak mengirim gambar"
             ) Boolean withoutImage) {
-        if (withoutImage == null) withoutImage = false;
+        final boolean noImage = withoutImage != null && withoutImage;
 
         event.deferReply().queue();
 
-        var data = (StringUtil.isNumeric(surah))
-                ? quranService.getRandomAyah(Integer.valueOf(surah))
-                : quranService.getRandomAyah(surah);
+        Replier.processReplier(event, e -> {
+            var data = StringUtil.isNumeric(surah)
+                    ? quranService.getRandomAyah(Integer.valueOf(surah))
+                    : quranService.getRandomAyah(surah);
 
-        if (withoutImage) Replier.replyAyah(event, data);
-        else Replier.sendAyahImage(event, data);
+            if (noImage) Replier.replyAyah(e, data);
+            else Replier.sendAyahImage(e, data);
+        });
     }
 }

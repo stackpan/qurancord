@@ -33,9 +33,13 @@ public class SlashSearch extends ApplicationCommand {
             ) String surahSearch) {
         event.deferReply().queue();
 
-        if (StringUtil.isNumeric(surahSearch))
-            Replier.replySurah(event, Integer.valueOf(surahSearch), quranService::searchSurah);
-        else Replier.replySurah(event, surahSearch, quranService::searchSurah);
+        Replier.processReplier(event, e -> {
+            var data = StringUtil.isNumeric(surahSearch)
+                    ? quranService.searchSurah(Integer.valueOf(surahSearch))
+                    : quranService.searchSurah(surahSearch);
+
+            Replier.replySurah(e, data);
+        });
     }
 
     @JDASlashCommand(
@@ -59,16 +63,18 @@ public class SlashSearch extends ApplicationCommand {
                     description = "Penanda untuk tidak mengirim gambar"
             ) Boolean withoutImage
     ) {
-        if (withoutImage == null) withoutImage = false;
+        final boolean noImage = withoutImage != null && withoutImage;
 
         event.deferReply().queue();
 
-        var data = (StringUtil.isNumeric(surahSearch))
-                ? quranService.searchAyah(Integer.valueOf(surahSearch), ayahSearch)
-                : quranService.searchAyah(surahSearch, ayahSearch);
+        Replier.processReplier(event, e -> {
+            var data = StringUtil.isNumeric(surahSearch)
+                    ? quranService.searchAyah(Integer.valueOf(surahSearch), ayahSearch)
+                    : quranService.searchAyah(surahSearch, ayahSearch);
 
-        if (withoutImage) Replier.replyAyah(event, data);
-        else Replier.sendAyahImage(event, data);
+            if (noImage) Replier.replyAyah(e, data);
+            else Replier.sendAyahImage(e, data);
+        });
     }
 
 }

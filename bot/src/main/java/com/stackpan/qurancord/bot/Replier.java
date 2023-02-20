@@ -19,6 +19,16 @@ import java.util.function.Consumer;
 
 public class Replier {
 
+    public static void processReplier(SlashCommandInteractionEvent event, Consumer<SlashCommandInteractionEvent> consumer) {
+        try {
+            consumer.accept(event);
+        } catch (SurahNotFoundException e) {
+            event.getHook().sendMessage(e.getUserMessage()).queue();
+        } catch (AyahNotFoundException e) {
+            event.getHook().sendMessage(e.getUserMessage()).queue();
+        }
+    }
+
     public static void replySurah(SlashCommandInteractionEvent event, Surah surah) {
         event.getHook().sendMessageEmbeds(SurahEmbed.show(surah)).queue();
         event.getHook().sendMessage(StringUtil.formatDiscord(surah.description())).queue();
@@ -29,16 +39,6 @@ public class Replier {
         var ayah = (Ayah) serviceResult.get("ayah");
 
         event.getHook().sendMessageFormat("%s \n**Q.S. %s: %d**", ayah.arabicText().strip(), surah.latinName(), ayah.number()).queue();
-    }
-
-    public static void processReplier(SlashCommandInteractionEvent event, Consumer<SlashCommandInteractionEvent> consumer) {
-        try {
-            consumer.accept(event);
-        } catch (SurahNotFoundException e) {
-            event.getHook().sendMessage(e.getUserMessage()).queue();
-        } catch (AyahNotFoundException e) {
-            event.getHook().sendMessage(e.getUserMessage()).queue();
-        }
     }
 
     public static void sendAyahImage(SlashCommandInteractionEvent event, Map<String, Object> serviceResult) {
