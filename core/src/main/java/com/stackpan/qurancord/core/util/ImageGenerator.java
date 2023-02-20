@@ -35,7 +35,7 @@ public class ImageGenerator {
 
         try {
             var ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, App.getResourceStream("Naskh-Nastaleeq-IndoPak-QWBW.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, App.getResourceStream("Lateef-Regular.ttf")));
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,7 @@ public class ImageGenerator {
         final int SECTION_GAP = (int) (FONT_SIZE * 0.8);
         final float WRAPPING_WIDTH = (float) IMAGE_WIDTH - MARGIN * 2;
 
-        Font arabicFont = new Font("Al QuranWBW", Font.PLAIN, FONT_SIZE);
+        Font arabicFont = new Font("Lateef", Font.PLAIN, FONT_SIZE);
         Font latinFont = new Font("Times New Roman", Font.PLAIN, (int) (FONT_SIZE * 0.5));
 
         AttributedString arAs = new AttributedString(arabicText);
