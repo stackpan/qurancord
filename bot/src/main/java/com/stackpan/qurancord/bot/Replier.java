@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Replier {
@@ -48,39 +48,13 @@ public class Replier {
         event.getHook().sendMessageFormat("%s \n**Q.S. %s: %d**", ayah.arabicText().strip(), surah.latinName(), ayah.number()).queue();
     }
 
-    public static void replyAyah(SlashCommandInteractionEvent event, String search, Function<String, Map<String, Object>> function) {
+    public static void processReplier(SlashCommandInteractionEvent event, Consumer<SlashCommandInteractionEvent> consumer) {
         try {
-            replyAyah(event, function.apply(search));
-        } catch (SurahNotFoundException e) {
-            event.getHook().sendMessage(e.getUserMessage()).queue();
-        }
-    }
-
-    public static void replyAyah(SlashCommandInteractionEvent event, Integer searchNumber, Function<Integer, Map<String, Object>> function) {
-        try {
-            replyAyah(event, function.apply(searchNumber));
-        } catch (SurahNotFoundException e) {
-            event.getHook().sendMessage(e.getUserMessage(searchNumber)).queue();
-        }
-    }
-
-    public static void replyAyah(SlashCommandInteractionEvent event, String search, Integer searchNumber, BiFunction<String, Integer, Map<String, Object>> function) {
-        try {
-            replyAyah(event, function.apply(search, searchNumber));
+            consumer.accept(event);
         } catch (SurahNotFoundException e) {
             event.getHook().sendMessage(e.getUserMessage()).queue();
         } catch (AyahNotFoundException e) {
-            event.getHook().sendMessage(e.getUserMessage(searchNumber)).queue();
-        }
-    }
-
-    public static void replyAyah(SlashCommandInteractionEvent event, Integer searchNumber1, Integer searchNumber2, BiFunction<Integer, Integer, Map<String, Object>> function) {
-        try {
-            replyAyah(event, function.apply(searchNumber1, searchNumber2));
-        } catch (SurahNotFoundException e) {
             event.getHook().sendMessage(e.getUserMessage()).queue();
-        } catch (AyahNotFoundException e) {
-            event.getHook().sendMessage(e.getUserMessage(searchNumber1)).queue();
         }
     }
 
