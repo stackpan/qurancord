@@ -8,5 +8,4 @@ public abstract class NotFoundException extends RuntimeException {
 
     public abstract String getUserMessage();
 
-    public abstract String getUserMessage(Integer userInputInteger);
 }
