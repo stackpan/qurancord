@@ -1,6 +1,7 @@
 package com.stackpan.qurancord.bot.commands;
 
 import com.freya02.botcommands.api.annotations.CommandMarker;
+import com.freya02.botcommands.api.annotations.Optional;
 import com.freya02.botcommands.api.application.ApplicationCommand;
 import com.freya02.botcommands.api.application.CommandScope;
 import com.freya02.botcommands.api.application.annotations.AppOption;
@@ -35,9 +36,18 @@ public class SlashRandom extends ApplicationCommand {
             subcommand = "any",
             description = "Meminta ayat Al-Quran di surah apapun"
     )
-    public void onRandomAyahAny(GlobalSlashEvent event) {
+    public void onRandomAyahAny(
+            GlobalSlashEvent event,
+            @Optional @AppOption(
+                    name = "without_image",
+                    description = "Penanda untuk tidak mengirim gambar"
+            ) Boolean withoutImage) {
+        if (withoutImage == null) withoutImage = false;
+
         event.deferReply().queue();
-        Replier.replyAyah(event, quranService.getRandomAyah());
+
+        if (withoutImage) Replier.replyAyah(event, quranService.getRandomAyah());
+        else Replier.sendAyahImage(event, quranService.getRandomAyah());
     }
 
     @JDASlashCommand(
@@ -52,25 +62,20 @@ public class SlashRandom extends ApplicationCommand {
             @AppOption(
                     name = "surah",
                     description = "Nama surah atau nomor surah"
-            ) String surah) {
-        event.deferReply().queue();
-        if (StringUtil.isNumeric(surah)) {
-            Replier.replyAyah(event, Integer.valueOf(surah), quranService::getRandomAyah);
-        } else {
-            Replier.replyAyah(event, surah, quranService::getRandomAyah);
-        }
-    }
+            ) String surah,
+            @Optional @AppOption(
+                    name = "without_image",
+                    description = "Penanda untuk tidak mengirim gambar"
+            ) Boolean withoutImage) {
+        if (withoutImage == null) withoutImage = false;
 
-    @JDASlashCommand(
-            name = name,
-            scope = CommandScope.GLOBAL,
-            group = "ayah",
-            subcommand = "image",
-            description = "Meminta ayat Al-Quran di surah apapun secara acak dengan gambar"
-    )
-    public void onRandomAyahImage(GlobalSlashEvent event) {
         event.deferReply().queue();
-        Replier.sendAyahImage(event, quranService.getRandomAyah());
-    }
 
+        var data = (StringUtil.isNumeric(surah))
+                ? quranService.getRandomAyah(Integer.valueOf(surah))
+                : quranService.getRandomAyah(surah);
+
+        if (withoutImage) Replier.replyAyah(event, data);
+        else Replier.sendAyahImage(event, data);
+    }
 }

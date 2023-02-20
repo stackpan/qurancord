@@ -1,6 +1,7 @@
 package com.stackpan.qurancord.bot.commands;
 
 import com.freya02.botcommands.api.annotations.CommandMarker;
+import com.freya02.botcommands.api.annotations.Optional;
 import com.freya02.botcommands.api.application.ApplicationCommand;
 import com.freya02.botcommands.api.application.CommandScope;
 import com.freya02.botcommands.api.application.annotations.AppOption;
@@ -31,11 +32,10 @@ public class SlashSearch extends ApplicationCommand {
                     description = "Nama surah atau nomor surah yang ingin dicari"
             ) String surahSearch) {
         event.deferReply().queue();
-        if (StringUtil.isNumeric(surahSearch)) {
+
+        if (StringUtil.isNumeric(surahSearch))
             Replier.replySurah(event, Integer.valueOf(surahSearch), quranService::searchSurah);
-        } else {
-            Replier.replySurah(event, surahSearch, quranService::searchSurah);
-        }
+        else Replier.replySurah(event, surahSearch, quranService::searchSurah);
     }
 
     @JDASlashCommand(
@@ -53,14 +53,22 @@ public class SlashSearch extends ApplicationCommand {
             @AppOption(
                     name = "ayah_search",
                     description = "Ayat yang ingin dicari"
-            ) Integer ayahSearch
+            ) Integer ayahSearch,
+            @Optional @AppOption(
+                    name = "without_image",
+                    description = "Penanda untuk tidak mengirim gambar"
+            ) Boolean withoutImage
     ) {
+        if (withoutImage == null) withoutImage = false;
+
         event.deferReply().queue();
-        if (StringUtil.isNumeric(surahSearch)) {
-            Replier.replyAyah(event, Integer.valueOf(surahSearch), ayahSearch, quranService::searchAyah);
-        } else {
-            Replier.replyAyah(event, surahSearch, ayahSearch, quranService::searchAyah);
-        }
+
+        var data = (StringUtil.isNumeric(surahSearch))
+                ? quranService.searchAyah(Integer.valueOf(surahSearch), ayahSearch)
+                : quranService.searchAyah(surahSearch, ayahSearch);
+
+        if (withoutImage) Replier.replyAyah(event, data);
+        else Replier.sendAyahImage(event, data);
     }
 
 }
