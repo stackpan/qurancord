@@ -22,6 +22,16 @@ public class ImageGenerator {
 
     private final static Map<RenderingHints.Key, Object> hints = new HashMap<>();
 
+    private static final int IMAGE_WIDTH = 1280;
+    private static final int MARGIN = 18;
+    private static final int FONT_SIZE = 60;
+    private static final int LATIN_FONT_SIZE = (int) (FONT_SIZE * 0.5);
+    private static final int SECTION_GAP = (int) (FONT_SIZE * 0.8);
+    private static final float WRAPPING_WIDTH = (float) IMAGE_WIDTH - MARGIN * 2;
+
+    private static final Font arabicFont;
+    private static final Font latinFont;
+
     static {
         hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
         hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -39,21 +49,15 @@ public class ImageGenerator {
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
+
+        arabicFont = new Font("Lateef", Font.PLAIN, FONT_SIZE);
+        latinFont = new Font("Times New Roman", Font.PLAIN, LATIN_FONT_SIZE);
     }
 
     public static void generateAyah(Surah surah, Ayah ayah) {
         String arabicText = ayah.arabicText();
         String translateText = ayah.bahasaTranslate();
         String surahName = "[" + surah.latinName() + ":" + ayah.number() + "]";
-
-        final int IMAGE_WIDTH = 1280;
-        final int MARGIN = 18;
-        final int FONT_SIZE = 60;
-        final int SECTION_GAP = (int) (FONT_SIZE * 0.8);
-        final float WRAPPING_WIDTH = (float) IMAGE_WIDTH - MARGIN * 2;
-
-        Font arabicFont = new Font("Lateef", Font.PLAIN, FONT_SIZE);
-        Font latinFont = new Font("Times New Roman", Font.PLAIN, (int) (FONT_SIZE * 0.5));
 
         AttributedString arAs = new AttributedString(arabicText);
         arAs.addAttribute(TextAttribute.FONT, arabicFont);
