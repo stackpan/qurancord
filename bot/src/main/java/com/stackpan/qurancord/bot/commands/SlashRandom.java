@@ -9,6 +9,7 @@ import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import com.stackpan.qurancord.bot.Bot;
 import com.stackpan.qurancord.bot.Replier;
+import com.stackpan.qurancord.core.exception.SurahNotFoundException;
 import com.stackpan.qurancord.core.service.QuranService;
 import com.stackpan.qurancord.core.util.StringUtil;
 
@@ -72,6 +73,8 @@ public class SlashRandom extends ApplicationCommand {
         event.deferReply().queue();
 
         Replier.processReplier(event, e -> {
+            if (StringUtil.checkUserInput(surah)) throw new SurahNotFoundException();
+
             var data = StringUtil.isNumeric(surah)
                     ? quranService.getRandomAyah(Integer.valueOf(surah))
                     : quranService.getRandomAyah(surah);

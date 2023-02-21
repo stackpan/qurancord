@@ -9,6 +9,7 @@ import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import com.stackpan.qurancord.bot.Bot;
 import com.stackpan.qurancord.bot.Replier;
+import com.stackpan.qurancord.core.exception.SurahNotFoundException;
 import com.stackpan.qurancord.core.service.QuranService;
 import com.stackpan.qurancord.core.util.StringUtil;
 
@@ -34,6 +35,8 @@ public class SlashSearch extends ApplicationCommand {
         event.deferReply().queue();
 
         Replier.processReplier(event, e -> {
+            if (StringUtil.checkUserInput(surahSearch)) throw new SurahNotFoundException();
+
             var data = StringUtil.isNumeric(surahSearch)
                     ? quranService.searchSurah(Integer.valueOf(surahSearch))
                     : quranService.searchSurah(surahSearch);
@@ -68,6 +71,8 @@ public class SlashSearch extends ApplicationCommand {
         event.deferReply().queue();
 
         Replier.processReplier(event, e -> {
+            if (StringUtil.checkUserInput(surahSearch)) throw new SurahNotFoundException();
+
             var data = StringUtil.isNumeric(surahSearch)
                     ? quranService.searchAyah(Integer.valueOf(surahSearch), ayahSearch)
                     : quranService.searchAyah(surahSearch, ayahSearch);

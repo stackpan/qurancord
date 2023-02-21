@@ -24,4 +24,8 @@ public class StringUtil {
         return Pattern.compile("^[0-9]*$").matcher(search).matches();
     }
 
+    public static boolean checkUserInput(String input) {
+        return Pattern.compile("[^a-zA-Z0-9-'\\s]").matcher(input).find();
+    }
+
 }
