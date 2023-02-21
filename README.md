@@ -12,13 +12,16 @@ Berikut dependensi yang digunakan:
 - [freya022/BotCommands](https://github.com/freya022/BotCommands)
 
 ### Penggunaan
-Bot ini menggunakan slash command, sebagai berikut:
-- `/random surah`: Meminta surah Al-Quran secara acak
-- `/random ayah any`: Meminta ayat Al-Quran secara acak di surah apapun
-- `/random ayah from-surah` `[surah:str]`: Meminta ayat Al-Quran secara acak berdasarkan surah
-- `/random ayah image`: **(Preview Feature)** Meminta ayat Al-Quran secara acak di surah apapun dengan gambar
-- `/search surah` `[surah_search:str]`: Mencari surah Al-Quran
-- `/search ayah` `[surah_search:str]` `[ayah_search:int]`: Mencari ayat di Al-Quran
+
+Bot ini menggunakan slash command, berikut ini adalah perintahnya:
+
+| Command                   | Options                                                   | Description                                         |
+|---------------------------|-----------------------------------------------------------|-----------------------------------------------------|
+| `/random surah`           |                                                           | Meminta surah Al-Quran secara acak                  |
+| `/random ayah any`        | `without_image:bool`                                      | Meminta ayat Al-Quran secara acak di surah apapun   |
+| `/random ayah from-surah` | `surah:str` `without_image:bool`                          | Meminta ayat Al-Quran secara acak berdasarkan surah |
+| `/search surah`           | `surah_search:str`                                        | Mencari surah Al-Quran                              |
+| `/search ayah`            | `surah_search:str` `ayah_search:int` `without_image:bool` | Mencari ayat di Al-Quran                            |
 
 ## Installasi
 
