@@ -1,8 +1,6 @@
 # qurancord
 Qurancord adalah aplikasi berupa bot discord untuk mencari dan mendapatkan surah dan/atau ayat Al-Quran dengan memanfaatkan API dari internet. Ditulis menggunakan Java.
 
-_Setelah [2.2-alpha](https://github.com/stackpan/qurancord/releases/tag/2.2-alpha), secara perlahan saya akan mulai berhenti melanjutkan projek ini. Karena semua yang ingin saya lakukan sudah diselesaikan di projek ini. Kedepannya saya hanya akan melakukan perubahan jika terdapat Issue dari kalian_
-
 ## Pratinjau
 Project ini dibuat menggunakan bahasa Java (Java 17) dan memanfaatkan Apache Maven sebagai manajemen dependensi. Untuk sumber data Al-Quran, didapatkan dari https://equran.id/apidev.
 
