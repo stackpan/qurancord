@@ -1,1 +1,1 @@
-rootProject.name = "qcv2"
+rootProject.name = "qurancord"
