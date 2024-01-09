@@ -25,47 +25,56 @@ Bot ini menggunakan slash command, berikut ini adalah perintahnya:
 
 ## Installasi
 
-### Manual Local
-1. **Persyaratan**: Pastikan kamu telah menginstall JRE/JDK minimal versi 17 di local komputer kamu
-2. Membuat Discord Application
-    - Pergi ke halaman [discord developer portal](https://discord.com/developers/applications) dan login
-    - Klik "New Application"
-    - Berikan sebuah nama
-    - Buat sebuah bot dengan pergi ke menu "Bot" di pengaturan sebelah kiri lalu klik "Add Bot" dan beri nama
-    - Klik "Reset Token" dan copy tokennya, lalu tambahkan ke environment variable di local kamu dengan key `BOT_TOKEN`. Caranya: 
-        ```
-        export BOT_TOKEN=YOUR_COPIED_TOKEN
-        ```
-3. Invite bot ke server
-    - Di halaman discord developer portal, pergi ke menu OAuth2 - URL Generator
-    - Generate URL dengan mencentang: 
-      - scopes:
-        - bot
-      - bot permissions:
-        - Send Messages
-        - Use Slash Command
-    - Copy URL yang digenerate dan buka di browser untuk mengundang bot ke server kamu
-4. Download [distribusi file jar kami](https://github.com/stackpan/qurancord/releases) (**Catatan!** pilih versi terbaru)
-5. Buka command line, lalu masuk ke lokasi jar yang sudah didownload
+### Persiapan Discord Application
+1. Pergi ke halaman [discord developer portal](https://discord.com/developers/applications) dan login
+2. Klik "New Application"
+3. Beri nama
+4. Buat sebuah bot dengan pergi ke menu "Bot" di pengaturan sebelah kiri lalu klik "Add Bot" dan beri nama
+5. Klik "Reset Token", **salin dan simpan tokennya**
+6. Di halaman discord developer portal, pergi ke menu OAuth2 - URL Generator
+7. Generate URL dengan mencentang item berikut:
+   - scopes:
+     - bot
+   - bot permissions:
+     - Send Messages
+     - Use Slash Command
+8. Salin URL yang telah di-_generate_ dan buka di browser untuk mengundang bot tersebut ke server kamu
+9. Ikuti salah satu metode deployment berikut: [Manual Local](#manual-local) atau [Docker Compose](#docker-compose)
+
+### Deployment
+
+#### Manual Local
+Persyaratan:
+- JDK versi 17 ke atas
+
+Langkah-langkah:
+1. Clone dan buka repository ini:
+   ```
+    git clone https://github.com/stackpan/qurancord.git
+    cd /path/to/qurancord
+   ```
+2. Tambahkan environment variable `BOT_TOKEN` di local kamu:
     ```
-    cd /to/downloadedjar/directory
+    export BOT_TOKEN=YOUR_COPIED_TOKEN
     ```
-6. Jalankan dengan perintah:
+3. Build file jar:
+   ```
+   ./mvnw clean compile assembly:single
+   ```
+4. Jalankan dengan perintah:
     ```
-    java -jar qurancord-bot-VERSION-jar-with-dependencies.jar
+    java -jar ./bot/target/qurancord-bot-{VERSION}-jar-with-dependencies.jar
     ```
 
-### Docker image
+#### Docker compose
 
-Jika kamu kesulitan dengan metode [Manual Local](#manual-local) kamu bisa memanfaatkan [Docker Image kami](https://hub.docker.com/r/ivanzkyanto/qurancord).
+Persyaratan:
+- Docker dengan Docker Compose. Kunjungi [docker.com](https://www.docker.com) untuk menginstallnya
 
-1. Pastikan kamu telah menginstall setidaknya docker daemon di mesin kamu, atau bisa sekaligus dengan docker client. Kunjungi [docker.com](https://www.docker.com) untuk menginstallnya
-2. Pull image [ivanzkyanto/qurancord](https://hub.docker.com/r/ivanzkyanto/qurancord):
+Langkah-langkah
+1. Clone repository ini
+2. Isi environment `BOT_TOKEN` di dalam file `docker-compose.yaml`
+3. Jalankan file compose:
     ```
-    docker pull ivanzkyanto/qurancord
+    docker compose up
     ```
-3. Buat dan jalankan sebuah kontainer dari image, **pastikan untuk menambahkan `BOT_TOKEN` di environment variable**:
-    ```
-    docker run -d -e BOT_TOKEN=<YOUR_BOT_TOKEN_HERE> ivanzkyanto/qurancord
-    ```
-    Kamu tidak perlu membuka port apapun.
