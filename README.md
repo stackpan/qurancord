@@ -71,7 +71,7 @@ Langkah-langkah:
 Persyaratan:
 - Docker dengan Docker Compose. Kunjungi [docker.com](https://www.docker.com) untuk menginstallnya
 
-Langkah-langkah
+Langkah-langkah:
 1. Clone repository ini
 2. Isi environment `BOT_TOKEN` di dalam file `docker-compose.yaml`
 3. Jalankan file compose:
