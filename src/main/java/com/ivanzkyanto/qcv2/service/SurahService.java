@@ -1,13 +1,14 @@
 package com.ivanzkyanto.qcv2.service;
 
 import com.ivanzkyanto.qcv2.model.Surah;
+import com.ivanzkyanto.qcv2.model.SurahDetail;
 
 public interface SurahService {
 
-    Surah get(int number);
+    SurahDetail get(Integer number);
 
-    Surah search(String name);
+    Surah search(String keyword);
 
-    Surah random();
+    SurahDetail random();
 
 }

@@ -1,15 +1,16 @@
 package com.ivanzkyanto.qcv2.service;
 
 import com.ivanzkyanto.qcv2.model.Ayah;
+import com.ivanzkyanto.qcv2.model.SearchResult;
 
 public interface AyahService {
 
-    Ayah get(int surahNumber, int ayahNumber);
+    Ayah get(Integer surahNumber, Integer ayahNumber);
 
-    Ayah search(String keyword);
+    SearchResult search(String keyword);
 
     Ayah random();
 
-    Ayah random(int ayah);
+    Ayah random(Integer surahNumber);
 
 }

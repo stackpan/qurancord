@@ -16,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.Objects;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
