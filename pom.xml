@@ -6,7 +6,7 @@
 
     <groupId>com.stackpan.qurancord</groupId>
     <artifactId>qurancord</artifactId>
-    <version>2.2-ALPHA</version>
+    <version>2.3-ALPHA</version>
     <packaging>pom</packaging>
 
     <name>qurancord</name>

@@ -1,5 +1,11 @@
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jdk-alpine
 
-COPY bot/target/qurancord-bot-2.2-ALPHA-jar-with-dependencies.jar /app/qurancord-server.jar
+WORKDIR /app
 
-CMD ["java", "-jar", "/app/qurancord-server.jar"]
+COPY . .
+
+RUN ./mvnw clean compile assembly:single
+
+COPY bot/target/*.jar app.jar
+
+CMD ["java", "-jar", "app.jar"]
