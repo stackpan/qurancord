@@ -2,10 +2,13 @@ package com.ivanzkyanto.qcv2.service;
 
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Ayah;
+import com.ivanzkyanto.qcv2.model.AyahDetail;
 import com.ivanzkyanto.qcv2.model.SearchResult;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,8 +20,15 @@ class AyahServiceTest {
 
     @Test
     void get() {
-        Ayah result = ayahService.get(1, 1);
-        assertEquals("In the name of God, The Most Gracious, The Dispenser of Grace:", result.getText());
+        Optional<AyahDetail> result = ayahService.get(1, 1);
+        assertTrue(result.isPresent());
+        assertEquals("In the name of God, The Most Gracious, The Dispenser of Grace:", result.get().getText());
+    }
+
+    @Test
+    void getNotFound() {
+        Optional<AyahDetail> result = ayahService.get(1, 100);
+        assertTrue(result.isEmpty());
     }
 
     @Test

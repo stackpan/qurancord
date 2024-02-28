@@ -11,8 +11,6 @@ import com.ivanzkyanto.qcv2.service.SurahService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
-
 @CommandMarker
 @RequiredArgsConstructor
 public class SurahCommandController extends ApplicationCommand {
@@ -27,10 +25,7 @@ public class SurahCommandController extends ApplicationCommand {
     )
     public void find(
             @NotNull GlobalSlashEvent event,
-            @AppOption(
-                    name = "number",
-                    description = "command.surah.search.options.number.description"
-            ) Integer number
+            @AppOption(name = "number", description = "option.surah.find.number.description") Integer number
     ) {
         event.deferReply().queue();
 
@@ -67,11 +62,7 @@ public class SurahCommandController extends ApplicationCommand {
     )
     public void search(
             @NotNull GlobalSlashEvent event,
-            @AppOption(
-                    name = "keyword",
-                    description = "option.surah.search.keyword.description"
-            )
-            String keyword
+            @AppOption(name = "keyword", description = "option.surah.search.keyword.description") String keyword
     ) {
         event.deferReply().queue();
 

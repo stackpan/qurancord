@@ -1,17 +1,16 @@
-package com.ivanzkyanto.qcv2.discord;
+package com.ivanzkyanto.qcv2.configuration;
 
 import com.freya02.botcommands.api.CommandsBuilder;
-import com.ivanzkyanto.qcv2.configuration.DiscordConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import org.springframework.stereotype.Component;
-
-@Component
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
+@Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class DiscordEngine {
+public class DiscordConfigurer implements CommandLineRunner {
 
     private final DiscordConfigurationProperties configuration;
 
@@ -19,11 +18,17 @@ public class DiscordEngine {
 
     private JDA jda;
 
-    public void start() {
+    @Override
+    public void run(String... args) {
+        this.start();
+        this.buildCommands();
+    }
+
+    private void start() {
         this.jda = JDABuilder.createDefault(configuration.botToken()).build();
     }
 
-    public void buildCommands() {
+    private void buildCommands() {
         try {
             this.jda.awaitReady();
             CommandsBuilder.newBuilder()
@@ -34,5 +39,4 @@ public class DiscordEngine {
             System.exit(1);
         }
     }
-
 }

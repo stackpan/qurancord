@@ -1,4 +1,4 @@
-package com.ivanzkyanto.qcv2.discord;
+package com.ivanzkyanto.qcv2.configuration;
 
 import com.freya02.botcommands.api.builder.ExtensionsBuilder;
 import com.ivanzkyanto.qcv2.service.AyahService;
