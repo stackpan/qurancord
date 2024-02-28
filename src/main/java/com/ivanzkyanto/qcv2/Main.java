@@ -9,10 +9,10 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @Slf4j
-public class QurancordApplication {
+public class Main {
 
     public static void main(String[] args) {
-        SpringApplication.run(QurancordApplication.class, args);
+        SpringApplication.run(Main.class, args);
     }
 
     @Bean

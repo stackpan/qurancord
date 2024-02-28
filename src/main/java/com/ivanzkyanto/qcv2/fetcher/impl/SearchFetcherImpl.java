@@ -4,7 +4,7 @@ import com.ivanzkyanto.qcv2.fetcher.SearchFetcher;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
 import com.ivanzkyanto.qcv2.model.SearchEditionReference;
 import com.ivanzkyanto.qcv2.model.SearchResult;
-import com.ivanzkyanto.qcv2.util.SearchEditionReferenceMaker;
+import com.ivanzkyanto.qcv2.model.SearchEditionReferenceMaker;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

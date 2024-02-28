@@ -1,6 +1,5 @@
 package com.ivanzkyanto.qcv2.model;
 
-import com.ivanzkyanto.qcv2.util.SearchEditionReferenceMaker;
 import lombok.*;
 
 @Data

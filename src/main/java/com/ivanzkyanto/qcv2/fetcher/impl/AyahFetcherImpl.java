@@ -3,7 +3,7 @@ package com.ivanzkyanto.qcv2.fetcher.impl;
 import com.ivanzkyanto.qcv2.fetcher.AyahFetcher;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
 import com.ivanzkyanto.qcv2.model.AyahDetail;
-import com.ivanzkyanto.qcv2.util.AyahReferenceMaker;
+import com.ivanzkyanto.qcv2.model.AyahReferenceMaker;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

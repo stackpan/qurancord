@@ -2,7 +2,7 @@ package com.ivanzkyanto.qcv2.fetcher;
 
 import com.ivanzkyanto.qcv2.model.ApiResponse;
 import com.ivanzkyanto.qcv2.model.AyahDetail;
-import com.ivanzkyanto.qcv2.util.AyahReferenceMaker;
+import com.ivanzkyanto.qcv2.model.AyahReferenceMaker;
 
 public interface AyahFetcher {
 

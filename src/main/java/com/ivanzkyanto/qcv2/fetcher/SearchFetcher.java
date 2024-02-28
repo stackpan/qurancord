@@ -2,7 +2,7 @@ package com.ivanzkyanto.qcv2.fetcher;
 
 import com.ivanzkyanto.qcv2.model.ApiResponse;
 import com.ivanzkyanto.qcv2.model.SearchResult;
-import com.ivanzkyanto.qcv2.util.SearchEditionReferenceMaker;
+import com.ivanzkyanto.qcv2.model.SearchEditionReferenceMaker;
 
 public interface SearchFetcher {
 
