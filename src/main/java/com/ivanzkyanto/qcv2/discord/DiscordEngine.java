@@ -28,7 +28,7 @@ public class DiscordEngine {
             this.jda.awaitReady();
             CommandsBuilder.newBuilder()
                     .extensionsBuilder(extensionRegister)
-                    .build(this.jda, "com.ivanzkyanto.qcv2.commands");
+                    .build(this.jda, "com.ivanzkyanto.qcv2.command");
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             System.exit(1);

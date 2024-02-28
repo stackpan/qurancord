@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.service.impl;
 
+import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.fetcher.AyahFetcher;
 import com.ivanzkyanto.qcv2.fetcher.SearchFetcher;
 import com.ivanzkyanto.qcv2.model.*;
@@ -9,6 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Component
@@ -46,10 +48,14 @@ public class AyahServiceImpl implements AyahService {
     }
 
     @Override
-    public Ayah random(Integer surahNumber) {
-        SurahDetail surah = surahService.get(surahNumber);
+    public Ayah random(Integer surahNumber) throws SurahNotFoundException {
+        Optional<SurahDetail> surah = surahService.get(surahNumber);
 
-        return random(surah);
+        if (surah.isEmpty()) {
+            throw new SurahNotFoundException();
+        }
+
+        return random(surah.get());
     }
 
     private Ayah random(SurahDetail surah) {

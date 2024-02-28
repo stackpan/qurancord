@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.service;
 
+import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Ayah;
 import com.ivanzkyanto.qcv2.model.SearchResult;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class AyahServiceTest {
     }
 
     @Test
-    void randomSpecificSurah() {
+    void randomSpecificSurah() throws SurahNotFoundException {
         Ayah result = ayahService.random(1);
         assertNotNull(result);
     }

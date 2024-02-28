@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.service;
 
+import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Ayah;
 import com.ivanzkyanto.qcv2.model.SearchResult;
 
@@ -11,6 +12,6 @@ public interface AyahService {
 
     Ayah random();
 
-    Ayah random(Integer surahNumber);
+    Ayah random(Integer surahNumber) throws SurahNotFoundException;
 
 }

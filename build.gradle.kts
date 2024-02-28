@@ -27,6 +27,7 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("net.dv8tion:JDA:5.0.0-beta.20")
     implementation("io.github.freya022:BotCommands:2.10.3")
 }
