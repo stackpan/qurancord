@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.service;
 
+import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Ayah;
 import com.ivanzkyanto.qcv2.model.AyahDetail;
@@ -20,15 +21,13 @@ class AyahServiceTest {
 
     @Test
     void get() {
-        Optional<AyahDetail> result = ayahService.get(1, 1);
-        assertTrue(result.isPresent());
-        assertEquals("In the name of God, The Most Gracious, The Dispenser of Grace:", result.get().getText());
+        AyahDetail result = ayahService.get(1, 1);
+        assertEquals("In the name of God, The Most Gracious, The Dispenser of Grace:", result.getText());
     }
 
     @Test
     void getNotFound() {
-        Optional<AyahDetail> result = ayahService.get(1, 100);
-        assertTrue(result.isEmpty());
+        assertThrows(AyahNotFoundException.class, () -> ayahService.get(1, 100));
     }
 
     @Test
@@ -39,14 +38,25 @@ class AyahServiceTest {
     }
 
     @Test
+    void searchNotFound() {
+        Optional<SearchResult> result = ayahService.search("notfound");
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
     void random() {
         Ayah result = ayahService.random();
         assertNotNull(result);
     }
 
     @Test
-    void randomSpecificSurah() throws SurahNotFoundException {
+    void randomSpecificSurah() {
         Ayah result = ayahService.random(1);
         assertNotNull(result);
+    }
+
+    @Test
+    void randomSpecificSurahNotFound() {
+        assertThrows(SurahNotFoundException.class, () -> ayahService.random(1000));
     }
 }

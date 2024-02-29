@@ -6,7 +6,9 @@ import com.freya02.botcommands.api.application.CommandScope;
 import com.freya02.botcommands.api.application.annotations.AppOption;
 import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
+import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
+import com.ivanzkyanto.qcv2.model.AyahDetail;
 import com.ivanzkyanto.qcv2.service.AyahService;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -33,14 +35,17 @@ public class AyahCommandController extends ApplicationCommand {
     ) {
         event.deferReply().queue();
 
-        ayahService.get(surah, number).ifPresentOrElse(
-                ayah -> event.getHook()
-                        .sendMessageFormat("%s \n**Q.S. %s: %d**", ayah.getText(), ayah.getSurah().getEnglishName(), ayah.getNumber())
-                        .queue(),
-                () -> event.getHook()
-                        .sendMessage("message.ayah-not-found")
-                        .queue()
-        );
+        try {
+            var ayah = ayahService.get(surah, number);
+
+            event.getHook()
+                    .sendMessageFormat("%s \n**Q.S. %s: %d**", ayah.getText(), ayah.getSurah().getEnglishName(), ayah.getNumber())
+                    .queue();
+        } catch (AyahNotFoundException e) {
+            event.getHook()
+                    .sendMessage("message.ayah-not-found")
+                    .queue();
+        }
     }
 
     @JDASlashCommand(
@@ -58,6 +63,7 @@ public class AyahCommandController extends ApplicationCommand {
         ayahService.search(keyword).ifPresentOrElse(
                 searchResult -> {
                     var ayah = searchResult.getMatches().get(0);
+
                     event.getHook()
                         .sendMessageEmbeds(new EmbedBuilder()
                                 .setTitle(String.format("Found %s results", searchResult.getCount()))

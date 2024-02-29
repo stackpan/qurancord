@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.service;
 
+import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Ayah;
 import com.ivanzkyanto.qcv2.model.AyahDetail;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 public interface AyahService {
 
-    Optional<AyahDetail> get(Integer surahNumber, Integer ayahNumber);
+    AyahDetail get(Integer surahNumber, Integer ayahNumber) throws AyahNotFoundException;
 
     Optional<SearchResult> search(String keyword);
 

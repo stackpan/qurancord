@@ -26,13 +26,9 @@ public class SurahServiceImpl implements SurahService {
     private SurahFetcher surahFetcher;
 
     @Override
-    public Optional<SurahDetail> get(Integer number) {
-        try {
-            var response = surahFetcher.get(number);
-            return Optional.of(response.getData());
-        } catch (SurahNotFoundException e) {
-            return Optional.empty();
-        }
+    public SurahDetail get(Integer number) throws SurahNotFoundException {
+        var response = surahFetcher.get(number);
+        return response.getData();
     }
 
     @Override
@@ -52,12 +48,7 @@ public class SurahServiceImpl implements SurahService {
         Random random = new Random();
         int number = random.nextInt(114) + 1;
 
-        ApiResponse<SurahDetail> response = null;
-        try {
-            response = surahFetcher.get(number);
-        } catch (SurahNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        ApiResponse<SurahDetail> response = surahFetcher.get(number);
 
         return response.getData();
     }

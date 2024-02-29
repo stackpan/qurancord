@@ -7,6 +7,7 @@ import com.freya02.botcommands.api.application.annotations.AppOption;
 import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import com.ivanzkyanto.qcv2.component.MessageEmbeds;
+import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.service.SurahService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -29,14 +30,17 @@ public class SurahCommandController extends ApplicationCommand {
     ) {
         event.deferReply().queue();
 
-        surahService.get(number).ifPresentOrElse(
-                surahDetail -> event.getHook()
-                        .sendMessageEmbeds(MessageEmbeds.surah(surahDetail))
-                        .queue(),
-                () -> event.getHook()
-                        .sendMessage("message.surah-not-found")
-                        .queue()
-        );
+        try {
+            var surah = surahService.get(number);
+
+            event.getHook()
+                    .sendMessageEmbeds(MessageEmbeds.surah(surah))
+                    .queue();
+        } catch (SurahNotFoundException e) {
+            event.getHook()
+                    .sendMessage("message.surah-not-found")
+                    .queue();
+        }
     }
 
     @JDASlashCommand(
@@ -49,6 +53,7 @@ public class SurahCommandController extends ApplicationCommand {
         event.deferReply().queue();
 
         var surah = surahService.random();
+
         event.getHook()
                 .sendMessageEmbeds(MessageEmbeds.surah(surah))
                 .queue();

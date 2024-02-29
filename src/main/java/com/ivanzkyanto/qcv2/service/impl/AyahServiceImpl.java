@@ -30,13 +30,9 @@ public class AyahServiceImpl implements AyahService {
     private SurahService surahService;
 
     @Override
-    public Optional<AyahDetail> get(Integer surahNumber, Integer ayahNumber) {
-        try {
-            ApiResponse<AyahDetail> response = ayahFetcher.get(new AyahReference(surahNumber, ayahNumber));
-            return Optional.of(response.getData());
-        } catch (AyahNotFoundException e) {
-            return Optional.empty();
-        }
+    public AyahDetail get(Integer surahNumber, Integer ayahNumber) throws AyahNotFoundException {
+        ApiResponse<AyahDetail> response = ayahFetcher.get(new AyahReference(surahNumber, ayahNumber));
+        return response.getData();
     }
 
     @Override
@@ -54,13 +50,8 @@ public class AyahServiceImpl implements AyahService {
 
     @Override
     public AyahDetail random(Integer surahNumber) throws SurahNotFoundException {
-        Optional<SurahDetail> surah = surahService.get(surahNumber);
-
-        if (surah.isEmpty()) {
-            throw new SurahNotFoundException(surahNumber, "en.asad");
-        }
-
-        return random(surah.get());
+        SurahDetail surah = surahService.get(surahNumber);
+        return random(surah);
     }
 
     private AyahDetail random(SurahDetail surah) {
