@@ -19,6 +19,7 @@ public class Main {
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
+        return builder.rootUri("http://api.alquran.cloud")
+                .build();
     }
 }

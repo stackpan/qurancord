@@ -33,8 +33,9 @@ class AyahServiceTest {
 
     @Test
     void search() {
-        SearchResult result = ayahService.search("Abraham");
-        assertFalse(result.getMatches().isEmpty());
+        Optional<SearchResult> result = ayahService.search("Abraham");
+        assertTrue(result.isPresent());
+        assertFalse(result.get().getMatches().isEmpty());
     }
 
     @Test

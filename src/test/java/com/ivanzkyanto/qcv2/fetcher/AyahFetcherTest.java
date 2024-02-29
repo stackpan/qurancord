@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.fetcher;
 
+import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
 import com.ivanzkyanto.qcv2.model.AyahDetail;
 import com.ivanzkyanto.qcv2.model.AyahReference;
@@ -30,5 +31,10 @@ class AyahFetcherTest {
         assertNotNull(response.getData().getEdition());
 
         log.info(response.getData().toString());
+    }
+
+    @Test
+    void getNotFound() {
+        assertThrows(AyahNotFoundException.class, () -> ayahFetcher.get(new AyahReference(1, 200)));
     }
 }

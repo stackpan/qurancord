@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.fetcher;
 
+import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
 import com.ivanzkyanto.qcv2.model.Surah;
 import com.ivanzkyanto.qcv2.model.SurahDetail;
@@ -33,7 +34,7 @@ class SurahFetcherTest {
     }
 
     @Test
-    void get() {
+    void get() throws SurahNotFoundException {
         ApiResponse<SurahDetail> response = surahFetcher.get(7);
 
         assertEquals(200, response.getCode());
@@ -43,5 +44,10 @@ class SurahFetcherTest {
         assertNotNull(response.getData().getEdition());
 
         log.info(response.getData().toString());
+    }
+
+    @Test
+    void getNotFound() {
+        assertThrows(SurahNotFoundException.class, () -> surahFetcher.get(1000));
     }
 }

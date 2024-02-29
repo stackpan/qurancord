@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -21,14 +23,22 @@ class SearchFetcherTest {
 
     @Test
     void search() {
-        ApiResponse<SearchResult> response = searchFetcher.search("Abraham", 37, new SearchEditionReference("en", "pickthall"));
+        Optional<ApiResponse<SearchResult>> response = searchFetcher.search("Abraham", 37, new SearchEditionReference("en", "pickthall"));
 
-        assertEquals(200, response.getCode());
-        assertEquals("OK", response.getStatus());
-        assertNotNull(response.getData());
-        assertNotNull(response.getData().getCount());
-        assertNotNull(response.getData().getMatches());
+        assertTrue(response.isPresent());
+        assertEquals(200, response.get().getCode());
+        assertEquals("OK", response.get().getStatus());
+        assertNotNull(response.get().getData());
+        assertNotNull(response.get().getData().getCount());
+        assertNotNull(response.get().getData().getMatches());
 
-        log.info(response.getData().toString());
+        log.info(response.get().getData().toString());
+    }
+
+    @Test
+    void searchNoContent() {
+        Optional<ApiResponse<SearchResult>> response = searchFetcher.search("notfound", 37, new SearchEditionReference("en", "pickthall"));
+
+        assertTrue(response.isEmpty());
     }
 }

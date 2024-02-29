@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.service.impl;
 
+import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.fetcher.AyahFetcher;
 import com.ivanzkyanto.qcv2.fetcher.SearchFetcher;
@@ -9,11 +10,8 @@ import com.ivanzkyanto.qcv2.service.SurahService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -35,26 +33,16 @@ public class AyahServiceImpl implements AyahService {
     public Optional<AyahDetail> get(Integer surahNumber, Integer ayahNumber) {
         try {
             ApiResponse<AyahDetail> response = ayahFetcher.get(new AyahReference(surahNumber, ayahNumber));
-
             return Optional.of(response.getData());
-        } catch (HttpStatusCodeException exception) {
-            if (exception.getStatusCode().isSameCodeAs(HttpStatusCode.valueOf(404))) {
-                return Optional.empty();
-            }
-            log.error(exception.getMessage());
-            throw exception;
+        } catch (AyahNotFoundException e) {
+            return Optional.empty();
         }
     }
 
     @Override
     public Optional<SearchResult> search(String keyword) {
-        ApiResponse<SearchResult> response = searchFetcher.search(keyword);
-
-        if (Objects.isNull(response)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(response.getData());
+        Optional<ApiResponse<SearchResult>> response = searchFetcher.search(keyword);
+        return response.map(ApiResponse::getData);
     }
 
     @Override
@@ -69,7 +57,7 @@ public class AyahServiceImpl implements AyahService {
         Optional<SurahDetail> surah = surahService.get(surahNumber);
 
         if (surah.isEmpty()) {
-            throw new SurahNotFoundException();
+            throw new SurahNotFoundException(surahNumber, "en.asad");
         }
 
         return random(surah.get());

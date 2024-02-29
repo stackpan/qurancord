@@ -9,6 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -25,26 +27,27 @@ public class SearchFetcherImpl implements SearchFetcher {
     private RestTemplate restTemplate;
 
     @Override
-    public ApiResponse<SearchResult> search(String keyword) {
+    public Optional<ApiResponse<SearchResult>> search(String keyword) {
         return search(keyword, null);
     }
 
     @Override
-    public ApiResponse<SearchResult> search(String keyword, Integer surah) {
+    public Optional<ApiResponse<SearchResult>> search(String keyword, Integer surah) {
         return search(keyword, surah, new SearchEditionReference("en", "asad"));
     }
 
     @Override
-    public ApiResponse<SearchResult> search(String keyword, Integer surah, SearchEditionReferenceMaker languageOrEdition) {
+    public Optional<ApiResponse<SearchResult>> search(String keyword, Integer surah, SearchEditionReferenceMaker languageOrEdition) {
         String surahPath = (Objects.isNull(surah)) ? "all" : surah.toString();
 
-        URI uri = URI.create("http://api.alquran.cloud/v1/search/" + keyword + "/" + surahPath + "/" + languageOrEdition.make());
+        var url = String.format("/v1/search/%s/%s/%s", keyword, surahPath, languageOrEdition.make());
+        var type = new ParameterizedTypeReference<ApiResponse<SearchResult>>() {};
+        var response = restTemplate.exchange(url, HttpMethod.GET, null, type);
 
-        RequestEntity<Void> request = new RequestEntity<>(HttpMethod.GET, uri);
+        if (response.getStatusCode().isSameCodeAs(HttpStatusCode.valueOf(204)) || Objects.isNull(response.getBody())) {
+            return Optional.empty();
+        }
 
-        ResponseEntity<ApiResponse<SearchResult>> response = restTemplate.exchange(request, new ParameterizedTypeReference<>() {
-        });
-
-        return response.getBody();
+        return Optional.of(response.getBody());
     }
 }
