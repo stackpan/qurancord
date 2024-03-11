@@ -11,4 +11,5 @@ public interface AyahFetcher {
 
     ApiResponse<AyahDetail> get(AyahReferenceMaker reference, String edition) throws AyahNotFoundException;
 
+    ApiResponse<AyahDetail[]> get(AyahReferenceMaker reference, String... editions) throws AyahNotFoundException;
 }

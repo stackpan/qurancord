@@ -19,6 +19,8 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -44,6 +46,23 @@ public class AyahFetcherImpl implements AyahFetcher {
         } catch (RestClientResponseException e) {
             if (e.getStatusCode().isSameCodeAs(HttpStatusCode.valueOf(404))) {
                 throw new AyahNotFoundException(reference.make(), edition);
+            }
+            throw e;
+        }
+    }
+
+    @Override
+    public ApiResponse<AyahDetail[]> get(AyahReferenceMaker reference, String... editions) throws AyahNotFoundException {
+        var joinedEdition = String.join(",", editions);
+        try {
+            var url = String.format("/v1/ayah/%s/editions/%s", reference.make(), joinedEdition);
+            var type = new ParameterizedTypeReference<ApiResponse<AyahDetail[]>>() {};
+            var response = restTemplate.exchange(url, HttpMethod.GET, null, type);
+
+            return response.getBody();
+        } catch (RestClientResponseException e) {
+            if (e.getStatusCode().isSameCodeAs(HttpStatusCode.valueOf(404))) {
+                throw new AyahNotFoundException(reference.make(), joinedEdition);
             }
             throw e;
         }

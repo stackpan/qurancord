@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -31,6 +33,25 @@ class AyahFetcherTest {
         assertNotNull(response.getData().getEdition());
 
         log.info(response.getData().toString());
+    }
+
+    @Test
+    void getMultiEditions() {
+        var response = ayahFetcher.get(new AyahReference(114, 1), "quran-simple", "id.indonesian");
+
+        assertEquals(200, response.getCode());
+        assertEquals("OK", response.getStatus());
+        assertNotNull(response.getData());
+        assertTrue(
+                Arrays.stream(response.getData()).anyMatch(
+                        ayahDetail -> ayahDetail.getEdition().getIdentifier().equals("quran-simple")
+                )
+        );
+        assertTrue(
+                Arrays.stream(response.getData()).anyMatch(
+                        ayahDetail -> ayahDetail.getEdition().getIdentifier().equals("id.indonesian")
+                )
+        );
     }
 
     @Test
