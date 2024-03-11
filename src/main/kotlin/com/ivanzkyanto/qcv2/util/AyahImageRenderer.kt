@@ -1,29 +1,17 @@
 package com.ivanzkyanto.qcv2.util
 
+import com.ivanzkyanto.qcv2.util.config.RENDERING_HINTS
 import java.awt.Color
 import java.awt.Font
 import java.awt.Graphics2D
-import java.awt.RenderingHints
 import java.awt.font.LineBreakMeasurer
 import java.awt.font.TextAttribute
 import java.awt.font.TextLayout
 import java.awt.image.BufferedImage
 import java.text.AttributedString
 
-private val RENDERING_HINTS = mapOf(
-    RenderingHints.KEY_ALPHA_INTERPOLATION to RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
-    RenderingHints.KEY_ANTIALIASING to RenderingHints.VALUE_ANTIALIAS_ON,
-    RenderingHints.KEY_COLOR_RENDERING to RenderingHints.VALUE_COLOR_RENDER_QUALITY,
-    RenderingHints.KEY_DITHERING to RenderingHints.VALUE_DITHER_ENABLE,
-    RenderingHints.KEY_STROKE_CONTROL to RenderingHints.VALUE_STROKE_PURE,
-    RenderingHints.KEY_FRACTIONALMETRICS to RenderingHints.VALUE_FRACTIONALMETRICS_ON,
-    RenderingHints.KEY_INTERPOLATION to RenderingHints.VALUE_INTERPOLATION_BILINEAR,
-    RenderingHints.KEY_RENDERING to RenderingHints.VALUE_RENDER_QUALITY,
-    RenderingHints.KEY_TEXT_ANTIALIASING to RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-)
-
 private const val IMAGE_WIDTH = 1280
-private const val MARGIN = 18
+private const val MARGIN = 24
 private const val FONT_SIZE = 60
 private const val LATIN_FONT_SIZE = (FONT_SIZE * 0.5).toInt()
 private const val SECTION_GAP = (FONT_SIZE * 0.8).toInt()
