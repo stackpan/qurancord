@@ -1,9 +1,11 @@
 package com.ivanzkyanto.qcv2.util;
 
+import com.ivanzkyanto.qcv2.configuration.FontRegister;
 import com.ivanzkyanto.qcv2.fetcher.AyahFetcher;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
 import com.ivanzkyanto.qcv2.model.AyahReference;
 import com.ivanzkyanto.qcv2.model.Edition;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +33,11 @@ public class AyahImageGeneratorTest {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @BeforeAll
+    static void beforeAll() throws IOException, FontFormatException {
+        FontRegister.register();
+    }
 
     @Test
     void generate() throws IOException {

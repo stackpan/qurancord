@@ -1,4 +1,4 @@
-package com.ivanzkyanto.qcv2.configuration;
+package com.ivanzkyanto.qcv2.configuration.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

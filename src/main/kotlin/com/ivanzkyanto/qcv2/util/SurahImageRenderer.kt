@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage
 private const val MARGIN = 24
 private const val FONT_SIZE = 72
 
-private val ARABIC_FONT = Font("Lateef", Font.PLAIN, FONT_SIZE)
+private val ARABIC_FONT = Font("Katibeh", Font.PLAIN, FONT_SIZE)
 
 fun render(surah: String): BufferedImage {
     // Image dimension measurement
@@ -33,7 +33,7 @@ fun render(surah: String): BufferedImage {
     graphics.font = ARABIC_FONT
 
     val surahTextLayout = TextLayout(surah, ARABIC_FONT, graphics.fontRenderContext)
-    surahTextLayout.draw(graphics, MARGIN.toFloat(), surahTextLayout.ascent + MARGIN)
+    surahTextLayout.draw(graphics, MARGIN.toFloat(), surahTextLayout.ascent + surahTextLayout.descent + MARGIN)
 
     graphics.dispose()
     return image

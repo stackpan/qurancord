@@ -2,6 +2,7 @@ package com.ivanzkyanto.qcv2.configuration;
 
 import com.freya02.botcommands.api.builder.ExtensionsBuilder;
 import com.ivanzkyanto.qcv2.service.AyahService;
+import com.ivanzkyanto.qcv2.service.StorageService;
 import com.ivanzkyanto.qcv2.service.SurahService;
 import lombok.Setter;
 import org.springframework.context.ApplicationContext;
@@ -20,6 +21,7 @@ public class ExtensionRegister implements Consumer<ExtensionsBuilder>, Applicati
     public void accept(ExtensionsBuilder extensionsBuilder) {
         extensionsBuilder
                 .registerConstructorParameter(SurahService.class, t -> applicationContext.getBean(SurahService.class))
-                .registerConstructorParameter(AyahService.class, t -> applicationContext.getBean(AyahService.class));
+                .registerConstructorParameter(AyahService.class, t -> applicationContext.getBean(AyahService.class))
+                .registerConstructorParameter(StorageService.class, t -> applicationContext.getBean(StorageService.class));
     }
 }

@@ -18,7 +18,7 @@ private const val SECTION_GAP = (FONT_SIZE * 0.8).toInt()
 private const val WRAPPING_WIDTH = (IMAGE_WIDTH - MARGIN * 2).toFloat()
 private const val VERSE_LINE_GAP = 28f
 
-private val ARABIC_FONT = Font("Lateef", Font.PLAIN, FONT_SIZE)
+private val ARABIC_FONT = Font("Katibeh", Font.PLAIN, FONT_SIZE)
 private val LATIN_FONT = Font("Times New Roman", Font.PLAIN, LATIN_FONT_SIZE)
 
 fun render(verse: String, translate: String, surahName: String, ayahNumber: Int): BufferedImage {

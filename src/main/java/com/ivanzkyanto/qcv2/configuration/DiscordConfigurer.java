@@ -1,6 +1,7 @@
 package com.ivanzkyanto.qcv2.configuration;
 
 import com.freya02.botcommands.api.CommandsBuilder;
+import com.ivanzkyanto.qcv2.configuration.properties.DiscordConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;

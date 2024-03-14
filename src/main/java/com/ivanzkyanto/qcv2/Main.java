@@ -14,12 +14,12 @@ import java.io.IOException;
 
 @SpringBootApplication
 @Slf4j
-@ConfigurationPropertiesScan("com.ivanzkyanto.qcv2.configuration")
+@ConfigurationPropertiesScan("com.ivanzkyanto.qcv2.configuration.properties")
 public class Main {
 
     public static void main(String[] args) throws IOException, FontFormatException {
         SpringApplication.run(Main.class, args);
-        FontRegister.regist();
+        FontRegister.register();
     }
 
     @Bean
