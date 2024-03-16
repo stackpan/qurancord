@@ -69,7 +69,7 @@ public class AyahCommandController extends ApplicationCommand {
 
         results.ifPresentOrElse(
                 searchResult -> {
-                    var titleBuilder = new StringBuilder("Top ayah search for keyword: \"%s\"".formatted(keyword));
+                    var titleBuilder = new StringBuilder("Top ayah search for keyword \"%s\"".formatted(keyword));
                     if (surahNumber != null) {
                         titleBuilder.append(" in surah number %d".formatted(surahNumber));
                     }
@@ -96,33 +96,18 @@ public class AyahCommandController extends ApplicationCommand {
 
     @JDASlashCommand(
             name = "ayah",
-            group = "random",
-            subcommand = "any",
+            subcommand = "random",
             scope = CommandScope.GLOBAL,
             description = "commmand.ayah.random.description"
     )
-    public void random(@NotNull GlobalSlashEvent event) {
-        event.deferReply().queue();
-
-        var ayah = ayahService.randomWithTranslate();
-        sendEmbedWithImage(event, ayah);
-    }
-
-    @JDASlashCommand(
-            name = "ayah",
-            group = "random",
-            subcommand = "in-surah",
-            scope = CommandScope.GLOBAL,
-            description = "commmand.ayah.random.description"
-    )
-    public void randomInSurah(
+    public void random(
             @NotNull GlobalSlashEvent event,
-            @AppOption(name = "in_surah", description = "option.ayah.search.in_surah.description") Integer number
+            @Optional @AppOption(name = "in_surah", description = "option.ayah.random.in_surah.description") Integer number
     ) {
         event.deferReply().queue();
 
         try {
-            var ayah = ayahService.randomWithTranslate(number);
+            var ayah = number != null ? ayahService.randomWithTranslate(number) : ayahService.randomWithTranslate();
             sendEmbedWithImage(event, ayah);
         } catch (SurahNotFoundException e) {
             event.getHook()
