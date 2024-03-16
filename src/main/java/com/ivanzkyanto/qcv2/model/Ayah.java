@@ -25,6 +25,30 @@ public class Ayah {
 
     public AyahDetail toDetail(SurahDetail surah) {
         var result = new AyahDetail();
+        constructAyahDetail(surah, result);
+        result.setEdition(surah.getEdition());
+
+        return result;
+    }
+
+    public AyahDetailWithTranslate toDetailWithTranslate(SurahDetail surah, TranslateEdition translate) {
+        var result = new AyahDetailWithTranslate();
+        constructAyahDetail(surah, result);
+        result.setEdition(surah.getEdition());
+
+        return result;
+    }
+
+    public AyahDetailWithTranslate toDetailWithTranslate(Surah surah, Edition edition, TranslateEdition translate) {
+        var result = new AyahDetailWithTranslate();
+        constructAyahDetail(surah, result);
+        result.setEdition(edition);
+        result.setTranslate(translate);
+
+        return result;
+    }
+
+    private void constructAyahDetail(Surah surah, AyahDetail result) {
         result.setNumber(this.getNumber());
         result.setText(this.getText());
         result.setNumberInSurah(this.getNumberInSurah());
@@ -35,9 +59,6 @@ public class Ayah {
         result.setHizbQuarter(this.getHizbQuarter());
         result.setSajda(this.getSajda());
         result.setSurah(surah);
-        result.setEdition(surah.getEdition());
-
-        return result;
     }
     
 }

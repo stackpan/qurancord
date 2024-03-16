@@ -10,6 +10,7 @@ import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.AyahDetail;
 import com.ivanzkyanto.qcv2.service.AyahService;
+import com.ivanzkyanto.qcv2.service.StorageService;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +22,8 @@ import java.util.Objects;
 public class AyahCommandController extends ApplicationCommand {
 
     private final AyahService ayahService;
+
+    private final StorageService storageService;
 
     @JDASlashCommand(
             name = "ayah",

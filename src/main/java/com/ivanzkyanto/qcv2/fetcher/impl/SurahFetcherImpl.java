@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.fetcher.impl;
 
+import com.ivanzkyanto.qcv2.configuration.properties.QuranEditionConfigurationProperties;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.fetcher.SurahFetcher;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
@@ -29,6 +30,9 @@ public class SurahFetcherImpl implements SurahFetcher {
     @NonNull
     private RestTemplate restTemplate;
 
+    @NonNull
+    private QuranEditionConfigurationProperties quranEditionConfigurationProperties;
+
     @Override
     public ApiResponse<List<Surah>> getAll() {
         var type = new ParameterizedTypeReference<ApiResponse<List<Surah>>>() {};
@@ -39,7 +43,7 @@ public class SurahFetcherImpl implements SurahFetcher {
 
     @Override
     public ApiResponse<SurahDetail> get(Integer number) throws SurahNotFoundException {
-        return get(number, "en.asad");
+        return get(number, quranEditionConfigurationProperties.translate());
     }
 
     @Override
@@ -53,6 +57,23 @@ public class SurahFetcherImpl implements SurahFetcher {
         } catch (RestClientResponseException e) {
             if (e.getStatusCode().isSameCodeAs(HttpStatusCode.valueOf(404))) {
                 throw new SurahNotFoundException(number, edition);
+            }
+            throw e;
+        }
+    }
+
+    @Override
+    public ApiResponse<SurahDetail[]> get(Integer number, String... editions) throws SurahNotFoundException {
+        var joinedEdition = String.join(",", editions);
+        try {
+            var url = String.format("/v1/surah/%s/%s", number, joinedEdition);
+            var type = new ParameterizedTypeReference<ApiResponse<SurahDetail[]>>() {};
+            var response = restTemplate.exchange(url, HttpMethod.GET, null, type);
+
+            return response.getBody();
+        } catch (RestClientResponseException e) {
+            if (e.getStatusCode().isSameCodeAs(HttpStatusCode.valueOf(404))) {
+                throw new SurahNotFoundException(number, joinedEdition);
             }
             throw e;
         }

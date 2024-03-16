@@ -1,21 +1,19 @@
 package com.ivanzkyanto.qcv2.fetcher.impl;
 
+import com.ivanzkyanto.qcv2.configuration.properties.QuranEditionConfigurationProperties;
 import com.ivanzkyanto.qcv2.fetcher.SearchFetcher;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
 import com.ivanzkyanto.qcv2.model.SearchEditionReference;
-import com.ivanzkyanto.qcv2.model.SearchResult;
 import com.ivanzkyanto.qcv2.model.SearchEditionReferenceMaker;
+import com.ivanzkyanto.qcv2.model.SearchResult;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,6 +24,9 @@ public class SearchFetcherImpl implements SearchFetcher {
     @NonNull
     private RestTemplate restTemplate;
 
+    @NonNull
+    private QuranEditionConfigurationProperties quranEditionConfigurationProperties;
+
     @Override
     public Optional<ApiResponse<SearchResult>> search(String keyword) {
         return search(keyword, null);
@@ -33,7 +34,8 @@ public class SearchFetcherImpl implements SearchFetcher {
 
     @Override
     public Optional<ApiResponse<SearchResult>> search(String keyword, Integer surah) {
-        return search(keyword, surah, new SearchEditionReference("en", "asad"));
+        var split = quranEditionConfigurationProperties.translate().split("\\.");
+        return search(keyword, surah, new SearchEditionReference(split[0], split[1]));
     }
 
     @Override

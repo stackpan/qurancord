@@ -15,4 +15,6 @@ public interface SurahFetcher {
 
     ApiResponse<SurahDetail> get(Integer number, String edition) throws SurahNotFoundException;
 
+    ApiResponse<SurahDetail[]> get(Integer number, String... editions) throws SurahNotFoundException;
+
 }
