@@ -25,40 +25,19 @@ public class Ayah {
 
     public AyahDetail toDetail(SurahDetail surah) {
         var result = new AyahDetail();
-        constructAyahDetail(surah, result);
-        result.setEdition(surah.getEdition());
-
-        return result;
-    }
-
-    public AyahDetailWithTranslate toDetailWithTranslate(SurahDetail surah, TranslateEdition translate) {
-        var result = new AyahDetailWithTranslate();
-        constructAyahDetail(surah, result);
-        result.setEdition(surah.getEdition());
-
-        return result;
-    }
-
-    public AyahDetailWithTranslate toDetailWithTranslate(Surah surah, Edition edition, TranslateEdition translate) {
-        var result = new AyahDetailWithTranslate();
-        constructAyahDetail(surah, result);
-        result.setEdition(edition);
-        result.setTranslate(translate);
-
-        return result;
-    }
-
-    private void constructAyahDetail(Surah surah, AyahDetail result) {
-        result.setNumber(this.getNumber());
-        result.setText(this.getText());
-        result.setNumberInSurah(this.getNumberInSurah());
-        result.setJuz(this.getJuz());
-        result.setManzil(this.getManzil());
-        result.setPage(this.getPage());
-        result.setRuku(this.getRuku());
-        result.setHizbQuarter(this.getHizbQuarter());
-        result.setSajda(this.getSajda());
+        result.setNumber(this.number);
+        result.setText(this.text);
+        result.setNumberInSurah(this.numberInSurah);
+        result.setJuz(this.juz);
+        result.setManzil(this.manzil);
+        result.setPage(this.page);
+        result.setRuku(this.ruku);
+        result.setHizbQuarter(this.hizbQuarter);
+        result.setSajda(this.sajda);
         result.setSurah(surah);
+        result.setEdition(surah.getEdition());
+
+        return result;
     }
     
 }

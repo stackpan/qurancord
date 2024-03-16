@@ -66,7 +66,7 @@ public class SurahFetcherImpl implements SurahFetcher {
     public ApiResponse<SurahDetail[]> get(Integer number, String... editions) throws SurahNotFoundException {
         var joinedEdition = String.join(",", editions);
         try {
-            var url = String.format("/v1/surah/%s/%s", number, joinedEdition);
+            var url = String.format("/v1/surah/%s/editions/%s", number, joinedEdition);
             var type = new ParameterizedTypeReference<ApiResponse<SurahDetail[]>>() {};
             var response = restTemplate.exchange(url, HttpMethod.GET, null, type);
 

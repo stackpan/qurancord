@@ -29,16 +29,27 @@ public class AyahServiceProvider {
                 .orElse(null);
     }
 
-//    public AyahDetailWithTranslate random(SurahDetail surah, String ayahTranslate) {
-//        Random random = new Random();
-//        int ayahNumber = random.nextInt(surah.getNumberOfAyahs()) + 1;
-//
-//        return surah.getAyahs().stream()
-//                .filter(ayah -> ayah.getNumberInSurah().equals(ayahNumber))
-//                .findFirst()
-//                .map(ayah -> ayah.toDetailWithTranslate(surah, ayahTranslate))
-//                .orElse(null);
-//    }
+    public AyahDetailWithTranslate random(SurahDetail[] surahs) {
+        SurahDetail verseEdition = surahs[0];
+        SurahDetail translateEdition = surahs[1];
+
+        Random random = new Random();
+        int ayahNumber = random.nextInt(verseEdition.getNumberOfAyahs()) + 1;
+
+        return verseEdition.getAyahs().stream()
+                .filter(ayah -> ayah.getNumberInSurah().equals(ayahNumber))
+                .findFirst()
+                .map(ayah -> {
+                    Ayah ayahTranslate = translateEdition.getAyahs().stream()
+                            .filter(a -> a.getNumberInSurah().equals(ayahNumber))
+                            .findFirst()
+                            .get();
+                    TranslateEdition objectTranslateEdition = translateEdition.getEdition()
+                            .toTranslateEdition(ayahTranslate.getText());
+                    return ayah.toDetail(verseEdition).withTranslate(objectTranslateEdition);
+                })
+                .orElse(null);
+    }
 
     public AyahDetail get(AyahReference reference) throws AyahNotFoundException {
         ApiResponse<AyahDetail> response = ayahFetcher.get(reference);
@@ -51,7 +62,7 @@ public class AyahServiceProvider {
         AyahDetail verse = response.getData()[0];
         AyahDetail translate = response.getData()[1];
         TranslateEdition objectTranslateEdition = translate.getEdition().toTranslateEdition(translate.getText());
-        return verse.toDetailWithTranslate(verse.getSurah(), verse.getEdition(), objectTranslateEdition);
+        return verse.withTranslate(objectTranslateEdition);
     }
 
 }

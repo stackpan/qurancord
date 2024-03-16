@@ -78,27 +78,27 @@ public class AyahServiceImpl implements AyahService {
         return ayahServiceProvider.random(surah);
     }
 
-//    @Override
-//    public AyahDetailWithTranslate randomWithTranslate() {
-//        SurahDetail surah = surahService.random();
-//        return ayahServiceProvider.random(surah, quranEditionConfigurationProperties.translate());
-//    }
-//
-//    @Override
-//    public AyahDetailWithTranslate randomWithTranslate(String translateEdition) {
-//        SurahDetail surah = surahService.random();
-//        return ayahServiceProvider.random(surah, translateEdition);
-//    }
-//
-//    @Override
-//    public AyahDetailWithTranslate randomWithTranslate(Integer surahNumber) {
-//        SurahDetail surah = surahService.get(surahNumber);
-//        return ayahServiceProvider.random(surah, quranEditionConfigurationProperties.translate());
-//    }
-//
-//    @Override
-//    public AyahDetailWithTranslate randomWithTranslate(Integer surahNumber, String translateEdition) {
-//        SurahDetail surah = surahService.get(surahNumber);
-//        return ayahServiceProvider.random(surah, translateEdition);
-//    }
+    @Override
+    public AyahDetailWithTranslate randomWithTranslate() {
+        SurahDetail[] surahs = surahService.randomMultiEdition();
+        return ayahServiceProvider.random(surahs);
+    }
+
+    @Override
+    public AyahDetailWithTranslate randomWithTranslate(String translateEdition) {
+        SurahDetail[] surahs = surahService.randomMultiEdition(translateEdition);
+        return ayahServiceProvider.random(surahs);
+    }
+
+    @Override
+    public AyahDetailWithTranslate randomWithTranslate(Integer surahNumber) {
+        SurahDetail[] surahs = surahService.getMultiEdition(surahNumber);
+        return ayahServiceProvider.random(surahs);
+    }
+
+    @Override
+    public AyahDetailWithTranslate randomWithTranslate(Integer surahNumber, String translateEdition) {
+        SurahDetail[] surahs = surahService.getMultiEdition(surahNumber, translateEdition);
+        return ayahServiceProvider.random(surahs);
+    }
 }

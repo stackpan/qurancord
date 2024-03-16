@@ -10,8 +10,16 @@ public interface SurahService {
 
     SurahDetail get(Integer number) throws SurahNotFoundException;
 
+    SurahDetail[] getMultiEdition(Integer number) throws SurahNotFoundException;
+
+    SurahDetail[] getMultiEdition(Integer number, String translateEdition) throws SurahNotFoundException;
+
     Optional<Surah> search(String keyword);
 
     SurahDetail random();
+
+    SurahDetail[] randomMultiEdition();
+
+    SurahDetail[] randomMultiEdition(String translateEdition);
 
 }

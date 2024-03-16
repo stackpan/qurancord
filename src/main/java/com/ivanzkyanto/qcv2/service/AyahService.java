@@ -23,12 +23,12 @@ public interface AyahService {
 
     AyahDetail random(Integer surahNumber) throws SurahNotFoundException;
 
-//    AyahDetailWithTranslate randomWithTranslate();
-//
-//    AyahDetailWithTranslate randomWithTranslate(String translateEdition);
-//
-//    AyahDetailWithTranslate randomWithTranslate(Integer surahNumber);
-//
-//    AyahDetailWithTranslate randomWithTranslate(Integer surahNumber, String translateEdition);
+    AyahDetailWithTranslate randomWithTranslate();
+
+    AyahDetailWithTranslate randomWithTranslate(String translateEdition);
+
+    AyahDetailWithTranslate randomWithTranslate(Integer surahNumber);
+
+    AyahDetailWithTranslate randomWithTranslate(Integer surahNumber, String translateEdition);
 
 }

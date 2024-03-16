@@ -1,5 +1,6 @@
 package com.ivanzkyanto.qcv2.service.impl;
 
+import com.ivanzkyanto.qcv2.configuration.properties.QuranEditionConfigurationProperties;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.fetcher.SurahFetcher;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
@@ -25,9 +26,32 @@ public class SurahServiceImpl implements SurahService {
     @NonNull
     private SurahFetcher surahFetcher;
 
+    @NonNull
+    private QuranEditionConfigurationProperties quranEditionConfigurationProperties;
+
     @Override
     public SurahDetail get(Integer number) throws SurahNotFoundException {
         var response = surahFetcher.get(number);
+        return response.getData();
+    }
+
+    @Override
+    public SurahDetail[] getMultiEdition(Integer number) throws SurahNotFoundException {
+        var response = surahFetcher.get(
+                number,
+                quranEditionConfigurationProperties.verse(),
+                quranEditionConfigurationProperties.translate()
+        );
+        return response.getData();
+    }
+
+    @Override
+    public SurahDetail[] getMultiEdition(Integer number, String translateEdition) throws SurahNotFoundException {
+        var response = surahFetcher.get(
+                number,
+                quranEditionConfigurationProperties.verse(),
+                translateEdition
+        );
         return response.getData();
     }
 
@@ -49,6 +73,34 @@ public class SurahServiceImpl implements SurahService {
         int number = random.nextInt(114) + 1;
 
         ApiResponse<SurahDetail> response = surahFetcher.get(number);
+
+        return response.getData();
+    }
+
+    @Override
+    public SurahDetail[] randomMultiEdition() {
+        Random random = new Random();
+        int number = random.nextInt(114) + 1;
+
+        ApiResponse<SurahDetail[]> response = surahFetcher.get(
+                number,
+                quranEditionConfigurationProperties.verse(),
+                quranEditionConfigurationProperties.translate()
+        );
+
+        return response.getData();
+    }
+
+    @Override
+    public SurahDetail[] randomMultiEdition(String translateEdition) {
+        Random random = new Random();
+        int number = random.nextInt(114) + 1;
+
+        ApiResponse<SurahDetail[]> response = surahFetcher.get(
+                number,
+                quranEditionConfigurationProperties.verse(),
+                translateEdition
+        );
 
         return response.getData();
     }

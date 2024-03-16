@@ -6,7 +6,6 @@ import com.ivanzkyanto.qcv2.model.Ayah;
 import com.ivanzkyanto.qcv2.model.AyahDetail;
 import com.ivanzkyanto.qcv2.model.AyahDetailWithTranslate;
 import com.ivanzkyanto.qcv2.model.SearchResult;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -67,13 +66,17 @@ class AyahServiceTest {
         AyahDetailWithTranslate ayah = ayahService.getWithTranslate(2, 255);
         assertNotNull(ayah);
         assertNotNull(ayah.getTranslate());
+        assertEquals("en.asad", ayah.getTranslate().getIdentifier());
     }
 
     @Test
     void getWithTranslateSpecified() {
-        AyahDetailWithTranslate ayah = ayahService.getWithTranslate(2, 255, "id.muntakhab");
+        AyahDetailWithTranslate ayah = ayahService.getWithTranslate(2, 255, "id.indonesian");
         assertNotNull(ayah);
+        System.out.println(ayah);
+
         assertNotNull(ayah.getTranslate());
+        assertEquals("id.indonesian", ayah.getTranslate().getIdentifier());
     }
 
     @Test
@@ -82,29 +85,37 @@ class AyahServiceTest {
     }
 
     @Test
-    @Disabled
     void randomWithTranslate() {
-//        AyahDetailWithTranslate ayah = ayahService.randomWithTranslate();
-//        assertNotNull(ayah);
-//        assertNotNull(ayah.getTranslate());
+        AyahDetailWithTranslate ayah = ayahService.randomWithTranslate();
+
+        System.out.println(ayah);
+
+        assertNotNull(ayah);
+        assertNotNull(ayah.getTranslate());
+        assertEquals("en.asad", ayah.getTranslate().getIdentifier());
     }
 
     @Test
-    @Disabled
     void randomWithTranslateSpecified() {
-//        AyahDetailWithTranslate ayah = ayahService.randomWithTranslate("id.muntakhab");
-//        assertNotNull(ayah);
-//        assertNotNull(ayah.getTranslate());
+        AyahDetailWithTranslate ayah = ayahService.randomWithTranslate("id.indonesian");
+        assertNotNull(ayah);
+        assertNotNull(ayah.getTranslate());
+        assertEquals("id.indonesian", ayah.getTranslate().getIdentifier());
     }
 
     @Test
-    @Disabled
     void randomWithTranslateSpecificSurah() {
+        AyahDetailWithTranslate ayah = ayahService.randomWithTranslate(1);
+        assertNotNull(ayah);
+        assertNotNull(ayah.getTranslate());
+        assertEquals("en.asad", ayah.getTranslate().getIdentifier());
     }
 
     @Test
-    @Disabled
     void randomWithTranslateSpecificSurahSpecifiedEdition() {
-
+        AyahDetailWithTranslate ayah = ayahService.randomWithTranslate(1, "id.indonesian");
+        assertNotNull(ayah);
+        assertNotNull(ayah.getTranslate());
+        assertEquals("id.indonesian", ayah.getTranslate().getIdentifier());
     }
 }
