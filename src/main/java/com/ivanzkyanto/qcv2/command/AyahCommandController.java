@@ -1,6 +1,7 @@
 package com.ivanzkyanto.qcv2.command;
 
 import com.freya02.botcommands.api.annotations.CommandMarker;
+import com.freya02.botcommands.api.annotations.Optional;
 import com.freya02.botcommands.api.application.ApplicationCommand;
 import com.freya02.botcommands.api.application.CommandScope;
 import com.freya02.botcommands.api.application.annotations.AppOption;
@@ -59,20 +60,33 @@ public class AyahCommandController extends ApplicationCommand {
     )
     public void search(
             @NotNull GlobalSlashEvent event,
-            @AppOption(name = "keyword", description = "option.ayah.search.keyword.description") String keyword
+            @AppOption(name = "keyword", description = "option.ayah.search.keyword.description") String keyword,
+            @Optional @AppOption(name = "surah_number", description = "option.ayah.search.surah.description") Integer surahNumber
     ) {
         event.deferReply().queue();
 
-        ayahService.search(keyword).ifPresentOrElse(
-                searchResult -> {
-                    var ayah = searchResult.getMatches().get(0);
+        var results = surahNumber != null ? ayahService.search(keyword, surahNumber) : ayahService.search(keyword);
 
-                    event.getHook()
-                        .sendMessageEmbeds(new EmbedBuilder()
-                                .setTitle(String.format("Found %s results", searchResult.getCount()))
-                                .setDescription(String.format("%s \n**Q.S. %s: %d**", ayah.getText(), ayah.getSurah().getEnglishName(), ayah.getNumber()))
-                                .build())
-                        .queue();
+        results.ifPresentOrElse(
+                searchResult -> {
+                    var titleBuilder = new StringBuilder("Top ayah search for keyword: \"%s\"".formatted(keyword));
+                    if (surahNumber != null) {
+                        titleBuilder.append(" in surah number %d".formatted(surahNumber));
+                    }
+
+                    var embedBuilder = new EmbedBuilder().setTitle(titleBuilder.toString());
+
+                    searchResult.getMatches().stream().limit(5)
+                            .forEach(searchMatch -> {
+                                var name = "%s %d:%d".formatted(searchMatch.getSurah().getEnglishName(), searchMatch.getSurah().getNumber(), searchMatch.getNumberInSurah());
+                                var value = "\"%s\"".formatted(searchMatch.getText().length() > 999
+                                        ? "%s...".formatted(searchMatch.getText().substring(0, 999))
+                                        : searchMatch.getText());
+
+                                embedBuilder.addField(name, value, false);
+                            });
+
+                    event.getHook().sendMessageEmbeds(embedBuilder.build()).queue();
                 },
                 () -> event.getHook()
                         .sendMessage("message.search-not-found")

@@ -19,6 +19,8 @@ public interface AyahService {
 
     Optional<SearchResult> search(String keyword);
 
+    Optional<SearchResult> search(String keyword, Integer surahNumber);
+
     AyahDetail random();
 
     AyahDetail random(Integer surahNumber) throws SurahNotFoundException;

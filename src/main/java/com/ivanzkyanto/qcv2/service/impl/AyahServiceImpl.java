@@ -67,6 +67,12 @@ public class AyahServiceImpl implements AyahService {
     }
 
     @Override
+    public Optional<SearchResult> search(String keyword, Integer surahNumber) {
+        Optional<ApiResponse<SearchResult>> response = searchFetcher.search(keyword, surahNumber);
+        return response.map(ApiResponse::getData);
+    }
+
+    @Override
     public AyahDetail random() {
         SurahDetail surah = surahService.random();
         return ayahServiceProvider.random(surah);
