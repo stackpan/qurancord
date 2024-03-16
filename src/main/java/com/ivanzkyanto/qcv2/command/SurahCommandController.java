@@ -6,6 +6,7 @@ import com.freya02.botcommands.api.application.CommandScope;
 import com.freya02.botcommands.api.application.annotations.AppOption;
 import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
+import com.freya02.botcommands.api.application.slash.annotations.LongRange;
 import com.ivanzkyanto.qcv2.component.MessageEmbeds;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Surah;
@@ -35,8 +36,12 @@ public class SurahCommandController extends ApplicationCommand {
             description = "command.surah.find.description"
     )
     public void find(
-            @NotNull GlobalSlashEvent event,
-            @AppOption(name = "number", description = "option.surah.find.number.description") Integer number
+            @NotNull
+            GlobalSlashEvent event,
+
+            @AppOption(name = "number", description = "option.surah.find.number.description")
+            @LongRange(from = 1, to = 114)
+            Integer number
     ) {
         event.deferReply().queue();
 
