@@ -8,14 +8,17 @@ import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
-import com.ivanzkyanto.qcv2.model.AyahDetail;
+import com.ivanzkyanto.qcv2.model.AyahDetailWithTranslate;
 import com.ivanzkyanto.qcv2.service.AyahService;
 import com.ivanzkyanto.qcv2.service.StorageService;
+import com.ivanzkyanto.qcv2.util.AyahImageRendererKt;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.utils.FileUpload;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
+import java.io.IOException;
+import java.nio.file.Files;
 
 @CommandMarker
 @RequiredArgsConstructor
@@ -39,11 +42,8 @@ public class AyahCommandController extends ApplicationCommand {
         event.deferReply().queue();
 
         try {
-            var ayah = ayahService.get(surah, number);
-
-            event.getHook()
-                    .sendMessageFormat("%s \n**Q.S. %s: %d**", ayah.getText(), ayah.getSurah().getEnglishName(), ayah.getNumber())
-                    .queue();
+            var ayah = ayahService.getWithTranslate(surah, number);
+            sendEmbedWithImage(event, ayah);
         } catch (AyahNotFoundException e) {
             event.getHook()
                     .sendMessage("message.ayah-not-found")
@@ -90,11 +90,8 @@ public class AyahCommandController extends ApplicationCommand {
     public void random(@NotNull GlobalSlashEvent event) {
         event.deferReply().queue();
 
-        var ayah = ayahService.random();
-
-        event.getHook()
-                .sendMessageFormat("%s \n**Q.S. %s: %d**", ayah.getText(), ayah.getSurah().getEnglishName(), ayah.getNumber())
-                .queue();
+        var ayah = ayahService.randomWithTranslate();
+        sendEmbedWithImage(event, ayah);
     }
 
     @JDASlashCommand(
@@ -111,16 +108,41 @@ public class AyahCommandController extends ApplicationCommand {
         event.deferReply().queue();
 
         try {
-            var ayah = ayahService.random(number);
-
-            event.getHook()
-                    .sendMessageFormat("%s \n**Q.S. %s: %d**", ayah.getText(), ayah.getSurah().getEnglishName(), ayah.getNumber())
-                    .queue();
+            var ayah = ayahService.randomWithTranslate(number);
+            sendEmbedWithImage(event, ayah);
         } catch (SurahNotFoundException e) {
             event.getHook()
                     .sendMessage("message.surah-not-found")
                     .queue();
         }
+    }
+
+    private void sendEmbedWithImage(@NotNull GlobalSlashEvent event, AyahDetailWithTranslate ayah) {
+        var ayahImageFilename = "ayah:ed:%s_tl:%s_ref:%d:%d.png".formatted(
+                ayah.getEdition().getIdentifier(),
+                ayah.getTranslate().getIdentifier(),
+                ayah.getSurah().getNumber(),
+                ayah.getNumberInSurah()
+        );
+        var ayahImagePath = storageService.getFileAsPath(ayahImageFilename);
+
+        if (!Files.exists(ayahImagePath)) {
+            try {
+                var image = AyahImageRendererKt.render(
+                        ayah.getText(),
+                        ayah.getTranslate().getText(),
+                        ayah.getSurah().getEnglishName(),
+                        ayah.getNumberInSurah()
+                );
+                storageService.writeImage(image, ayahImageFilename);
+            } catch (IOException e) {
+                event.getHook().sendMessage("message.error").queue();
+            }
+        }
+
+        event.getHook()
+                .sendFiles(FileUpload.fromData(ayahImagePath))
+                .queue();
     }
 
 }
