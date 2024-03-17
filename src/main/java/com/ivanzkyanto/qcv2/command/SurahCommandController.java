@@ -19,6 +19,7 @@ import com.ivanzkyanto.qcv2.service.SurahService;
 import com.ivanzkyanto.qcv2.util.LoggerString;
 import com.ivanzkyanto.qcv2.util.StringUtils;
 import com.ivanzkyanto.qcv2.util.SurahImageRendererKt;
+import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 
 import static com.freya02.botcommands.api.localization.Localization.Entry.entry;
 
+@Category("surah")
 @CommandMarker
 @RequiredArgsConstructor
 @LocalizationBundle("lang")

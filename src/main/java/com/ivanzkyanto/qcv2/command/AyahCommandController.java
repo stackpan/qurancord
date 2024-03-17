@@ -8,6 +8,7 @@ import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import com.freya02.botcommands.api.application.slash.annotations.LongRange;
 import com.freya02.botcommands.api.localization.annotations.LocalizationBundle;
+import com.freya02.botcommands.api.prefixed.annotations.Category;
 import com.ivanzkyanto.qcv2.component.AyahEmbeds;
 import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
@@ -29,6 +30,7 @@ import java.nio.file.Path;
 
 import static com.freya02.botcommands.api.localization.Localization.Entry.entry;
 
+@Category("ayah")
 @CommandMarker
 @RequiredArgsConstructor
 @LocalizationBundle("lang")
