@@ -43,7 +43,7 @@ public class SurahCommandController extends ApplicationCommand {
 
         try {
             var surah = surahService.get(number);
-            var path = findOrCreateImage(surah);
+            var path = getOrCreateImage(surah);
 
             event.getHook()
                     .sendMessageEmbeds(MessageEmbeds.surah(event, surah, "surah.png"))
@@ -63,7 +63,7 @@ public class SurahCommandController extends ApplicationCommand {
         event.deferReply().queue();
         var surah = surahService.random();
         try {
-            var path = findOrCreateImage(surah);
+            var path = getOrCreateImage(surah);
 
             event.getHook()
                     .sendMessageEmbeds(MessageEmbeds.surah(event, surah, "surah.png"))
@@ -83,7 +83,7 @@ public class SurahCommandController extends ApplicationCommand {
         surahService.search(keyword).ifPresentOrElse(
                 surah -> {
                     try {
-                        var path = findOrCreateImage(surah);
+                        var path = getOrCreateImage(surah);
 
                         event.getHook()
                                 .sendMessage(event.localize("surah.search.success", entry("keyword", keyword)))
@@ -100,15 +100,15 @@ public class SurahCommandController extends ApplicationCommand {
         );
     }
 
-    private Path findOrCreateImage(Surah surah) throws IOException {
-        var surahImageFilename = "surah:%d.png".formatted(surah.getNumber());
-        var surahImagePath = storageService.getFileAsPath(surahImageFilename);
+    private Path getOrCreateImage(Surah surah) throws IOException {
+        var filename = "surah:%d.png".formatted(surah.getNumber());
+        var path = storageService.getFileAsPath(filename);
 
-        if (!Files.exists(surahImagePath)) {
-            storageService.writeImage(SurahImageRendererKt.render(surah.getName()), surahImageFilename);
+        if (!Files.exists(path)) {
+            storageService.writeImage(SurahImageRendererKt.render(surah.getName()), filename);
         }
 
-        return surahImagePath;
+        return path;
     }
 
 }

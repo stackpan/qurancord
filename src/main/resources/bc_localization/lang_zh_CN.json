@@ -87,6 +87,11 @@
         "revelation_type": "Revelation Type",
         "number_of_ayahs": "Number of ayahs"
       }
+    },
+    "ayah": {
+      "field": {
+        "translation": "Translation"
+      }
     }
   }
 }

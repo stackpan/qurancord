@@ -8,6 +8,7 @@ import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import com.freya02.botcommands.api.application.slash.annotations.LongRange;
 import com.freya02.botcommands.api.localization.annotations.LocalizationBundle;
+import com.ivanzkyanto.qcv2.component.AyahEmbeds;
 import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.AyahDetailWithTranslate;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static com.freya02.botcommands.api.localization.Localization.Entry.entry;
 
@@ -38,13 +40,24 @@ public class AyahCommandController extends ApplicationCommand {
     public void find(
             @NotNull GlobalSlashEvent event,
             @AppOption(name = "surah") @LongRange(from = 1, to = 114) Integer surah,
-            @AppOption(name = "number") Integer number
+            @AppOption(name = "number") Integer number,
+            @AppOption(name = "image") @Nullable Boolean image
     ) {
         event.deferReply().queue();
 
         try {
             var ayah = ayahService.getWithTranslate(surah, number);
-            sendEmbedWithImage(event, ayah);
+
+            if (image != null && image) {
+                var imagePath = getOrCreateImage(ayah);
+
+                event.getHook()
+                        .sendMessageEmbeds(AyahEmbeds.create(ayah, "ayah.png"))
+                        .addFiles(FileUpload.fromData(imagePath, "ayah.png"))
+                        .queue();
+            } else {
+                event.getHook().sendMessageEmbeds(AyahEmbeds.create(event, ayah)).queue();
+            }
         } catch (AyahNotFoundException e) {
             event.getHook()
                     .sendMessage(event.localize(
@@ -53,6 +66,8 @@ public class AyahCommandController extends ApplicationCommand {
                             entry("surahNumber", surah))
                     )
                     .queue();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -100,57 +115,54 @@ public class AyahCommandController extends ApplicationCommand {
     @JDASlashCommand(name = "ayah", subcommand = "random", scope = CommandScope.GLOBAL)
     public void random(
             @NotNull GlobalSlashEvent event,
-            @AppOption(name = "surah") @LongRange(from = 1, to = 114) @Nullable Integer surahNumber
+            @AppOption(name = "surah") @LongRange(from = 1, to = 114) @Nullable Integer surahNumber,
+            @AppOption(name = "image") @Nullable Boolean image
     ) {
         event.deferReply().queue();
 
         try {
             var ayah = surahNumber != null ? ayahService.randomWithTranslate(surahNumber) : ayahService.randomWithTranslate();
-            sendEmbedWithImage(event, ayah);
+
+            if (image != null && image) {
+                var imagePath = getOrCreateImage(ayah);
+
+                event.getHook()
+                        .sendMessageEmbeds(AyahEmbeds.create(ayah, "ayah.png"))
+                        .addFiles(FileUpload.fromData(imagePath, "ayah.png"))
+                        .queue();
+            } else {
+                event.getHook().sendMessageEmbeds(AyahEmbeds.create(event, ayah)).queue();
+            }
         } catch (SurahNotFoundException e) {
             assert surahNumber != null;
             event.getHook()
                     .sendMessage(event.localize("_exception.surah_not_found", entry("number", surahNumber)))
                     .queue();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private void sendEmbedWithImage(@NotNull GlobalSlashEvent event, AyahDetailWithTranslate ayah) {
-        var ayahImageFilename = "ayah:ed:%s_tl:%s_ref:%d:%d.png".formatted(
+    private Path getOrCreateImage(AyahDetailWithTranslate ayah) throws IOException {
+        var filename = "ayah:ed:%s_tl:%s_ref:%d:%d.png".formatted(
                 ayah.getEdition().getIdentifier(),
                 ayah.getTranslate().getIdentifier(),
                 ayah.getSurah().getNumber(),
                 ayah.getNumberInSurah()
         );
-        var ayahImagePath = storageService.getFileAsPath(ayahImageFilename);
+        var path = storageService.getFileAsPath(filename);
 
-        if (!Files.exists(ayahImagePath)) {
-            try {
-                var image = AyahImageRendererKt.render(
-                        ayah.getText(),
-                        ayah.getTranslate().getText(),
-                        ayah.getSurah().getEnglishName(),
-                        ayah.getNumberInSurah()
-                );
-                storageService.writeImage(image, ayahImageFilename);
-            } catch (IOException e) {
-                event.getHook().sendMessage(event.localize("_exception.error")).queue();
-            }
+        if (!Files.exists(path)) {
+            var image = AyahImageRendererKt.render(
+                    ayah.getText(),
+                    ayah.getTranslate().getText(),
+                    ayah.getSurah().getEnglishName(),
+                    ayah.getNumberInSurah()
+            );
+            storageService.writeImage(image, filename);
         }
 
-        var embed = new EmbedBuilder()
-                .setTitle("%s %d:%d".formatted(
-                        ayah.getSurah().getEnglishName(),
-                        ayah.getSurah().getNumber(),
-                        ayah.getNumberInSurah()
-                ))
-                .setImage("attachment://ayah.png")
-                .build();
-
-        event.getHook()
-                .sendMessageEmbeds(embed)
-                .addFiles(FileUpload.fromData(ayahImagePath, "ayah.png"))
-                .queue();
+        return path;
     }
 
 }
