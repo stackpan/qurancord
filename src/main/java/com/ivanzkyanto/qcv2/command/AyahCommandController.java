@@ -7,6 +7,7 @@ import com.freya02.botcommands.api.application.annotations.AppOption;
 import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
 import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand;
 import com.freya02.botcommands.api.application.slash.annotations.LongRange;
+import com.freya02.botcommands.api.localization.annotations.LocalizationBundle;
 import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.AyahDetailWithTranslate;
@@ -22,30 +23,22 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import static com.freya02.botcommands.api.localization.Localization.Entry.entry;
+
 @CommandMarker
 @RequiredArgsConstructor
+@LocalizationBundle("lang")
 public class AyahCommandController extends ApplicationCommand {
 
     private final AyahService ayahService;
 
     private final StorageService storageService;
 
-    @JDASlashCommand(
-            name = "ayah",
-            subcommand = "find",
-            scope = CommandScope.GLOBAL,
-            description = "command.ayah.find.description"
-    )
+    @JDASlashCommand(name = "ayah", subcommand = "find", scope = CommandScope.GLOBAL)
     public void find(
-            @NotNull
-            GlobalSlashEvent event,
-
-            @AppOption(name = "surah", description = "option.ayah.find.surah.description")
-            @LongRange(from = 1, to = 114)
-            Integer surah,
-
-            @AppOption(name = "number", description = "option.ayah.find.number.description")
-            Integer number
+            @NotNull GlobalSlashEvent event,
+            @AppOption(name = "surah") @LongRange(from = 1, to = 114) Integer surah,
+            @AppOption(name = "number") Integer number
     ) {
         event.deferReply().queue();
 
@@ -54,28 +47,20 @@ public class AyahCommandController extends ApplicationCommand {
             sendEmbedWithImage(event, ayah);
         } catch (AyahNotFoundException e) {
             event.getHook()
-                    .sendMessage("message.ayah-not-found")
+                    .sendMessage(event.localize(
+                            "_exception.ayah_not_found",
+                            entry("ayahNumber", number),
+                            entry("surahNumber", surah))
+                    )
                     .queue();
         }
     }
 
-    @JDASlashCommand(
-            name = "ayah",
-            subcommand = "search",
-            scope = CommandScope.GLOBAL,
-            description = "command.ayah.search.description"
-    )
+    @JDASlashCommand(name = "ayah", subcommand = "search", scope = CommandScope.GLOBAL)
     public void search(
-            @NotNull
-            GlobalSlashEvent event,
-
-            @AppOption(name = "keyword", description = "option.ayah.search.keyword.description")
-            String keyword,
-
-            @AppOption(name = "surah_number", description = "option.ayah.search.surah.description")
-            @LongRange(from = 1, to = 114)
-            @Nullable
-            Integer surahNumber
+            @NotNull GlobalSlashEvent event,
+            @AppOption(name = "keyword") String keyword,
+            @AppOption(name = "surah") @LongRange(from = 1, to = 114) @Nullable Integer surahNumber
     ) {
         event.deferReply().queue();
 
@@ -83,16 +68,20 @@ public class AyahCommandController extends ApplicationCommand {
 
         results.ifPresentOrElse(
                 searchResult -> {
-                    var titleBuilder = new StringBuilder("Top ayah search for keyword \"%s\"".formatted(keyword));
+                    var titleBuilder = new StringBuilder(event.localize("ayah.search.success1", entry("keyword", keyword)));
                     if (surahNumber != null) {
-                        titleBuilder.append(" in surah number %d".formatted(surahNumber));
+                        titleBuilder.append(event.localize("ayah.search.success2", entry("number", surahNumber)));
                     }
 
                     var embedBuilder = new EmbedBuilder().setTitle(titleBuilder.toString());
 
                     searchResult.getMatches().stream().limit(5)
                             .forEach(searchMatch -> {
-                                var name = "%s %d:%d".formatted(searchMatch.getSurah().getEnglishName(), searchMatch.getSurah().getNumber(), searchMatch.getNumberInSurah());
+                                var name = "%s %d:%d".formatted(
+                                        searchMatch.getSurah().getEnglishName(),
+                                        searchMatch.getSurah().getNumber(),
+                                        searchMatch.getNumberInSurah()
+                                );
                                 var value = "\"%s\"".formatted(searchMatch.getText().length() > 999
                                         ? "%s...".formatted(searchMatch.getText().substring(0, 999))
                                         : searchMatch.getText());
@@ -103,25 +92,15 @@ public class AyahCommandController extends ApplicationCommand {
                     event.getHook().sendMessageEmbeds(embedBuilder.build()).queue();
                 },
                 () -> event.getHook()
-                        .sendMessage("message.search-not-found")
+                        .sendMessage(event.localize("_exception.ayah_search_no_results", entry("keyword", keyword)))
                         .queue()
         );
     }
 
-    @JDASlashCommand(
-            name = "ayah",
-            subcommand = "random",
-            scope = CommandScope.GLOBAL,
-            description = "commmand.ayah.random.description"
-    )
+    @JDASlashCommand(name = "ayah", subcommand = "random", scope = CommandScope.GLOBAL)
     public void random(
-            @NotNull
-            GlobalSlashEvent event,
-
-            @AppOption(name = "in_surah", description = "option.ayah.random.in_surah.description")
-            @LongRange(from = 1, to = 114)
-            @Nullable
-            Integer surahNumber
+            @NotNull GlobalSlashEvent event,
+            @AppOption(name = "surah") @LongRange(from = 1, to = 114) @Nullable Integer surahNumber
     ) {
         event.deferReply().queue();
 
@@ -129,8 +108,9 @@ public class AyahCommandController extends ApplicationCommand {
             var ayah = surahNumber != null ? ayahService.randomWithTranslate(surahNumber) : ayahService.randomWithTranslate();
             sendEmbedWithImage(event, ayah);
         } catch (SurahNotFoundException e) {
+            assert surahNumber != null;
             event.getHook()
-                    .sendMessage("message.surah-not-found")
+                    .sendMessage(event.localize("_exception.surah_not_found", entry("number", surahNumber)))
                     .queue();
         }
     }
@@ -154,12 +134,22 @@ public class AyahCommandController extends ApplicationCommand {
                 );
                 storageService.writeImage(image, ayahImageFilename);
             } catch (IOException e) {
-                event.getHook().sendMessage("message.error").queue();
+                event.getHook().sendMessage(event.localize("_exception.error")).queue();
             }
         }
 
+        var embed = new EmbedBuilder()
+                .setTitle("%s %d:%d".formatted(
+                        ayah.getSurah().getEnglishName(),
+                        ayah.getSurah().getNumber(),
+                        ayah.getNumberInSurah()
+                ))
+                .setImage("attachment://ayah.png")
+                .build();
+
         event.getHook()
-                .sendFiles(FileUpload.fromData(ayahImagePath))
+                .sendMessageEmbeds(embed)
+                .addFiles(FileUpload.fromData(ayahImagePath, "ayah.png"))
                 .queue();
     }
 

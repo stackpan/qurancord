@@ -1,0 +1,92 @@
+{
+  "_edition": "en.asad",
+  "surah": {
+    "name": "surah",
+    "description": "Get surah information",
+    "find": {
+      "name": "find",
+      "description": "Find surah information based on specified number",
+      "options": {
+        "number": {
+          "name": "number",
+          "description": "Surah number"
+        }
+      }
+    },
+    "random": {
+      "name": "random",
+      "description": "Find randomized surah information"
+    },
+    "search": {
+      "name": "search",
+      "description": "Search surah information based on specified name keyword",
+      "options": {
+        "keyword": {
+          "name": "keyword",
+          "description": "Surah name keyword"
+        }
+      },
+      "success": "This is the search result for surah that is close to keyword \"{keyword}\""
+    }
+  },
+  "ayah": {
+    "name": "ayah",
+    "description": "Get ayah information",
+    "find": {
+      "name": "find",
+      "description": "Find an ayah from specified options",
+      "options": {
+        "surah": {
+          "name": "surah",
+          "description": "Surah number"
+        },
+        "number": {
+          "name": "number",
+          "description": "Ayah number in surah"
+        }
+      }
+    },
+    "search": {
+      "name": "search",
+      "description": "Search ayah translations based on specified keyword",
+      "options": {
+        "keyword": {
+          "name": "keyword",
+          "description": "Search keyword"
+        },
+        "surah": {
+          "name": "surah",
+          "description": "Surah number for filter search into specific surah"
+        }
+      },
+      "success1": "Top ayah search for keyword \"{keyword}\"",
+      "success2": " in surah number {number}"
+    },
+    "random": {
+      "name": "random",
+      "description": "Get randomized ayah information",
+      "options": {
+        "surah": {
+          "name": "surah",
+          "description": "Surah number for filter random into specific surah"
+        }
+      }
+    }
+  },
+  "_exception": {
+    "error": "There is something wrong happened to me. Could you try it again?",
+    "surah_not_found": "Could not find surah with number {number}.",
+    "ayah_not_found": "Could not find ayah with number {ayahNumber} in surah number {surahNumber}.",
+    "ayah_search_no_results": "There are no results for ayah search from keyword \"{keyword}\"."
+  },
+  "_embed": {
+    "surah": {
+      "field": {
+        "arabic": "Arabic",
+        "number": "Number",
+        "revelation_type": "Revelation Type",
+        "number_of_ayahs": "Number of ayahs"
+      }
+    }
+  }
+}
