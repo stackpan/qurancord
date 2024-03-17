@@ -1,0 +1,5 @@
+spring.main.web-application-type=none
+discord.bot-token=
+storage.path=storage
+quran.edition.verse=quran-simple-enhanced
+quran.edition.translate=en.asad
