@@ -14,8 +14,10 @@ import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Surah;
 import com.ivanzkyanto.qcv2.service.StorageService;
 import com.ivanzkyanto.qcv2.service.SurahService;
+import com.ivanzkyanto.qcv2.util.LoggerString;
 import com.ivanzkyanto.qcv2.util.SurahImageRendererKt;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.utils.FileUpload;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,6 +30,7 @@ import static com.freya02.botcommands.api.localization.Localization.Entry.entry;
 @CommandMarker
 @RequiredArgsConstructor
 @LocalizationBundle("lang")
+@Slf4j
 public class SurahCommandController extends ApplicationCommand {
 
     private final SurahService surahService;
@@ -40,6 +43,7 @@ public class SurahCommandController extends ApplicationCommand {
             @AppOption(name = "number") @LongRange(from = 1, to = 114) Integer number
     ) {
         event.deferReply().queue();
+        log.info(LoggerString.getLogGlobalCommand(event));
 
         try {
             var surah = surahService.get(number);
@@ -61,6 +65,8 @@ public class SurahCommandController extends ApplicationCommand {
     @JDASlashCommand(name = "surah", subcommand = "random", scope = CommandScope.GLOBAL)
     public void random(@NotNull GlobalSlashEvent event) {
         event.deferReply().queue();
+        log.info(LoggerString.getLogGlobalCommand(event));
+
         var surah = surahService.random();
         try {
             var path = getOrCreateImage(surah);
@@ -80,6 +86,8 @@ public class SurahCommandController extends ApplicationCommand {
             @AppOption(name = "keyword") String keyword
     ) {
         event.deferReply().queue();
+        log.info(LoggerString.getLogGlobalCommand(event));
+
         surahService.search(keyword).ifPresentOrElse(
                 surah -> {
                     try {

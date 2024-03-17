@@ -15,7 +15,9 @@ import com.ivanzkyanto.qcv2.model.AyahDetailWithTranslate;
 import com.ivanzkyanto.qcv2.service.AyahService;
 import com.ivanzkyanto.qcv2.service.StorageService;
 import com.ivanzkyanto.qcv2.util.AyahImageRendererKt;
+import com.ivanzkyanto.qcv2.util.LoggerString;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.utils.FileUpload;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +32,7 @@ import static com.freya02.botcommands.api.localization.Localization.Entry.entry;
 @CommandMarker
 @RequiredArgsConstructor
 @LocalizationBundle("lang")
+@Slf4j
 public class AyahCommandController extends ApplicationCommand {
 
     private final AyahService ayahService;
@@ -44,6 +47,7 @@ public class AyahCommandController extends ApplicationCommand {
             @AppOption(name = "image") @Nullable Boolean image
     ) {
         event.deferReply().queue();
+        log.info(LoggerString.getLogGlobalCommand(event));
 
         try {
             var ayah = ayahService.getWithTranslate(surah, number);
@@ -78,6 +82,7 @@ public class AyahCommandController extends ApplicationCommand {
             @AppOption(name = "surah") @LongRange(from = 1, to = 114) @Nullable Integer surahNumber
     ) {
         event.deferReply().queue();
+        log.info(LoggerString.getLogGlobalCommand(event));
 
         var results = surahNumber != null ? ayahService.search(keyword, surahNumber) : ayahService.search(keyword);
 
@@ -119,6 +124,7 @@ public class AyahCommandController extends ApplicationCommand {
             @AppOption(name = "image") @Nullable Boolean image
     ) {
         event.deferReply().queue();
+        log.info(LoggerString.getLogGlobalCommand(event));
 
         try {
             var ayah = surahNumber != null ? ayahService.randomWithTranslate(surahNumber) : ayahService.randomWithTranslate();
