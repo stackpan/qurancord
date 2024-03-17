@@ -5,6 +5,7 @@ import com.ivanzkyanto.qcv2.configuration.properties.DiscordConfigurationPropert
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.interactions.DiscordLocale;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,9 @@ public class DiscordConfigurer {
 
     @Bean
     public JDA jda() throws InterruptedException {
-        JDA jda = JDABuilder.createDefault(configuration.botToken()).build();
+        JDA jda = JDABuilder.createDefault(configuration.botToken())
+                .setActivity(Activity.listening("Ummat"))
+                .build();
 
         jda.awaitReady();
         CommandsBuilder.newBuilder()

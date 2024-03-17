@@ -9,7 +9,7 @@ import com.freya02.botcommands.api.application.slash.annotations.JDASlashCommand
 import com.freya02.botcommands.api.application.slash.annotations.LongRange;
 import com.freya02.botcommands.api.localization.Localizable;
 import com.freya02.botcommands.api.localization.annotations.LocalizationBundle;
-import com.ivanzkyanto.qcv2.component.MessageEmbeds;
+import com.ivanzkyanto.qcv2.component.SurahEmbeds;
 import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Surah;
 import com.ivanzkyanto.qcv2.service.StorageService;
@@ -46,7 +46,7 @@ public class SurahCommandController extends ApplicationCommand {
             var path = getOrCreateImage(surah);
 
             event.getHook()
-                    .sendMessageEmbeds(MessageEmbeds.surah(event, surah, "surah.png"))
+                    .sendMessageEmbeds(SurahEmbeds.surah(event, surah, "surah.png"))
                     .addFiles(FileUpload.fromData(path, "surah.png"))
                     .queue();
         } catch (SurahNotFoundException e) {
@@ -66,7 +66,7 @@ public class SurahCommandController extends ApplicationCommand {
             var path = getOrCreateImage(surah);
 
             event.getHook()
-                    .sendMessageEmbeds(MessageEmbeds.surah(event, surah, "surah.png"))
+                    .sendMessageEmbeds(SurahEmbeds.surah(event, surah, "surah.png"))
                     .addFiles(FileUpload.fromData(path, "surah.png"))
                     .queue();
         } catch (IOException e) {
@@ -87,7 +87,7 @@ public class SurahCommandController extends ApplicationCommand {
 
                         event.getHook()
                                 .sendMessage(event.localize("surah.search.success", entry("keyword", keyword)))
-                                .addEmbeds(MessageEmbeds.surah(event, surah, "surah.png"))
+                                .addEmbeds(SurahEmbeds.surah(event, surah, "surah.png"))
                                 .addFiles(FileUpload.fromData(path, "surah.png"))
                                 .queue();
                     } catch (IOException e) {

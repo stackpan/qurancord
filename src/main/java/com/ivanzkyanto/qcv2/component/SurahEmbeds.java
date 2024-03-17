@@ -5,19 +5,19 @@ import com.ivanzkyanto.qcv2.model.Surah;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
-public class MessageEmbeds {
+public class SurahEmbeds {
 
     public static MessageEmbed surah(Localizable event, Surah surah, String imageFilename) {
-        return createEmbedBuilder(event, surah)
+        return initializeBuilder(event, surah)
                 .setImage("attachment://%s".formatted(imageFilename))
                 .build();
     }
 
     public static MessageEmbed surah(Localizable event, Surah surah) {
-        return createEmbedBuilder(event, surah).build();
+        return initializeBuilder(event, surah).build();
     }
 
-    private static EmbedBuilder createEmbedBuilder(Localizable event, Surah surah) {
+    private static EmbedBuilder initializeBuilder(Localizable event, Surah surah) {
         return new EmbedBuilder()
                 .setTitle(surah.getEnglishName())
                 .setDescription(surah.getEnglishNameTranslation())

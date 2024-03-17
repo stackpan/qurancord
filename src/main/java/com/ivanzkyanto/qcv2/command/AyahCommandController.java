@@ -56,7 +56,7 @@ public class AyahCommandController extends ApplicationCommand {
                         .addFiles(FileUpload.fromData(imagePath, "ayah.png"))
                         .queue();
             } else {
-                event.getHook().sendMessageEmbeds(AyahEmbeds.create(event, ayah)).queue();
+                event.getHook().sendMessageEmbeds(AyahEmbeds.create(ayah)).queue();
             }
         } catch (AyahNotFoundException e) {
             event.getHook()
@@ -131,7 +131,7 @@ public class AyahCommandController extends ApplicationCommand {
                         .addFiles(FileUpload.fromData(imagePath, "ayah.png"))
                         .queue();
             } else {
-                event.getHook().sendMessageEmbeds(AyahEmbeds.create(event, ayah)).queue();
+                event.getHook().sendMessageEmbeds(AyahEmbeds.create(ayah)).queue();
             }
         } catch (SurahNotFoundException e) {
             assert surahNumber != null;
