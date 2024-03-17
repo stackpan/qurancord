@@ -84,6 +84,7 @@
   "_exception": {
     "error": "There is something wrong happened to me. Could you try it again?",
     "surah_not_found": "Could not find surah with number {number}.",
+    "surah_search_not_found": "Could not find surah with keyword {keyword}.",
     "ayah_not_found": "Could not find ayah with number {ayahNumber} in surah number {surahNumber}.",
     "ayah_search_no_results": "There are no results for ayah search from keyword \"{keyword}\"."
   },

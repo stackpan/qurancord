@@ -15,7 +15,7 @@
     },
     "random": {
       "name": "random",
-      "description": "Find randomized surah information"
+      "description": "Get randomized surah information"
     },
     "search": {
       "name": "search",
@@ -43,6 +43,10 @@
         "number": {
           "name": "number",
           "description": "Ayah number in surah"
+        },
+        "image": {
+          "name": "image",
+          "description": "Toggle to send image or not"
         }
       }
     },
@@ -69,6 +73,10 @@
         "surah": {
           "name": "surah",
           "description": "Surah number for filter random into specific surah"
+        },
+        "image": {
+          "name": "image",
+          "description": "Toggle to send image or not"
         }
       }
     }
@@ -76,6 +84,7 @@
   "_exception": {
     "error": "There is something wrong happened to me. Could you try it again?",
     "surah_not_found": "Could not find surah with number {number}.",
+    "surah_search_not_found": "Could not find surah with keyword {keyword}.",
     "ayah_not_found": "Could not find ayah with number {ayahNumber} in surah number {surahNumber}.",
     "ayah_search_no_results": "There are no results for ayah search from keyword \"{keyword}\"."
   },

@@ -12,6 +12,10 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())

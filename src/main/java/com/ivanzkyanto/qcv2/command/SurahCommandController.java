@@ -112,7 +112,7 @@ public class SurahCommandController extends ApplicationCommand {
                     }
                 },
                 () -> event.getHook()
-                        .sendMessage(event.localize("_exception.surah_not_found", entry("number", keyword)))
+                        .sendMessage(event.localize("_exception.surah_search_not_found", entry("keyword", keyword)))
                         .queue()
         );
     }
