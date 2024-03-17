@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,13 @@ public class SurahServiceImpl implements SurahService {
 
     @NonNull
     private QuranEditionConfigurationProperties quranEditionConfigurationProperties;
+
+    @Override
+    public List<String> getAllNames() {
+        return surahFetcher.getAll().getData().stream()
+                .map(Surah::getEnglishName)
+                .toList();
+    }
 
     @Override
     public SurahDetail get(Integer number) throws SurahNotFoundException {

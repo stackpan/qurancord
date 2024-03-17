@@ -4,9 +4,12 @@ import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
 import com.ivanzkyanto.qcv2.model.Surah;
 import com.ivanzkyanto.qcv2.model.SurahDetail;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SurahService {
+
+    List<String> getAllNames();
 
     SurahDetail get(Integer number) throws SurahNotFoundException;
 
