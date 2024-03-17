@@ -28,6 +28,7 @@ public class DiscordConfigurer {
 
         jda.awaitReady();
         CommandsBuilder.newBuilder()
+                .addOwners(configuration.ownerId())
                 .extensionsBuilder(extensionRegister)
                 .applicationCommandBuilder(builder -> builder
                         .addLocalizations("lang", List.of(

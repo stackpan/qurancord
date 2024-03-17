@@ -120,8 +120,6 @@ public class SurahCommandController extends ApplicationCommand {
     @AutocompletionHandler(name = "surahNames", mode = AutocompletionMode.FUZZY)
     public List<Command.Choice> getSurahNameChoices(CommandAutoCompleteInteractionEvent event) {
         return surahService.getAllNames().stream()
-                .filter(name -> Pattern.compile(StringUtils.regexifySurahName(name), Pattern.CASE_INSENSITIVE)
-                        .matcher(event.getFocusedOption().getValue()).find())
                 .map(name -> new Command.Choice(name, name))
                 .collect(Collectors.toList());
     }
