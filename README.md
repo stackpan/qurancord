@@ -12,7 +12,7 @@ These are the dependencies used:
 
 ### Usage
 
-This bot monstly uses the Discord Slash Command. The following is a list of commands:
+This bot is mostly uses the Discord Slash Command. The following is a list of the commands:
 
 | Command          | Options                                   | Description                                              |
 |------------------|-------------------------------------------|----------------------------------------------------------|
