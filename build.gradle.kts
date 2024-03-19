@@ -6,14 +6,14 @@ plugins {
 }
 
 group = "com.ivanzkyanto"
-version = "3.0.0"
+version = findProperty("app.version")!!
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 configurations {
