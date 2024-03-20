@@ -2,7 +2,7 @@
 Qurancord is a discord bot to search for and obtain surahs and/or verses of Quran from the internet. Built using Spring Framework and JDA
 
 ## Preview
-This project is built on top of JVM Technology which will require Java 17 and using Gradle as dependency management. Quran's sources are obtained from https://alquran.cloud/api.
+This project is built on top of JVM Technology which will require Java 21 and using Gradle as dependency management. Quran's sources are obtained from https://alquran.cloud/api.
 
 These are the dependencies used:
 - [Spring Framework](https://spring.io/)
@@ -27,7 +27,7 @@ This bot is mostly uses the Discord Slash Command. The following is a list of th
 
 ### Manual
 Requirement:
-- JDK 17 or later
+- JDK 21 or later
 
 Procedure:
 1. Clone this repo:
