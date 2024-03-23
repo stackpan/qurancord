@@ -2,19 +2,14 @@ package com.ivanzkyanto.qcv2.fetcher.impl;
 
 import com.ivanzkyanto.qcv2.configuration.properties.QuranEditionConfigurationProperties;
 import com.ivanzkyanto.qcv2.fetcher.SearchFetcher;
+import com.ivanzkyanto.qcv2.fetcher.provider.SearchFetcherProvider;
 import com.ivanzkyanto.qcv2.model.ApiResponse;
-import com.ivanzkyanto.qcv2.model.SearchEditionReference;
 import com.ivanzkyanto.qcv2.model.SearchEditionReferenceMaker;
 import com.ivanzkyanto.qcv2.model.SearchResult;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -22,34 +17,33 @@ import java.util.Optional;
 public class SearchFetcherImpl implements SearchFetcher {
 
     @NonNull
-    private RestTemplate restTemplate;
+    private SearchFetcherProvider searchFetcherProvider;
 
     @NonNull
     private QuranEditionConfigurationProperties quranEditionConfigurationProperties;
 
     @Override
     public Optional<ApiResponse<SearchResult>> search(String keyword) {
-        return search(keyword, null);
+        return searchFetcherProvider.search(keyword, "all", quranEditionConfigurationProperties.translate());
+    }
+
+    @Override
+    public Optional<ApiResponse<SearchResult>> search(String keyword, String edition) {
+        return searchFetcherProvider.search(keyword, "all", edition);
     }
 
     @Override
     public Optional<ApiResponse<SearchResult>> search(String keyword, Integer surah) {
-        var split = quranEditionConfigurationProperties.translate().split("\\.");
-        return search(keyword, surah, new SearchEditionReference(split[0], split[1]));
+        return search(keyword, surah, quranEditionConfigurationProperties.translate());
     }
 
     @Override
     public Optional<ApiResponse<SearchResult>> search(String keyword, Integer surah, SearchEditionReferenceMaker languageOrEdition) {
-        String surahPath = (Objects.isNull(surah)) ? "all" : surah.toString();
+        return search(keyword, surah, languageOrEdition.make());
+    }
 
-        var url = String.format("/v1/search/%s/%s/%s", keyword, surahPath, languageOrEdition.make());
-        var type = new ParameterizedTypeReference<ApiResponse<SearchResult>>() {};
-        var response = restTemplate.exchange(url, HttpMethod.GET, null, type);
-
-        if (response.getStatusCode().isSameCodeAs(HttpStatusCode.valueOf(204)) || Objects.isNull(response.getBody())) {
-            return Optional.empty();
-        }
-
-        return Optional.of(response.getBody());
+    @Override
+    public Optional<ApiResponse<SearchResult>> search(String keyword, Integer surah, String edition) {
+        return searchFetcherProvider.search(keyword, surah.toString(), edition);
     }
 }
