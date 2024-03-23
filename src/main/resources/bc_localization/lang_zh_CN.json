@@ -1,100 +1,100 @@
 {
-  "_edition": "en.asad",
+  "_edition": "zh.jian",
   "surah": {
-    "name": "surah",
-    "description": "Get surah information",
+    "name": "古兰经",
+    "description": "获取古兰经信息",
     "find": {
-      "name": "find",
-      "description": "Find surah information based on specified number",
+      "name": "寻找",
+      "description": "根据指定号码查找古兰经信息",
       "options": {
         "number": {
-          "name": "number",
-          "description": "Surah number"
+          "name": "数字",
+          "description": "古兰经的数量"
         }
       }
     },
     "random": {
-      "name": "random",
-      "description": "Get randomized surah information"
+      "name": "随机的",
+      "description": "获取随机古兰经信息"
     },
     "search": {
-      "name": "search",
-      "description": "Search surah information based on specified name keyword",
+      "name": "搜索",
+      "description": "根据指定名称关键字搜索古兰经信息",
       "options": {
         "keyword": {
-          "name": "keyword",
-          "description": "Surah name keyword"
+          "name": "关键词",
+          "description": "古兰经名字的关键词"
         }
       },
-      "success": "This is the search result for surah that is close to keyword \"{keyword}\""
+      "success": "这是与关键字 “{keyword}” 接近的古兰经搜索结果"
     }
   },
   "ayah": {
-    "name": "ayah",
-    "description": "Get ayah information",
+    "name": "阿亚",
+    "description": "获取阿亚信息",
     "find": {
-      "name": "find",
-      "description": "Find an ayah from specified options",
+      "name": "寻找",
+      "description": "从指定选项中查找阿亚",
       "options": {
         "surah": {
-          "name": "surah",
-          "description": "Surah number"
+          "name": "古兰经",
+          "description": "古兰经的数量"
         },
         "number": {
-          "name": "number",
-          "description": "Ayah number in surah"
+          "name": "数字",
+          "description": "古兰经中的阿亚号码"
         },
         "image": {
-          "name": "image",
-          "description": "Toggle to send image or not"
+          "name": "图像",
+          "description": "切换是否发送图像"
         }
       }
     },
     "search": {
-      "name": "search",
-      "description": "Search ayah translations based on specified keyword",
+      "name": "搜索",
+      "description": "根据指定关键字搜索阿亚翻译",
       "options": {
         "keyword": {
-          "name": "keyword",
-          "description": "Search keyword"
+          "name": "关键词",
+          "description": "搜索关键词"
         },
         "surah": {
-          "name": "surah",
-          "description": "Surah number for filter search into specific surah"
+          "name": "古兰经",
+          "description": "用于过滤搜索特定古兰经的古兰经编号"
         }
       },
-      "success1": "Top ayah search for keyword \"{keyword}\"",
-      "success2": " in surah number {number}"
+      "success1": "关键字 “{keyword}” 的热门阿亚搜索",
+      "success2": "在古兰经中，第 {number} 号"
     },
     "random": {
-      "name": "random",
-      "description": "Get randomized ayah information",
+      "name": "随机的",
+      "description": "获取随机的阿亚信息",
       "options": {
         "surah": {
-          "name": "surah",
-          "description": "Surah number for filter random into specific surah"
+          "name": "古兰经",
+          "description": "用于随机筛选特定古兰经的古兰经编号"
         },
         "image": {
-          "name": "image",
-          "description": "Toggle to send image or not"
+          "name": "图像",
+          "description": "切换是否发送图像"
         }
       }
     }
   },
   "_exception": {
-    "error": "There is something wrong happened to me. Could you try it again?",
-    "surah_not_found": "Could not find surah with number {number}.",
-    "surah_search_not_found": "Could not find surah with keyword {keyword}.",
-    "ayah_not_found": "Could not find ayah with number {ayahNumber} in surah number {surahNumber}.",
-    "ayah_search_no_results": "There are no results for ayah search from keyword \"{keyword}\"."
+    "error": "我发生了一些不对劲的事情。 你能再试一次吗？",
+    "surah_not_found": "找不到编号为 {number} 的古兰经",
+    "surah_search_not_found": "找不到关键字为 {keyword} 的古兰经",
+    "ayah_not_found": "在编号 {surahNumber} 的古兰经中找不到编号为 {ayahNumber} 的阿亚",
+    "ayah_search_no_results": "使用关键字“{keyword}”进行阿亚搜索没有结果"
   },
   "_embed": {
     "surah": {
       "field": {
-        "arabic": "Arabic",
-        "number": "Number",
-        "revelation_type": "Revelation Type",
-        "number_of_ayahs": "Total of ayahs"
+        "arabic": "阿拉伯",
+        "number": "数字",
+        "revelation_type": "启示型",
+        "number_of_ayahs": "阿亚总数"
       }
     }
   }
