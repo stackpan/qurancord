@@ -87,7 +87,7 @@ public class AyahCommandController extends ApplicationCommand {
         event.deferReply().queue();
         log.info(LoggerString.getLogGlobalCommand(event));
 
-        var sanitizedKeyword = StringUtils.sanitize(keyword);
+        var sanitizedKeyword = keyword;
         var results = surahNumber != null ? ayahService.search(sanitizedKeyword, surahNumber) : ayahService.search(sanitizedKeyword);
 
         results.ifPresentOrElse(
