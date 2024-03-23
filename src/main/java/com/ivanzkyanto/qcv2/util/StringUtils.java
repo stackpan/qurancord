@@ -47,7 +47,7 @@ public class StringUtils {
     }
 
     public static String sanitize(String input) {
-        return input.replaceAll("/", "");
+        return input.replaceAll("[/?&#]", "");
     }
 
 }
