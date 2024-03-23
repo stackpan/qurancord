@@ -17,6 +17,7 @@ import com.ivanzkyanto.qcv2.service.AyahService;
 import com.ivanzkyanto.qcv2.service.StorageService;
 import com.ivanzkyanto.qcv2.util.AyahImageRendererKt;
 import com.ivanzkyanto.qcv2.util.LoggerString;
+import com.ivanzkyanto.qcv2.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -86,7 +87,8 @@ public class AyahCommandController extends ApplicationCommand {
         event.deferReply().queue();
         log.info(LoggerString.getLogGlobalCommand(event));
 
-        var results = surahNumber != null ? ayahService.search(keyword, surahNumber) : ayahService.search(keyword);
+        var sanitizedKeyword = StringUtils.sanitize(keyword);
+        var results = surahNumber != null ? ayahService.search(sanitizedKeyword, surahNumber) : ayahService.search(sanitizedKeyword);
 
         results.ifPresentOrElse(
                 searchResult -> {

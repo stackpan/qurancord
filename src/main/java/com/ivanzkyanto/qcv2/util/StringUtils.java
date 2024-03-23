@@ -46,4 +46,8 @@ public class StringUtils {
         return substrings;
     }
 
+    public static String sanitize(String input) {
+        return input.replaceAll("/", "");
+    }
+
 }
