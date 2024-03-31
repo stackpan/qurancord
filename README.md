@@ -35,9 +35,9 @@ Procedure:
     git clone https://github.com/stackpan/qurancord.git
     cd /path/to/qurancord
    ```
-2. Copy the app config template which are located on `src/main/resources/application.properties.example`
+2. Copy the app config template which are located on `app/src/main/resources/application.properties.example`
    ```shell
-   cp src/main/resources/application.properties.example src/main/resources/application.properties
+   cp app/src/main/resources/application.properties.example app/src/main/resources/application.properties
    ```
 3. Apply your token into `discord.bot-token` key inside app config:
     ```properties
