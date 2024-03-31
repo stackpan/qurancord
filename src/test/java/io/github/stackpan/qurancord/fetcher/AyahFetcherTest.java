@@ -1,9 +1,9 @@
-package com.ivanzkyanto.qcv2.fetcher;
+package io.github.stackpan.qurancord.fetcher;
 
-import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
-import com.ivanzkyanto.qcv2.model.ApiResponse;
-import com.ivanzkyanto.qcv2.model.AyahDetail;
-import com.ivanzkyanto.qcv2.model.AyahReference;
+import io.github.stackpan.qurancord.exception.AyahNotFoundException;
+import io.github.stackpan.qurancord.model.ApiResponse;
+import io.github.stackpan.qurancord.model.AyahDetail;
+import io.github.stackpan.qurancord.model.AyahReference;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,11 +1,11 @@
-package com.ivanzkyanto.qcv2.service;
+package io.github.stackpan.qurancord.service;
 
-import com.ivanzkyanto.qcv2.exception.AyahNotFoundException;
-import com.ivanzkyanto.qcv2.exception.SurahNotFoundException;
-import com.ivanzkyanto.qcv2.model.Ayah;
-import com.ivanzkyanto.qcv2.model.AyahDetail;
-import com.ivanzkyanto.qcv2.model.AyahDetailWithTranslate;
-import com.ivanzkyanto.qcv2.model.SearchResult;
+import io.github.stackpan.qurancord.exception.AyahNotFoundException;
+import io.github.stackpan.qurancord.exception.SurahNotFoundException;
+import io.github.stackpan.qurancord.model.Ayah;
+import io.github.stackpan.qurancord.model.AyahDetail;
+import io.github.stackpan.qurancord.model.AyahDetailWithTranslate;
+import io.github.stackpan.qurancord.model.SearchResult;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

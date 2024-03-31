@@ -1,6 +1,6 @@
-package com.ivanzkyanto.qcv2.service;
+package io.github.stackpan.qurancord.service;
 
-import com.ivanzkyanto.qcv2.configuration.properties.StorageConfigurationProperties;
+import io.github.stackpan.qurancord.configuration.properties.StorageConfigurationProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

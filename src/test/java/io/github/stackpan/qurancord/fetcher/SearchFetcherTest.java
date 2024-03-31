@@ -1,8 +1,8 @@
-package com.ivanzkyanto.qcv2.fetcher;
+package io.github.stackpan.qurancord.fetcher;
 
-import com.ivanzkyanto.qcv2.model.ApiResponse;
-import com.ivanzkyanto.qcv2.model.SearchEditionReference;
-import com.ivanzkyanto.qcv2.model.SearchResult;
+import io.github.stackpan.qurancord.model.ApiResponse;
+import io.github.stackpan.qurancord.model.SearchEditionReference;
+import io.github.stackpan.qurancord.model.SearchResult;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

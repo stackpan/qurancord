@@ -1,10 +1,10 @@
-package com.ivanzkyanto.qcv2.util;
+package io.github.stackpan.qurancord.util;
 
-import com.ivanzkyanto.qcv2.configuration.FontRegister;
-import com.ivanzkyanto.qcv2.fetcher.AyahFetcher;
-import com.ivanzkyanto.qcv2.model.ApiResponse;
-import com.ivanzkyanto.qcv2.model.AyahReference;
-import com.ivanzkyanto.qcv2.model.Edition;
+import io.github.stackpan.qurancord.configuration.FontRegister;
+import io.github.stackpan.qurancord.fetcher.AyahFetcher;
+import io.github.stackpan.qurancord.model.ApiResponse;
+import io.github.stackpan.qurancord.model.AyahReference;
+import io.github.stackpan.qurancord.model.Edition;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

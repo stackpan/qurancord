@@ -1,7 +1,7 @@
-package com.ivanzkyanto.qcv2.util;
+package io.github.stackpan.qurancord.util;
 
-import com.ivanzkyanto.qcv2.configuration.FontRegister;
-import com.ivanzkyanto.qcv2.fetcher.SurahFetcher;
+import io.github.stackpan.qurancord.configuration.FontRegister;
+import io.github.stackpan.qurancord.fetcher.SurahFetcher;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
