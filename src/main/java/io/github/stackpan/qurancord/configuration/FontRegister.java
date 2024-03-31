@@ -2,12 +2,9 @@ package io.github.stackpan.qurancord.configuration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.ResourceUtils;
 
 import java.awt.*;
-import java.awt.font.TextAttribute;
 import java.io.IOException;
-import java.util.Map;
 
 @Slf4j
 public class FontRegister {

@@ -1,6 +1,5 @@
 package io.github.stackpan.qurancord.fetcher.provider;
 
-import io.github.stackpan.qurancord.configuration.properties.QuranEditionConfigurationProperties;
 import io.github.stackpan.qurancord.model.ApiResponse;
 import io.github.stackpan.qurancord.model.SearchResult;
 import lombok.NonNull;

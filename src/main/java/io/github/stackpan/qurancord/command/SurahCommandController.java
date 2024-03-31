@@ -17,7 +17,6 @@ import io.github.stackpan.qurancord.model.Surah;
 import io.github.stackpan.qurancord.service.StorageService;
 import io.github.stackpan.qurancord.service.SurahService;
 import io.github.stackpan.qurancord.util.LoggerString;
-import io.github.stackpan.qurancord.util.StringUtils;
 import io.github.stackpan.qurancord.util.SurahImageRendererKt;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.freya02.botcommands.api.localization.Localization.Entry.entry;

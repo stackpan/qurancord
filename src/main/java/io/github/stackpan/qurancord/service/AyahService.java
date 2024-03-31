@@ -2,7 +2,6 @@ package io.github.stackpan.qurancord.service;
 
 import io.github.stackpan.qurancord.exception.AyahNotFoundException;
 import io.github.stackpan.qurancord.exception.SurahNotFoundException;
-import io.github.stackpan.qurancord.model.Ayah;
 import io.github.stackpan.qurancord.model.AyahDetail;
 import io.github.stackpan.qurancord.model.AyahDetailWithTranslate;
 import io.github.stackpan.qurancord.model.SearchResult;

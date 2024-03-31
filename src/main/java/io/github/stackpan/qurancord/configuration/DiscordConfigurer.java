@@ -1,15 +1,12 @@
 package io.github.stackpan.qurancord.configuration;
 
 import com.freya02.botcommands.api.CommandsBuilder;
-import com.freya02.botcommands.api.application.slash.GlobalSlashEvent;
-import com.freya02.botcommands.api.localization.Localizable;
 import io.github.stackpan.qurancord.configuration.properties.DiscordConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.DiscordLocale;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
