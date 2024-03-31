@@ -5,7 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
 }
 
-group = "com.ivanzkyanto"
+group = "io.github.stackpan"
 version = findProperty("app.version")!!
 
 java {
